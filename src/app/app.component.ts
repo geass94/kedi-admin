@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, ViewEncapsulation} from '@angular/core';
 import {User} from "./models/user";
 import {Router} from "@angular/router";
 import {AuthService} from "./services/auth.service";
@@ -6,7 +6,8 @@ import {AuthService} from "./services/auth.service";
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
   title = 'kedi-admin';
@@ -18,6 +19,8 @@ export class AppComponent {
   ) {
     this.authService.currentUser.subscribe(x => this.currentUser = x);
   }
+
+  showFiller = false;
 
   logout() {
     this.authService.logout();

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from "../../models/user";
 import {UserService} from "../../services/user.service";
-import {first} from "rxjs/internal/operators";
+import {deserialize} from "serializer.ts/Serializer";
 
 @Component({
   selector: 'app-home',
@@ -10,14 +10,15 @@ import {first} from "rxjs/internal/operators";
 })
 export class HomeComponent implements OnInit {
 
-  users: User[] = [];
+  user: User = new User;
 
   constructor(private userService: UserService) { }
 
   ngOnInit() {
-    this.userService.getAll().pipe(first()).subscribe(users => {
-      this.users = users;
+    this.userService.getMyProfile().subscribe(res => {
+      this.user = deserialize<User>(User, res);
     });
+    console.log(this.user);
   }
 
 }
