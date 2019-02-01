@@ -8,20 +8,20 @@ export interface Menu {
 }
 
 const MENUITEMS = [
-  { state: 'starter', name: 'Starter Page', type: 'link', icon: 'av_timer' },
-  { state: 'button', type: 'link', name: 'Buttons', icon: 'crop_7_5' },
-  { state: 'grid', type: 'link', name: 'Grid List', icon: 'view_comfy' },
-  { state: 'lists', type: 'link', name: 'Lists', icon: 'view_list' },
-  { state: 'menu', type: 'link', name: 'Menu', icon: 'view_headline' },
-  { state: 'tabs', type: 'link', name: 'Tabs', icon: 'tab' },
-  { state: 'stepper', type: 'link', name: 'Stepper', icon: 'web' },
+  { state: 'starter', name: 'Dashboard', type: 'link', icon: 'av_timer' },
+  { state: 'button', type: 'link', name: 'Users', icon: 'account_circle' },
+  { state: 'grid', type: 'link', name: 'Categories', icon: 'category' },
+  { state: 'lists', type: 'link', name: 'Products', icon: 'receipt' },
+  { state: 'menu', type: 'link', name: 'Manufacturers', icon: 'new_releases' },
+  { state: 'tabs', type: 'link', name: 'Colors', icon: 'palette' },
+  { state: 'stepper', type: 'link', name: 'Country', icon: 'account_balance' },
   {
     state: 'expansion',
     type: 'link',
-    name: 'Expansion Panel',
-    icon: 'vertical_align_center'
+    name: 'State',
+    icon: 'add_location'
   },
-  { state: 'chips', type: 'link', name: 'Chips', icon: 'vignette' },
+  { state: 'chips', type: 'link', name: 'Settings', icon: 'settings' },
   { state: 'toolbar', type: 'link', name: 'Toolbar', icon: 'voicemail' },
   {
     state: 'progress-snipper',

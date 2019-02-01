@@ -33,6 +33,12 @@ const routes: Routes = [
       {
         path: '',
         loadChildren:
+          './components/components.module#ComponentsModule'
+      },
+      {
+        path: '',
+        canActivate: [AuthGuard],
+        loadChildren:
           './material-component/material.module#MaterialComponentsModule'
       },
       {

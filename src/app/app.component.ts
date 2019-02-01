@@ -20,8 +20,6 @@ export class AppComponent {
     this.authService.currentUser.subscribe(x => this.currentUser = x);
   }
 
-  showFiller = false;
-
   logout() {
     this.authService.logout();
     this.router.navigate(['/login']);
