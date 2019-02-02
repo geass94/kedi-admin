@@ -4,11 +4,13 @@ import {RouterModule} from "@angular/router";
 import {ComponentsRoutes} from "./components.routing";
 import {LoginComponent} from "./login/login.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {MatButtonModule, MatFormFieldModule, MatInputModule} from "@angular/material";
+import {MatButtonModule, MatExpansionModule, MatFormFieldModule, MatInputModule} from "@angular/material";
+import {UsersComponent} from "./users/users.component";
 
 @NgModule({
   declarations: [
-    LoginComponent
+    LoginComponent,
+    UsersComponent
   ],
   imports: [
     RouterModule.forChild(ComponentsRoutes),
@@ -17,7 +19,8 @@ import {MatButtonModule, MatFormFieldModule, MatInputModule} from "@angular/mate
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatExpansionModule
   ]
 })
 export class ComponentsModule { }

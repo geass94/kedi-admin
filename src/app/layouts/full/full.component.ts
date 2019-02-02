@@ -9,11 +9,13 @@ import {
   ViewChild,
   HostListener,
   Directive,
-  AfterViewInit
+  AfterViewInit, Input
 } from '@angular/core';
 import { MenuItems } from '../../shared/menu-items/menu-items';
 import { AppHeaderComponent } from './header/header.component';
 import { AppSidebarComponent } from './sidebar/sidebar.component';
+import {User} from "../../models/user";
+import {AuthService} from "../../services/auth.service";
 
 /** @title Responsive sidenav */
 @Component({
@@ -23,17 +25,27 @@ import { AppSidebarComponent } from './sidebar/sidebar.component';
 })
 export class FullComponent implements OnDestroy, AfterViewInit {
   mobileQuery: MediaQueryList;
+  currentUser: User;
 
   private _mobileQueryListener: () => void;
 
   constructor(
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
-    public menuItems: MenuItems
+    public menuItems: MenuItems,
+    private router: Router,
+    private authService: AuthService
   ) {
     this.mobileQuery = media.matchMedia('(min-width: 768px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
+    this.authService.currentUser.subscribe(x => this.currentUser = x);
+  }
+
+  @Input()
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 
   ngOnDestroy(): void {

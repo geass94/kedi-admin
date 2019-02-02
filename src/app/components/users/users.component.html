@@ -1,0 +1,25 @@
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let user of users[0]">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Personal data:&nbsp;{{user.name}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+<form (submit)="onSubmit(f)" #f="ngForm">
+    <mat-form-field>
+      <input matInput placeholder="First name" name="firstName" [ngModel]="user.personalInformation.firstName" value="{{user.personalInformation.firstName}}">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Last name" name="lastName" [ngModel]="user.personalInformation.lastName" value="{{user.personalInformation.lastName}}">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Email" name="email" [ngModel]="user.email" value="{{user.email}}">
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Password" name="password" type="password">
+    </mat-form-field>
+  <input type="hidden" value="{{user.id}}" [ngModel]="user.id" name="id">
+    <button mat-raised-button type="submit" color="primary">Save</button>
+</form>
+  </mat-expansion-panel>
+</mat-accordion>
