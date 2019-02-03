@@ -1,0 +1,89 @@
+<mat-horizontal-stepper linear #stepper>
+  <mat-step [stepControl]="firstFormGroup" errorMessage="Name is required.">
+    <form [formGroup]="firstFormGroup" #f="ngForm">
+      <ng-template matStepLabel>Fill out product basic information</ng-template>
+
+      <mat-form-field>
+        <input matInput placeholder="Product name" name="name" formControlName="productName" type="text" required>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="Product price" name="price" formControlName="productPrice" type="number" required>
+      </mat-form-field>
+
+      <mat-form-field>
+        <textarea matInput placeholder="Product description" formControlName="productDescription"></textarea>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="Choose category" formControlName="productCategory" multiple>
+          <mat-option>---</mat-option>
+          <mat-option *ngFor="let category of categories[0]" [value]="category">
+            {{category.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="Choose color from library" formControlName="productColor">
+          <mat-option>---</mat-option>
+          <mat-option *ngFor="let color of colors[0]" [value]="color">
+            {{color.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="Choose manufacturer" formControlName="productManufacturer">
+          <mat-option>---</mat-option>
+          <mat-option *ngFor="let manufacturer of manufacturers[0]" [value]="manufacturer">
+            {{manufacturer.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="Choose sex" formControlName="productSex">
+          <mat-option>---</mat-option>
+          <mat-option value="MALE">Male</mat-option>
+          <mat-option value="FEMALE">Female</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="Choose size" formControlName="productSize">
+          <mat-option>---</mat-option>
+          <mat-option value="S">Small</mat-option>
+          <mat-option value="M">Medium</mat-option>
+          <mat-option value="L">Large</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div>
+        <button mat-button matStepperNext (click)="onSubmit(f)">Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup" errorMessage="Address is required.">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Upload photos for chosen color!</ng-template>
+      <div *ngIf="stepOneCompleted">
+        <p>Upload images for {{variant.color.name}} Color!</p>
+        <app-file-upload></app-file-upload>
+      </div>
+
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Add color variants?</ng-template>
+    You are now done.
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>
