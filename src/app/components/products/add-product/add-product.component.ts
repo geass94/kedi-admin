@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 
-import {serialize} from "serializer.ts/Serializer";
+import {deserialize, serialize} from "serializer.ts/Serializer";
 import {FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
 import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 
@@ -23,12 +23,9 @@ import {ProductService} from "../../../services/product.service";
   encapsulation: ViewEncapsulation.None
 })
 export class AddProductComponent implements OnInit {
-
-  products: Observable<Product[]>;
   colors: Observable<Color[]>;
   categories: Observable<Category[]>;
   manufacturers: Observable<Manufacturer[]>;
-
 
   basicInfoForm: FormGroup;
 
@@ -45,17 +42,9 @@ export class AddProductComponent implements OnInit {
   constructor(private productService: ProductService) { }
 
   ngOnInit() {
-    this.products = this.productService.getProducts();
-    this.products.subscribe();
-
     this.colors = this.productService.getColors();
-    this.colors.subscribe();
-
     this.categories = this.productService.getCategories();
-    this.categories.subscribe();
-
     this.manufacturers = this.productService.getManufacturers();
-    this.manufacturers.subscribe();
 
     this.basicInfoForm = new FormGroup({
       'name': new FormControl(null, Validators.required),
@@ -67,14 +56,16 @@ export class AddProductComponent implements OnInit {
       'sex': new FormControl(null, Validators.required),
       'size': new FormControl(null, Validators.required)
     });
-
   }
 
   onSubmit() {
     const form = this.basicInfoForm;
     if (form.valid) {
+      let toSubmit: Product = deserialize<Product>(Product, form.value);
+      toSubmit.productVariantId = this.variant.productVariantId;
+      toSubmit.productVariantIds = this.variant.productVariantIds;
       // ფორმაში ყველაფერი შევსებულია და ვამატებ პრუდუქტის ინფორმაციას.
-      this.productService.addProduct(serialize(form.value)).subscribe(res => {
+      this.productService.addProduct(serialize(toSubmit)).subscribe(res => {
         // პროდუქტის ინფორმაციის მოთხოვნა გაიგზავნა და უკან ბრუნდება პასუხი.
         this.variant = res;
         this.stepOneCompleted = true;
@@ -82,6 +73,19 @@ export class AddProductComponent implements OnInit {
         this.fileUploadComponent.formDataValue = this.variant.id;
       });
     }
+  }
+
+  createNewVariant() {
+    this.stepper.reset();
+    this.basicInfoForm.get("name").setValue(this.variant.name);
+    this.basicInfoForm.get("price").setValue(this.variant.price);
+    this.basicInfoForm.get("description").setValue(this.variant.description);
+    this.basicInfoForm.get("categoryList").setValue(this.variant.categoryList);
+    this.basicInfoForm.get("color").setValue(this.variant.color);
+    this.basicInfoForm.get("manufacturer").setValue(this.variant.manufacturer);
+    this.basicInfoForm.get("sex").setValue(this.variant.sex);
+    this.basicInfoForm.get("size").setValue(this.variant.size);
+    this.fileUploadComponent.resetUploader();
   }
 
   log(val) { console.log(val); }

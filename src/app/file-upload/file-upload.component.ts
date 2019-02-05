@@ -15,9 +15,12 @@ export class FileUploadComponent implements OnInit {
   });
   formDataKey: string;
   formDataValue: any;
+  mode = 'determinate';
+  value = 0;
+  uploadFinished = false;
 
   selectedFiles: File[] = [];
-  @Output() validateUploadForm = new EventEmitter<string>();
+  @Output() fileUploaderCallback = new EventEmitter<string>();
 
   @ViewChild('uploadForm') uploadForm: NgForm;
 
@@ -25,6 +28,16 @@ export class FileUploadComponent implements OnInit {
 
   ngOnInit() {
 
+  }
+
+  resetUploader() {
+    this.fileUploadForm.reset();
+    this.selectedFiles = [];
+    this.formDataKey = '';
+    this.formDataValue = null;
+    this.mode = 'determinate';
+    this.value = 0;
+    this.uploadFinished = false;
   }
 
   onFileSelect(event) {
@@ -41,20 +54,22 @@ export class FileUploadComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log("upload submited");
+    this.mode = 'indeterminate';
     const fd = new FormData();
     for (let singleFile of this.selectedFiles) {
       fd.append('files', singleFile, singleFile.name);
     }
     fd.append(this.formDataKey, this.formDataValue);
     this.fileUploadService.uploadFile(fd).subscribe((res) => {
-        console.log("Upload response: ", res);
+        // upload successful
       },
       (error) => {
         console.log("Upload error: ", error);
       },
       () => {
-        console.log("Upload compelted");
+        this.mode = 'determinate';
+        this.value = 100;
+        this.uploadFinished = true;
       });
   }
 

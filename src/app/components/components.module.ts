@@ -6,7 +6,9 @@ import {LoginComponent} from "./login/login.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {
   MatAutocompleteModule,
-  MatButtonModule, MatCardModule, MatExpansionModule, MatFormFieldModule, MatIconModule, MatInputModule, MatListModule,
+  MatButtonModule, MatCardModule, MatExpansionModule, MatFormFieldModule, MatGridListModule, MatIconModule,
+  MatInputModule, MatListModule,
+  MatProgressBarModule,
   MatSelectModule,
   MatStepperModule
 } from "@angular/material";
@@ -41,7 +43,9 @@ import { EditProductComponent } from './products/edit-product/edit-product.compo
     FileUploadModule,
     MatIconModule,
     MatCardModule,
-    MatListModule
+    MatListModule,
+    MatProgressBarModule,
+    MatGridListModule
   ]
 })
 export class ComponentsModule { }

@@ -67,7 +67,7 @@
   <mat-step [stepControl]="fileUploadComponent.fileUploadForm" errorMessage="At least one image is required.">
     <ng-template matStepLabel>Upload photos for chosen color!</ng-template>
     <p *ngIf="stepOneCompleted">Upload images for {{variant.color.name}} Color!</p>
-    <app-file-upload></app-file-upload>
+    <app-file-upload (fileUploaderCallback)="createNewVariant()"></app-file-upload>
     <div>
       <button mat-button matStepperPrevious>Back</button>
       <button mat-button matStepperNext [disabled]="!fileUploadComponent.fileUploadForm.valid">Next</button>
@@ -77,8 +77,8 @@
     <ng-template matStepLabel>Add color variants?</ng-template>
     You are now done.
     <div>
-      <button mat-button (click)="addColorVariant(stepper)">Add another color variant</button>
-      <button mat-button (click)="stepper.reset()">Reset</button>
+      <button mat-button (click)="createNewVariant()">Add another color variant</button>
+      <button mat-button (click)="stepper.reset()">Done</button>
     </div>
   </mat-step>
 </mat-horizontal-stepper>

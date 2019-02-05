@@ -1,12 +1,14 @@
 <form [formGroup]="fileUploadForm" (submit)="onSubmit()" #uploadForm>
+
   <input type="file" (change)="onFileSelect($event)" multiple formControlName="files" />
 
-  <p *ngIf="files.selectedOptions.selected.length > 0">Remove selected files <button mat-button (click)="removeSelectedFiles(files)">Remove</button></p>
+  <p *ngIf="files.selectedOptions.selected.length > 0 && !uploadFinished">Remove selected files <button mat-button (click)="removeSelectedFiles(files)">Remove</button></p>
   <mat-selection-list #files>
     <mat-list-option *ngFor="let file of selectedFiles" [value]="file">
       {{file.name}}
+      <mat-progress-bar mode="determinate" [color]="color" [mode]="mode" [value]="value"></mat-progress-bar>
     </mat-list-option>
   </mat-selection-list>
   <button mat-flat-button color="primary" type="submit" *ngIf="selectedFiles.length > 0">Upload files</button>
 </form>
-
+<br />

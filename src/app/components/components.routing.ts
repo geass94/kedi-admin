@@ -3,6 +3,7 @@ import {LoginComponent} from "./login/login.component";
 import {UsersComponent} from "./users/users.component";
 import {ProductsComponent} from "./products/products.component";
 import {AddProductComponent} from "./products/add-product/add-product.component";
+import {EditProductComponent} from "./products/edit-product/edit-product.component";
 
 export const ComponentsRoutes: Routes = [
   {
@@ -20,5 +21,9 @@ export const ComponentsRoutes: Routes = [
   {
     path: 'products/add',
     component: AddProductComponent
+  },
+  {
+    path: 'products/:id',
+    component: EditProductComponent
   }
 ];

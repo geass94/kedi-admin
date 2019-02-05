@@ -1,3 +1,8 @@
-<p>
-  edit-product works!
-</p>
+<div *ngIf="product != null">
+  {{product.name}}
+</div>
+
+
+<div *ngFor="let variant of variants | async">
+  {{variant.name}}
+</div>
