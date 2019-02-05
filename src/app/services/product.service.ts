@@ -5,6 +5,9 @@ import {Product} from "../models/product";
 import {deserialize, serialize} from "serializer.ts/Serializer";
 import {Observable} from "rxjs/index";
 import {map} from "rxjs/internal/operators";
+import {Category} from "../models/category";
+import {Manufacturer} from "../models/manufacturer";
+import {Color} from "../models/color";
 
 
 @Injectable({
@@ -14,20 +17,24 @@ export class ProductService {
 
   constructor(private http: HttpClient) { }
 
-  getProducts() {
-    return this.http.get(`${environment.apiUrl}/product/get-products`);
+  getProducts(): Observable<Product[]> {
+    return this.http.get(`${environment.apiUrl}/product/get-products`)
+      .pipe(map((res: any) => deserialize<Product[]>(Product, res)));
   }
 
-  getColors() {
-    return this.http.get(`${environment.apiUrl}/product/get-colors`);
+  getColors(): Observable<Color[]> {
+    return this.http.get(`${environment.apiUrl}/product/get-colors`)
+      .pipe(map((res: any) => deserialize<Color[]>(Color, res)));
   }
 
-  getCategories() {
-    return this.http.get(`${environment.apiUrl}/product/get-categories`);
+  getCategories(): Observable<Category[]> {
+    return this.http.get(`${environment.apiUrl}/product/get-categories`)
+      .pipe(map((res: any) => deserialize<Category[]>(Category, res)));
   }
 
-  getManufacturers() {
-    return this.http.get(`${environment.apiUrl}/product/get-manufacturers`);
+  getManufacturers(): Observable<Manufacturer[]> {
+    return this.http.get(`${environment.apiUrl}/product/get-manufacturers`)
+      .pipe(map((res: any) => deserialize<Manufacturer[]>(Manufacturer, res)));
   }
 
   addProduct(product: Product): Observable<Product> {

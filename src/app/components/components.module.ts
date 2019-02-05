@@ -6,12 +6,12 @@ import {LoginComponent} from "./login/login.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {
   MatAutocompleteModule,
-  MatButtonModule, MatCardModule, MatExpansionModule, MatFormFieldModule, MatIconModule, MatInputModule,
+  MatButtonModule, MatCardModule, MatExpansionModule, MatFormFieldModule, MatIconModule, MatInputModule, MatListModule,
   MatSelectModule,
   MatStepperModule
 } from "@angular/material";
 import {UsersComponent} from "./users/users.component";
-import { ProductComponent } from './product/product.component';
+import { ProductsComponent } from './products/products.component';
 import {FileUploadComponent} from "../file-upload/file-upload.component";
 import {FileUploadModule} from "ng2-file-upload";
 
@@ -19,7 +19,7 @@ import {FileUploadModule} from "ng2-file-upload";
   declarations: [
     LoginComponent,
     UsersComponent,
-    ProductComponent,
+    ProductsComponent,
     FileUploadComponent
   ],
   imports: [
@@ -36,7 +36,8 @@ import {FileUploadModule} from "ng2-file-upload";
     MatAutocompleteModule,
     FileUploadModule,
     MatIconModule,
-    MatCardModule
+    MatCardModule,
+    MatListModule
   ]
 })
 export class ComponentsModule { }

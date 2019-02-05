@@ -1,6 +1,5 @@
-import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {FileUploader} from "ng2-file-upload";
+import {Component, EventEmitter, OnInit, Output, ViewEncapsulation} from '@angular/core';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {FileUploadService} from "./file-upload.service";
 import {DataExchangeService} from "../services/data-exchange.service";
 
@@ -11,48 +10,54 @@ import {DataExchangeService} from "../services/data-exchange.service";
   encapsulation: ViewEncapsulation.None
 })
 export class FileUploadComponent implements OnInit {
+  fileUploadForm: FormGroup = new FormGroup({
+    'files': new FormControl(null, Validators.required)
+  });
   fromDataInfo: any;
   stepperInfo: any;
-  uploadForm: FormGroup;
   formDataKey: string;
   formDataValue: string;
 
-  public uploader: FileUploader = new FileUploader({
-    isHTML5: true
-  });
+  selectedFiles: File[] = [];
+  @Output() validateUploadForm = new EventEmitter<string>();
 
-  constructor(private fb: FormBuilder, private fileUploadService: FileUploadService, private des: DataExchangeService) { }
 
-  uploadSubmit() {
-    for (let i = 0; i < this.uploader.queue.length; i++) {
-      const fileItem = this.uploader.queue[i]._file;
-      if (fileItem.size > 10000000) {
-        alert("Each File should be less than 10 MB of size.");
-        return;
-      }
-    }
-
-    let data = new FormData();
-    for (let j = 0; j < this.uploader.queue.length; j++) {
-      let fileItem = this.uploader.queue[j]._file;
-      data.append('files[]', fileItem);
-    }
-    data.append(this.formDataKey, this.formDataValue);
-    this.fileUploadService.uploadFile(data).subscribe(res => alert(res.message));
-    this.uploader.clearQueue();
-  }
+  constructor(private fileUploadService: FileUploadService, private des: DataExchangeService) { }
 
   ngOnInit() {
-    this.uploadForm = this.fb.group({
-      document: [null, null]
-    });
 
     this.des.currentMessage.subscribe(message => this.fromDataInfo = message);
     this.des.currentMessage.subscribe(message => this.stepperInfo = message);
     this.formDataKey = this.fromDataInfo.formDataKey;
     this.formDataValue = this.fromDataInfo.formDataValue;
-    console.log("UPLOADER STEPPER", this.stepperInfo);
   }
+
+  onFileSelect(event) {
+    for (let singleFile of event.target.files) {
+      this.selectedFiles.push(<File>singleFile);
+    }
+  }
+
+  removeSelectedFiles(fiels) {
+    for (let el of fiels.selectedOptions.selected) {
+      const ind = this.selectedFiles.indexOf(el.value);
+      this.selectedFiles.splice(ind, 1);
+    }
+  }
+
+  onSubmit() {
+    console.log("FileUploadComponent: onSubmit");
+    // const fd = new FormData();
+    // for (let singleFile of this.selectedFiles) {
+    //   fd.append('files', singleFile, singleFile.name);
+    // }
+    // fd.append(this.formDataKey, this.formDataValue);
+    // this.fileUploadService.uploadFile(fd).subscribe(res => {
+    //
+    // });
+  }
+
+
 
 }
 
