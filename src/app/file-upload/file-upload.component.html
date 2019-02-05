@@ -1,4 +1,4 @@
-<form [formGroup]="fileUploadForm" (submit)="onSubmit()">
+<form [formGroup]="fileUploadForm" (submit)="onSubmit()" #uploadForm>
   <input type="file" (change)="onFileSelect($event)" multiple formControlName="files" />
 
   <p *ngIf="files.selectedOptions.selected.length > 0">Remove selected files <button mat-button (click)="removeSelectedFiles(files)">Remove</button></p>
@@ -7,5 +7,6 @@
       {{file.name}}
     </mat-list-option>
   </mat-selection-list>
+  <button mat-flat-button color="primary" type="submit" *ngIf="files.selectedOptions.selected.length > 0">Upload files</button>
 </form>
 

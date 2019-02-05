@@ -1,5 +1,5 @@
-import {Component, EventEmitter, OnInit, Output, ViewEncapsulation} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {Component, EventEmitter, OnInit, Output, ViewChild, ViewEncapsulation} from '@angular/core';
+import {FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
 import {FileUploadService} from "./file-upload.service";
 import {DataExchangeService} from "../services/data-exchange.service";
 
@@ -13,23 +13,18 @@ export class FileUploadComponent implements OnInit {
   fileUploadForm: FormGroup = new FormGroup({
     'files': new FormControl(null, Validators.required)
   });
-  fromDataInfo: any;
-  stepperInfo: any;
   formDataKey: string;
-  formDataValue: string;
+  formDataValue: any;
 
   selectedFiles: File[] = [];
   @Output() validateUploadForm = new EventEmitter<string>();
 
+  @ViewChild('uploadForm') uploadForm: NgForm;
 
   constructor(private fileUploadService: FileUploadService, private des: DataExchangeService) { }
 
   ngOnInit() {
 
-    this.des.currentMessage.subscribe(message => this.fromDataInfo = message);
-    this.des.currentMessage.subscribe(message => this.stepperInfo = message);
-    this.formDataKey = this.fromDataInfo.formDataKey;
-    this.formDataValue = this.fromDataInfo.formDataValue;
   }
 
   onFileSelect(event) {
@@ -46,15 +41,21 @@ export class FileUploadComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log("FileUploadComponent: onSubmit");
-    // const fd = new FormData();
-    // for (let singleFile of this.selectedFiles) {
-    //   fd.append('files', singleFile, singleFile.name);
-    // }
-    // fd.append(this.formDataKey, this.formDataValue);
-    // this.fileUploadService.uploadFile(fd).subscribe(res => {
-    //
-    // });
+    console.log("upload submited");
+    const fd = new FormData();
+    for (let singleFile of this.selectedFiles) {
+      fd.append('files', singleFile, singleFile.name);
+    }
+    fd.append(this.formDataKey, this.formDataValue);
+    this.fileUploadService.uploadFile(fd).subscribe((res) => {
+        console.log("Upload response: ", res);
+      },
+      (error) => {
+        console.log("Upload error: ", error);
+      },
+      () => {
+        console.log("Upload compelted");
+      });
   }
 
 

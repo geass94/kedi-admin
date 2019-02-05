@@ -14,13 +14,17 @@ import {UsersComponent} from "./users/users.component";
 import { ProductsComponent } from './products/products.component';
 import {FileUploadComponent} from "../file-upload/file-upload.component";
 import {FileUploadModule} from "ng2-file-upload";
+import { AddProductComponent } from './products/add-product/add-product.component';
+import { EditProductComponent } from './products/edit-product/edit-product.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
     UsersComponent,
     ProductsComponent,
-    FileUploadComponent
+    FileUploadComponent,
+    AddProductComponent,
+    EditProductComponent
   ],
   imports: [
     RouterModule.forChild(ComponentsRoutes),
