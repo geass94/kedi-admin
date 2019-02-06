@@ -18,6 +18,9 @@ import {FileUploadModule} from "ng2-file-upload";
 import { AddProductComponent } from './products/add-product/add-product.component';
 import { EditProductComponent } from './products/edit-product/edit-product.component';
 import {DashboardComponent} from "./dashboard/dashboard.component";
+import { CategoriesComponent } from './categories/categories.component';
+import { ManufacturersComponent } from './manufacturers/manufacturers.component';
+import { ColorsComponent } from './colors/colors.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,10 @@ import {DashboardComponent} from "./dashboard/dashboard.component";
     FileUploadComponent,
     AddProductComponent,
     EditProductComponent,
-    DashboardComponent
+    DashboardComponent,
+    CategoriesComponent,
+    ManufacturersComponent,
+    ColorsComponent
   ],
   imports: [
     RouterModule.forChild(ComponentsRoutes),

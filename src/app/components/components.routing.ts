@@ -4,6 +4,9 @@ import {ProductsComponent} from "./products/products.component";
 import {AddProductComponent} from "./products/add-product/add-product.component";
 import {EditProductComponent} from "./products/edit-product/edit-product.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
+import {CategoriesComponent} from "./categories/categories.component";
+import {ManufacturersComponent} from "./manufacturers/manufacturers.component";
+import {ColorsComponent} from "./colors/colors.component";
 
 export const ComponentsRoutes: Routes = [
   {
@@ -25,5 +28,17 @@ export const ComponentsRoutes: Routes = [
   {
     path: 'products/:id',
     component: EditProductComponent
+  },
+  {
+    path: 'categories',
+    component: CategoriesComponent
+  },
+  {
+    path: 'manufacturers',
+    component: ManufacturersComponent
+  },
+  {
+    path: 'colors',
+    component: ColorsComponent
   }
 ];
