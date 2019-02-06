@@ -1,16 +1,11 @@
 import {
   ChangeDetectorRef,
-  Component,
-  NgZone,
-  OnDestroy,
-  ViewChild,
-  HostListener,
-  Directive,
-  AfterViewInit
+  Component, EventEmitter,
+  OnDestroy, Output
 } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { MenuItems } from '../../../shared/menu-items/menu-items';
-import {FullComponent} from "../full.component";
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -18,6 +13,9 @@ import {FullComponent} from "../full.component";
 })
 export class AppSidebarComponent implements OnDestroy {
   mobileQuery: MediaQueryList;
+
+
+  @Output() emitLogout = new EventEmitter<string>();
 
   private _mobileQueryListener: () => void;
 
@@ -29,6 +27,10 @@ export class AppSidebarComponent implements OnDestroy {
     this.mobileQuery = media.matchMedia('(min-width: 768px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
+  }
+
+  callLogout() {
+    this.emitLogout.next();
   }
 
   ngOnDestroy(): void {

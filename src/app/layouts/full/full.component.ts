@@ -42,10 +42,9 @@ export class FullComponent implements OnDestroy, AfterViewInit {
     this.authService.currentUser.subscribe(x => this.currentUser = x);
   }
 
-  @Input()
   logout() {
     this.authService.logout();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/starter']);
   }
 
   ngOnDestroy(): void {

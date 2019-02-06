@@ -20,6 +20,7 @@ import { SharedModule } from './shared/shared.module';
 import { SpinnerComponent } from './shared/spinner.component';
 import {LocationStrategy, PathLocationStrategy} from "@angular/common";
 import {
+  MatButtonModule,
   MatCardModule, MatIconModule, MatListModule, MatMenuModule, MatSidenavModule,
   MatToolbarModule
 } from "@angular/material";
@@ -41,6 +42,7 @@ import {
     MatMenuModule,
     MatListModule,
     MatCardModule,
+    MatButtonModule,
     FormsModule,
     FlexLayoutModule,
     HttpClientModule,

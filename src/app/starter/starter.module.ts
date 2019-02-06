@@ -1,16 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { StarterComponent } from './starter.component';
 import { StarterRoutes } from './starter.routing';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {
-  MatAutocompleteModule,
-  MatButtonModule, MatCardModule, MatExpansionModule, MatFormFieldModule, MatGridListModule, MatIconModule,
-  MatInputModule, MatListModule, MatProgressBarModule, MatSelectModule, MatStepperModule
+
+  MatButtonModule, MatCardModule, MatFormFieldModule, MatIconModule,
+  MatInputModule, MatListModule,
 } from "@angular/material";
-import {FileUploadModule} from "ng2-file-upload";
+import {FlexLayoutModule} from "@angular/flex-layout";
 
 @NgModule({
   imports: [
@@ -20,16 +19,10 @@ import {FileUploadModule} from "ng2-file-upload";
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatExpansionModule,
-    MatStepperModule,
-    MatSelectModule,
-    MatAutocompleteModule,
-    FileUploadModule,
     MatIconModule,
     MatCardModule,
     MatListModule,
-    MatProgressBarModule,
-    MatGridListModule,
+    FlexLayoutModule,
     RouterModule.forChild(StarterRoutes)
   ],
   declarations: [StarterComponent]
