@@ -15,11 +15,14 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FullComponent } from './layouts/full/full.component';
 import { AppHeaderComponent } from './layouts/full/header/header.component';
 import { AppSidebarComponent } from './layouts/full/sidebar/sidebar.component';
-import { AdminMaterialModule } from './admin-material-module';
 
 import { SharedModule } from './shared/shared.module';
 import { SpinnerComponent } from './shared/spinner.component';
 import {LocationStrategy, PathLocationStrategy} from "@angular/common";
+import {
+  MatCardModule, MatIconModule, MatListModule, MatMenuModule, MatSidenavModule,
+  MatToolbarModule
+} from "@angular/material";
 
 @NgModule({
   declarations: [
@@ -32,7 +35,12 @@ import {LocationStrategy, PathLocationStrategy} from "@angular/common";
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    AdminMaterialModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatMenuModule,
+    MatListModule,
+    MatCardModule,
     FormsModule,
     FlexLayoutModule,
     HttpClientModule,

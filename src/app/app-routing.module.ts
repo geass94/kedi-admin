@@ -27,19 +27,14 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/starter',
+        redirectTo: '/dashboard',
         pathMatch: 'full'
-      },
-      {
-        path: '',
-        loadChildren:
-          './components/components.module#ComponentsModule'
       },
       {
         path: '',
         canActivate: [AuthGuard],
         loadChildren:
-          './material-component/material.module#MaterialComponentsModule'
+          './components/components.module#ComponentsModule'
       },
       {
         path: 'starter',

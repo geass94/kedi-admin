@@ -1,17 +1,2 @@
 
-<h2>Login</h2>
-<form [formGroup]="loginForm" #f="ngForm" (ngSubmit)="onSubmit()">
-  <div class="form-group">
-    <mat-form-field class="example-full-width">
-      <input matInput placeholder="Email" type="email" ngModel name="email" formControlName="email">
-    </mat-form-field>
 
-    <mat-form-field class="example-full-width">
-      <input matInput placeholder="Password" type="password" ngModel name="password" formControlName="password">
-    </mat-form-field>
-  </div>
-
-  <div class="form-group">
-    <button mat-raised-button color="primary">Login</button>
-  </div>
-</form>

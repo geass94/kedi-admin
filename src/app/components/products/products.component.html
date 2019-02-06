@@ -1,17 +1,16 @@
 <a mat-raised-button color="primary" routerLink="/products/add">Add new product</a>
 <hr />
-<mat-card *ngFor="let product of products | async;" class="example-card">
-  {{ loadVariantsForProduct() }}
+<mat-card *ngFor="let product of products; let i = index;" class="example-card">
   <mat-card-header>
     <div mat-card-avatar class="example-header-image"></div>
     <mat-card-title>{{product.name}}</mat-card-title>
-    <!--<mat-card-subtitle>Dog Breed</mat-card-subtitle>-->
   </mat-card-header>
   <img mat-card-image src="{{product.productFiles[0].fileUrl}}" alt="{{product.productFiles[0].name}}">
   <mat-card-content>
     <p>
       {{product.description}}
     </p>
+    <p *ngFor="let variant of variants[i];">{{variant.name}}</p>
   </mat-card-content>
   <mat-card-actions>
     <button mat-button routerLink="/products/{{product.id}}">Edit</button>

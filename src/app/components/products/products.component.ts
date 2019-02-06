@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {ProductService} from "../../services/product.service";
-import {Observable} from "rxjs/index";
 import {Product} from "../../models/product";
+import {deserialize} from "serializer.ts/Serializer";
 
 
 @Component({
@@ -11,17 +11,20 @@ import {Product} from "../../models/product";
   encapsulation: ViewEncapsulation.None
 })
 export class ProductsComponent implements OnInit {
-  products: Observable<Product[]>;
-  variants: Observable<Product[]>;
+  products: Product[];
+  variants: Product[] = [];
+
 
   constructor(private productService: ProductService) { }
 
   ngOnInit() {
-    this.products = this.productService.getProducts();
+    this.productService.getProducts().subscribe((res) => {
+      this.products = deserialize(Product, res);
+      this.products.forEach(product => {
+        this.productService.getProductVariants(product.productVariantIds).subscribe((variant) => {
+          this.variants.push( deserialize(Product, variant) );
+        });
+      });
+    });
   }
-
-  loadVariantsForProduct(product: Product) {
-    console.log("eee");
-  }
-
 }
