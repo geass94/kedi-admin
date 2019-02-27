@@ -11,7 +11,7 @@ import {deserialize} from "serializer.ts/Serializer";
   encapsulation: ViewEncapsulation.None
 })
 export class ProductsComponent implements OnInit {
-  products: Product[];
+  products: Product[] = [];
   variants: Product[] = [];
 
 

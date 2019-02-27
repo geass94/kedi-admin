@@ -9,7 +9,7 @@ import {
   MatInputModule, MatListModule,
   MatProgressBarModule,
   MatSelectModule,
-  MatStepperModule
+  MatStepperModule, MatTableModule
 } from "@angular/material";
 import {UsersComponent} from "./users/users.component";
 import { ProductsComponent } from './products/products.component';
@@ -49,6 +49,7 @@ import { ColorsComponent } from './colors/colors.component';
     FileUploadModule,
     MatIconModule,
     MatCardModule,
+    MatTableModule,
     MatListModule,
     MatProgressBarModule,
     MatGridListModule

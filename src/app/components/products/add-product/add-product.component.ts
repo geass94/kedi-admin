@@ -78,11 +78,15 @@ export class AddProductComponent implements OnInit {
   createNewVariant() {
     this.stepper.reset();
     this.basicInfoForm.get("name").setValue(this.variant.name);
+    this.basicInfoForm.get("name").disabled;
     this.basicInfoForm.get("price").setValue(this.variant.price);
     this.basicInfoForm.get("description").setValue(this.variant.description);
+    this.basicInfoForm.get("description").disabled;
     this.basicInfoForm.get("categoryList").setValue(this.variant.categoryList);
+    this.basicInfoForm.get("categoryList").disabled;
     this.basicInfoForm.get("color").setValue(this.variant.color);
     this.basicInfoForm.get("manufacturer").setValue(this.variant.manufacturer);
+    this.basicInfoForm.get("manufacturer").disabled;
     this.basicInfoForm.get("sex").setValue(this.variant.sex);
     this.basicInfoForm.get("size").setValue(this.variant.size);
     this.fileUploadComponent.resetUploader();

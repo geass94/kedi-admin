@@ -1,3 +1,59 @@
-<p>
-  categories works!
-</p>
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let category of categories">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <b>Parent Category:</b>&nbsp;{{category.name}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+
+    <ng-template matExpansionPanelContent>
+      <h2>მთავარი კატეგორიის რედაქტირება</h2>
+    <form (submit)="onSave(f)" #f="ngForm">
+      <mat-form-field>
+        <input matInput placeholder="Category name" name="name" [ngModel]="category.name" value="{{category.name}}">
+      </mat-form-field>
+      <input type="hidden" value="{{category.id}}" [ngModel]="category.id" name="id">
+      <button mat-raised-button type="submit" color="primary">Save Parent</button>
+    </form>
+    <hr/>
+      <h2>მთავარი კატეგორიაში ახალი ქვეკატეგორიის დამატება</h2>
+    <form (submit)="onAdd(f)" #f="ngForm">
+      <mat-form-field>
+        <input matInput placeholder="Category name" name="name" [ngModel]="name">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select name="parent" placeholder="Parent Category" [ngModel]="category">
+          <mat-option *ngFor="let parent of categories" [value]="parent">
+            {{parent.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-raised-button type="submit" color="primary">Add New Sub-category</button>
+    </form>
+    <hr/>
+      <mat-expansion-panel *ngFor="let subCat of category.children">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <b>Sub-Category:</b>&nbsp;{{subCat.name}}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <h2>ქვეკატეგორიების რედაქტირება</h2>
+        <form (submit)="onSave(f)" #f="ngForm">
+          <mat-form-field>
+            <input matInput placeholder="Category name" name="name" [ngModel]="subCat.name" value="{{subCat.name}}">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select name="parent" placeholder="Parent Category" [ngModel]="category">
+              <mat-option *ngFor="let parent of categories" [value]="parent">
+                {{parent.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <input type="hidden" value="{{subCat.id}}" [ngModel]="subCat.id" name="id">
+          <button mat-raised-button type="submit" color="primary">Save Sub-category</button>
+        </form>
+      </mat-expansion-panel>
+    </ng-template>
+  </mat-expansion-panel>
+</mat-accordion>
