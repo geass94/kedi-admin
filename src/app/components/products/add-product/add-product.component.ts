@@ -12,6 +12,7 @@ import {Color} from "../../../models/color";
 import {Category} from "../../../models/category";
 import {Manufacturer} from "../../../models/manufacturer";
 import {ProductService} from "../../../services/product.service";
+import {SpecificationsService} from "../../../services/specifications.service";
 
 @Component({
   selector: 'app-add-product',
@@ -39,12 +40,12 @@ export class AddProductComponent implements OnInit {
   @ViewChild(FileUploadComponent)
   fileUploadComponent: FileUploadComponent;
 
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService, private specService: SpecificationsService) { }
 
   ngOnInit() {
-    this.colors = this.productService.getColors();
+    this.colors = this.specService.getColors();
     this.categories = this.productService.getCategories();
-    this.manufacturers = this.productService.getManufacturers();
+    this.manufacturers = this.specService.getManufacturers();
 
     this.basicInfoForm = new FormGroup({
       'name': new FormControl(null, Validators.required),

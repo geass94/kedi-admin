@@ -23,6 +23,11 @@ export class ProductService {
       .pipe(map((res: any) => deserialize<Product[]>(Product, res)));
   }
 
+  getCategories() {
+    return this.http.get(`${environment.apiUrl}/specification/get-categories`)
+      .pipe(map((res: any) => deserialize<Category[]>(Category, res)));
+  }
+
   getProduct(id: any): Observable<Product> {
     return this.http.get(`${environment.apiUrl}/product/get-product-by-id/${id}`)
       .pipe(map((res: any) => deserialize<Product>(Product, res)));
@@ -33,21 +38,6 @@ export class ProductService {
     params = params.append('ids', JSON.stringify(ids).replace("[", "").replace("]", ""));
     return this.http.get(`${environment.apiUrl}/product/get-product-variants`, {params: params})
       .pipe(map((res: any) => deserialize<Product[]>(Product, res)));
-  }
-
-  getColors(): Observable<Color[]> {
-    return this.http.get(`${environment.apiUrl}/product/get-colors`)
-      .pipe(map((res: any) => deserialize<Color[]>(Color, res)));
-  }
-
-  getCategories(): Observable<Category[]> {
-    return this.http.get(`${environment.apiUrl}/product/get-categories`)
-      .pipe(map((res: any) => deserialize<Category[]>(Category, res)));
-  }
-
-  getManufacturers(): Observable<Manufacturer[]> {
-    return this.http.get(`${environment.apiUrl}/product/get-manufacturers`)
-      .pipe(map((res: any) => deserialize<Manufacturer[]>(Manufacturer, res)));
   }
 
   addProduct(product: Product): Observable<Product> {

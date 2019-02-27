@@ -1,3 +1,26 @@
-<p>
-  manufacturers works!
-</p>
+<section class="form-container">
+  <label>ახალი მწარმოებლის დამატება</label>
+  <form (submit)="onAdd(f)" #f="ngForm">
+    <mat-form-field>
+      <input matInput placeholder="მწარმოებლის სახელი" name="name" [ngModel]="name" required>
+    </mat-form-field>
+    <button mat-raised-button type="submit" manufacturer="primary">დამატება</button>
+  </form>
+</section>
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let manufacturer of manufacturers">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{manufacturer.name}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <form (submit)="onSave(f)" #f="ngForm">
+      <mat-form-field>
+        <input matInput placeholder="მწარმოებლის სახელი" name="name" [ngModel]="manufacturer.name" value="{{manufacturer.name}}">
+      </mat-form-field>
+      <input type="hidden" value="{{manufacturer.id}}" [ngModel]="manufacturer.id" name="id">
+      <button mat-raised-button type="submit" manufacturer="primary">შენახვა</button>&nbsp;
+      <button mat-raised-button type="button" (click)="onDelete(manufacturer)" manufacturer="warn">წაშლა</button>
+    </form>
+  </mat-expansion-panel>
+</mat-accordion>

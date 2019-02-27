@@ -1,3 +1,29 @@
-<p>
-  colors works!
-</p>
+<section class="form-container">
+  <label>ახალი ფერის დამატება</label>
+  <form (submit)="onAdd(f)" #f="ngForm">
+    <mat-form-field>
+      <input matInput placeholder="ფერის სახელი" name="name" [ngModel]="name" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="ფერის კოდი" name="hex" [ngModel]="hex">
+    </mat-form-field>
+    <button mat-raised-button type="submit" color="primary">დამატება</button>
+  </form>
+</section>
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let color of colors">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{color.name}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+        <form (submit)="onSave(f)" #f="ngForm">
+          <mat-form-field>
+            <input matInput placeholder="ფერის სახელი" name="name" [ngModel]="color.name" value="{{color.name}}">
+          </mat-form-field>
+          <input type="hidden" value="{{color.id}}" [ngModel]="color.id" name="id">
+          <button mat-raised-button type="submit" color="primary">შენახვა</button>&nbsp;
+          <button mat-raised-button type="button" (click)="onDelete(color)" color="warn">წაშლა</button>
+        </form>
+  </mat-expansion-panel>
+</mat-accordion>
