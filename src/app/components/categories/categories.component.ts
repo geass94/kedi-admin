@@ -21,6 +21,7 @@ export class CategoriesComponent implements OnInit {
 
   onSave(f: NgForm) {
     let cat: Category = serialize(f.value);
+    console.log(cat)
     // let category: Category = this.categories.filter(function(c) { return c.id === cat.id; })[0];
     this.specService.saveCategory(cat, cat.id);
   }

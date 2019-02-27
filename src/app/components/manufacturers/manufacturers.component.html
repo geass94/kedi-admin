@@ -14,7 +14,7 @@
         {{manufacturer.name}}
       </mat-panel-title>
     </mat-expansion-panel-header>
-    <form (submit)="onSave(f)" #f="ngForm">
+    <form (submit)="onSave(f1)" #f1="ngForm">
       <mat-form-field>
         <input matInput placeholder="მწარმოებლის სახელი" name="name" [ngModel]="manufacturer.name" value="{{manufacturer.name}}">
       </mat-form-field>

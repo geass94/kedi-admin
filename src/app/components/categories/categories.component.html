@@ -18,7 +18,7 @@
       <mat-tab-group>
         <mat-tab label="მშობელი კატეგორიის რედაქტირება">
           <br/>
-          <form (submit)="onSave(f)" #f="ngForm">
+          <form (submit)="onSave(f1)" #f1="ngForm">
             <mat-form-field>
               <input matInput placeholder="კატეგორიის სახელი" name="name" [ngModel]="category.name" value="{{category.name}}">
             </mat-form-field>
@@ -29,7 +29,7 @@
         </mat-tab>
         <mat-tab label="ქვეკატეგორიის დამატება">
           <br/>
-          <form (submit)="onAdd(f)" #f="ngForm">
+          <form (submit)="onAdd(f2)" #f2="ngForm">
             <mat-form-field>
               <input matInput placeholder="ქვეკატეგორიის სახელი" name="name" [ngModel]="name">
             </mat-form-field>
@@ -52,7 +52,7 @@
                   {{subCat.name}}
                 </mat-panel-title>
               </mat-expansion-panel-header>
-              <form (submit)="onSave(f)" #f="ngForm">
+              <form (submit)="onSave(f3)" #f3="ngForm">
                 <mat-form-field>
                   <input matInput placeholder="ქვეკატეგორიის სახელი" name="name" [ngModel]="subCat.name" value="{{subCat.name}}">
                 </mat-form-field>
