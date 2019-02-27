@@ -22,19 +22,34 @@ export class CategoriesComponent implements OnInit {
   onSave(f: NgForm) {
     let cat: Category = serialize(f.value);
     // let category: Category = this.categories.filter(function(c) { return c.id === cat.id; })[0];
-    console.log(cat)
     this.specService.saveCategory(cat, cat.id);
   }
 
   onAdd(f: NgForm) {
     let cat: Category = serialize(f.value);
     this.specService.addCategory(cat).subscribe((res) => {
-      if (cat.parent !== null) {
+      if (cat.parent !== null && typeof cat.parent !== 'undefined') {
         this.categories.filter(c => c.id === cat.parent.id).map(c => c.children.push(res));
       } else {
-        this.categories.push(res);
+        this.categories.unshift(res);
       }
     });
+    f.reset();
+  }
+
+  onDelete(cat: Category) {
+    this.specService.deleteCategory(cat.id).subscribe(
+      (res) => {},
+      (error) => {},
+      () => {
+        if (this.categories.indexOf(cat) === -1) {
+          this.categories.map(c => c.children.filter(a => a.id === cat.id).map(b => c.children.splice(c.children.indexOf(b), 1)));
+        } else {
+          this.categories.splice(this.categories.indexOf(cat), 1);
+        }
+
+      }
+      );
   }
 
 }

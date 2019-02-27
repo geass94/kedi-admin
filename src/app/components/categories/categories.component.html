@@ -1,59 +1,76 @@
+<section class="form-container">
+  <label>ახალი კატეგორიის დამატება</label>
+  <form (submit)="onAdd(f)" #f="ngForm">
+    <mat-form-field>
+      <input matInput placeholder="კატეგორიის სახელი" name="name" [ngModel]="name" required>
+    </mat-form-field>
+    <button mat-raised-button type="submit" color="primary">დამატება</button>
+  </form>
+</section>
 <mat-accordion>
   <mat-expansion-panel *ngFor="let category of categories">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        <b>Parent Category:</b>&nbsp;{{category.name}}
+        {{category.name}}
       </mat-panel-title>
     </mat-expansion-panel-header>
-
-
     <ng-template matExpansionPanelContent>
-      <h2>მთავარი კატეგორიის რედაქტირება</h2>
-    <form (submit)="onSave(f)" #f="ngForm">
-      <mat-form-field>
-        <input matInput placeholder="Category name" name="name" [ngModel]="category.name" value="{{category.name}}">
-      </mat-form-field>
-      <input type="hidden" value="{{category.id}}" [ngModel]="category.id" name="id">
-      <button mat-raised-button type="submit" color="primary">Save Parent</button>
-    </form>
-    <hr/>
-      <h2>მთავარი კატეგორიაში ახალი ქვეკატეგორიის დამატება</h2>
-    <form (submit)="onAdd(f)" #f="ngForm">
-      <mat-form-field>
-        <input matInput placeholder="Category name" name="name" [ngModel]="name">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-select name="parent" placeholder="Parent Category" [ngModel]="category">
-          <mat-option *ngFor="let parent of categories" [value]="parent">
-            {{parent.name}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <button mat-raised-button type="submit" color="primary">Add New Sub-category</button>
-    </form>
-    <hr/>
-      <mat-expansion-panel *ngFor="let subCat of category.children">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <b>Sub-Category:</b>&nbsp;{{subCat.name}}
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <h2>ქვეკატეგორიების რედაქტირება</h2>
-        <form (submit)="onSave(f)" #f="ngForm">
-          <mat-form-field>
-            <input matInput placeholder="Category name" name="name" [ngModel]="subCat.name" value="{{subCat.name}}">
-          </mat-form-field>
-          <mat-form-field>
-            <mat-select name="parent" placeholder="Parent Category" [ngModel]="category">
-              <mat-option *ngFor="let parent of categories" [value]="parent">
-                {{parent.name}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <input type="hidden" value="{{subCat.id}}" [ngModel]="subCat.id" name="id">
-          <button mat-raised-button type="submit" color="primary">Save Sub-category</button>
-        </form>
-      </mat-expansion-panel>
+      <mat-tab-group>
+        <mat-tab label="მშობელი კატეგორიის რედაქტირება">
+          <br/>
+          <form (submit)="onSave(f)" #f="ngForm">
+            <mat-form-field>
+              <input matInput placeholder="კატეგორიის სახელი" name="name" [ngModel]="category.name" value="{{category.name}}">
+            </mat-form-field>
+            <input type="hidden" value="{{category.id}}" [ngModel]="category.id" name="id">
+            <button mat-raised-button type="submit" color="primary">შენახვა</button>&nbsp;
+            <button mat-raised-button type="button" (click)="onDelete(category)" color="warn">წაშლა</button>
+          </form>
+        </mat-tab>
+        <mat-tab label="ქვეკატეგორიის დამატება">
+          <br/>
+          <form (submit)="onAdd(f)" #f="ngForm">
+            <mat-form-field>
+              <input matInput placeholder="ქვეკატეგორიის სახელი" name="name" [ngModel]="name">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-select name="parent" placeholder="მშობელი კატეგორია" [ngModel]="category">
+                <mat-option *ngFor="let parent of categories" [value]="parent">
+                  {{parent.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <button mat-raised-button type="submit" color="primary">დამატება</button>
+          </form>
+        </mat-tab>
+        <mat-tab label="ქვეკატეგორიების რედაქტირება" *ngIf="category.children.length > 0">
+          <br/>
+          <ng-template matTabContent>
+            <mat-expansion-panel *ngFor="let subCat of category.children">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{subCat.name}}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <form (submit)="onSave(f)" #f="ngForm">
+                <mat-form-field>
+                  <input matInput placeholder="ქვეკატეგორიის სახელი" name="name" [ngModel]="subCat.name" value="{{subCat.name}}">
+                </mat-form-field>
+                <mat-form-field>
+                  <mat-select name="parent" placeholder="მშობელი კატეგორია" [ngModel]="category">
+                    <mat-option *ngFor="let parent of categories" [value]="parent">
+                      {{parent.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <input type="hidden" value="{{subCat.id}}" [ngModel]="subCat.id" name="id">
+                <button mat-raised-button type="submit" color="primary">შენახვა</button>&nbsp;
+                <button mat-raised-button type="button" (click)="onDelete(subCat)" color="warn">წაშლა</button>
+              </form>
+            </mat-expansion-panel>
+          </ng-template>
+        </mat-tab>
+      </mat-tab-group>
     </ng-template>
   </mat-expansion-panel>
 </mat-accordion>

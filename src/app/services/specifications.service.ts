@@ -25,4 +25,8 @@ export class SpecificationsService {
     return this.http.post(`${environment.apiUrl}/product/add-category`, category)
       .pipe(map((res: any) => deserialize<Category>(Category, res)));
   }
+
+  deleteCategory(id: number) {
+    return this.http.delete(`${environment.apiUrl}/product/delete-category/${id}`);
+  }
 }
