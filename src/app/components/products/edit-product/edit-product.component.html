@@ -1,8 +1,87 @@
 <div *ngIf="product != null">
-  {{product.name}}
-</div>
+<section class="form-container">
+  <form [formGroup]="basicInfoForm" (submit)="onSubmit()">
+    <mat-form-field>
+      <input matInput placeholder="პროდუქტის სახელი" name="name" formControlName="name" type="text">
+    </mat-form-field>
 
+    <mat-form-field>
+      <input matInput placeholder="პროდუქტის ფასი" name="price" formControlName="price" type="number">
+    </mat-form-field>
 
-<div *ngFor="let variant of variants | async">
-  {{variant.name}}
+    <mat-form-field>
+      <textarea matInput placeholder="პროდუქტის აღწერა" formControlName="description"></textarea>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="აირჩიეთ კატეგორიები" formControlName="categoryList" multiple>
+        <mat-optgroup *ngFor="let category of categories | async" [label]="category.name">
+          <mat-option [value]="category">{{category.name}}</mat-option>
+          <mat-option *ngFor="let subCat of category.children" [value]="subCat">
+            {{subCat.name}}
+          </mat-option>
+        </mat-optgroup>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="აირჩიეთ ფერი" formControlName="color">
+        <mat-option>---</mat-option>
+        <mat-option *ngFor="let color of colors | async" [value]="color">
+          {{color.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="აირჩიეთ მწარმოებელი" formControlName="manufacturer">
+        <mat-option>---</mat-option>
+        <mat-option *ngFor="let manufacturer of manufacturers | async" [value]="manufacturer">
+          {{manufacturer.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="აირჩიეთ სქესი" formControlName="sex">
+        <mat-option>---</mat-option>
+        <mat-option value="MALE">მამაკაცი</mat-option>
+        <mat-option value="FEMALE">ქალი</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="აირჩიეთ ზომა" formControlName="size">
+        <mat-option>---</mat-option>
+        <mat-option value="S">Small</mat-option>
+        <mat-option value="M">Medium</mat-option>
+        <mat-option value="L">Large</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div>
+      <button mat-button type="submit" color="primary">შენახვა</button>
+    </div>
+  </form>
+
+</section>
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          პროდუქტის სურათები
+        </mat-panel-title>
+        <mat-panel-description>
+          წაშალეთ ან დაამატეთ ახალი სურათები
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <mat-grid-list cols="2" rowHeight="1:1" gutterSize="10px">
+        <mat-grid-tile *ngFor="let file of product.productFiles">
+          <img src="{{file.fileUrl}}" alt="{{file.name}}">
+        </mat-grid-tile>
+      </mat-grid-list>
+      <div *ngIf="fileUploadComponent">
+        <app-file-upload (fileUploaderCallback)="finishUpload()"></app-file-upload>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
 </div>

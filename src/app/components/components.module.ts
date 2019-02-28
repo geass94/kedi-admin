@@ -53,7 +53,7 @@ import { ColorsComponent } from './colors/colors.component';
     MatTabsModule,
     MatListModule,
     MatProgressBarModule,
-    MatGridListModule
+    MatGridListModule,
   ]
 })
 export class ComponentsModule { }
