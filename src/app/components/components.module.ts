@@ -21,6 +21,7 @@ import {DashboardComponent} from "./dashboard/dashboard.component";
 import { CategoriesComponent } from './categories/categories.component';
 import { ManufacturersComponent } from './manufacturers/manufacturers.component';
 import { ColorsComponent } from './colors/colors.component';
+import { PagesComponent } from './pages/pages.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { ColorsComponent } from './colors/colors.component';
     DashboardComponent,
     CategoriesComponent,
     ManufacturersComponent,
-    ColorsComponent
+    ColorsComponent,
+    PagesComponent
   ],
   imports: [
     RouterModule.forChild(ComponentsRoutes),

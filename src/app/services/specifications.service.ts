@@ -19,6 +19,11 @@ export class SpecificationsService {
       .pipe(map((res: any) => deserialize<Category[]>(Category, res)));
   }
 
+  getAllCategories() {
+    return this.http.get(`${environment.apiUrl}/specification/get-categories`)
+      .pipe(map((res: any) => deserialize<Category[]>(Category, res)));
+  }
+
   getColors() {
     return this.http.get(`${environment.apiUrl}/specification/get-colors`)
       .pipe(map((res: any) => deserialize<Color[]>(Color, res)));

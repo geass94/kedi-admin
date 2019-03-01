@@ -11,18 +11,36 @@ import {SpecificationsService} from "../../services/specifications.service";
 })
 export class CategoriesComponent implements OnInit {
   categories: Category[];
+  children: Category[] = [];
   constructor(private specService: SpecificationsService) { }
 
   ngOnInit() {
     this.specService.getCategories().subscribe(res => {
       this.categories = res;
+      this.categories.forEach(c => {
+        this.setChildren(c);
+      });
     });
+
+    console.log(this.children);
+  }
+
+  getChildrenByParent(id: number): Category[] {
+    return this.children.filter(c => c.parent.id === id);
+  }
+
+  setChildren (cat: Category) {
+    if (cat.children.length) {
+      cat.children.forEach(c => {
+        c.parent = cat;
+        this.children.push(c);
+        this.setChildren(c);
+      });
+    }
   }
 
   onSave(f: NgForm) {
     let cat: Category = serialize(f.value);
-    console.log(cat)
-    // let category: Category = this.categories.filter(function(c) { return c.id === cat.id; })[0];
     this.specService.saveCategory(cat, cat.id);
   }
 
