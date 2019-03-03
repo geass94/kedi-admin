@@ -9,6 +9,9 @@ import {Manufacturer} from "../../../models/manufacturer";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {FileUploadComponent} from "../../../file-upload/file-upload.component";
 import {SpecificationsService} from "../../../services/specifications.service";
+import {deserialize, serialize} from "serializer.ts/Serializer";
+import {NestedTreeControl} from "@angular/cdk/tree";
+import {MatTreeNestedDataSource} from "@angular/material";
 
 @Component({
   selector: 'app-edit-product',
@@ -18,19 +21,27 @@ import {SpecificationsService} from "../../../services/specifications.service";
 export class EditProductComponent implements OnInit {
   product: Product;
   variants: Observable<Product[]>;
-
+  treeControl = new NestedTreeControl<Category>(node => node.children);
+  dataSource = new MatTreeNestedDataSource<Category>();
   colors: Observable<Color[]>;
-  categories: Observable<Category[]>;
+  categories: Category[];
   manufacturers: Observable<Manufacturer[]>;
   basicInfoForm: FormGroup;
-
+  private selectedCategories;
   @ViewChild('FileUploadComponent')
   fileUploadComponent: FileUploadComponent;
 
   constructor(private route: ActivatedRoute, private productService: ProductService, private specService: SpecificationsService) { }
 
   ngOnInit() {
-    this.categories = this.specService.getCategories();
+    this.specService.getCategories().subscribe(res => {
+      this.categories = res;
+    }, err => {
+
+    },
+      () => {
+        this.dataSource.data = this.categories;
+    });
     this.colors = this.specService.getColors();
     this.manufacturers = this.specService.getManufacturers();
 
@@ -42,10 +53,30 @@ export class EditProductComponent implements OnInit {
 
       },
       () => {
+        this.selectedCategories = this.product.categoryList;
         this.loadVariants();
         this.initForm();
       }
     );
+  }
+
+  hasChild = (_: number, node: Category) => !!node.children && node.children.length > 0;
+
+  inProductCategories(node: Category): boolean {
+    if (this.product.categoryList.filter(c => c.id === node.id).length) {
+      return true;
+    }
+    return false;
+  }
+
+  onCategoryChoose(cat: Category): void {
+    delete cat.children;
+    if (this.selectedCategories.indexOf(cat) === -1) {
+      this.selectedCategories.push(cat);
+    } else {
+      this.selectedCategories.splice(this.selectedCategories.indexOf(cat), 1);
+    }
+    console.log(this.selectedCategories);
   }
 
   loadVariants() {
@@ -54,6 +85,23 @@ export class EditProductComponent implements OnInit {
 
   finishUpload() {
     this.fileUploadComponent.resetUploader();
+  }
+
+  onSubmit() {
+    const form = this.basicInfoForm;
+    if (form.valid) {
+      let toSubmit: Product = deserialize<Product>(Product, form.value);
+      toSubmit.productVariantId = this.product.productVariantId;
+      toSubmit.productVariantIds = this.product.productVariantIds;
+      toSubmit.categoryList = this.selectedCategories;
+      // ფორმაში ყველაფერი შევსებულია და ვამატებ პრუდუქტის ინფორმაციას.
+      this.productService.saveProduct(serialize(toSubmit), this.product.id).subscribe(res => {
+        // პროდუქტის ინფორმაციის მოთხოვნა გაიგზავნა და უკან ბრუნდება პასუხი.
+        this.product = res;
+        // this.fileUploadComponent.formDataKey = "product-id";
+        // this.fileUploadComponent.formDataValue = this.product.id;
+      });
+    }
   }
 
   initForm() {

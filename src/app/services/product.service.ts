@@ -44,4 +44,9 @@ export class ProductService {
     return this.http.post(`${environment.apiUrl}/product/add-product`, serialize(product))
       .pipe(map((res: any) => deserialize<Product>(Product, res)));
   }
+
+  saveProduct(product: Product, id: number) {
+    return this.http.put(`${environment.apiUrl}/product/save-product/${id}`, serialize(product))
+      .pipe(map((res: any) => deserialize<Product>(Product, res)));
+  }
 }

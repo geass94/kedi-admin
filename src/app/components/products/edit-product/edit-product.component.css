@@ -4,3 +4,41 @@
   border-radius: 3px;
   margin-bottom: 10px;
 }
+
+
+.sub-child {
+  padding-left: 30px;
+}
+
+
+.example-tree-invisible {
+  display: none;
+}
+
+.example-tree ul,
+.example-tree li {
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: none;
+}
+
+.inline-form {
+  width: 100%;
+  display: inline-block;
+}
+.inline-form mat-form-field {
+  width: 80%;
+}
+
+
+.inline-form .button-groups {
+  width: 20%;
+  padding-left: 30px;
+  display: inline;
+}
+
+.scrollable {
+  padding-top: 15px;
+  max-height: 300px;
+  overflow-y: scroll;
+}

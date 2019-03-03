@@ -5,7 +5,8 @@ import {ComponentsRoutes} from "./components.routing";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {
   MatAutocompleteModule,
-  MatButtonModule, MatCardModule, MatExpansionModule, MatFormFieldModule, MatGridListModule, MatIconModule,
+  MatButtonModule, MatCardModule, MatCheckboxModule, MatExpansionModule, MatFormFieldModule, MatGridListModule,
+  MatIconModule,
   MatInputModule, MatListModule,
   MatProgressBarModule, MatRadioModule,
   MatSelectModule, MatSnackBarModule,
@@ -58,7 +59,8 @@ import { PagesComponent } from './pages/pages.component';
     MatGridListModule,
     MatTreeModule,
     MatRadioModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatCheckboxModule
   ]
 })
 export class ComponentsModule { }

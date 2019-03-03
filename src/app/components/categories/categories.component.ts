@@ -28,8 +28,10 @@ export class CategoriesComponent implements OnInit {
   private loadCategories() {
     this.specService.getCategories().subscribe(
       (res) => {
-        this.setChildren(res);
-        this.loadChildren(res);
+        // this.setChildren(res);
+        this.categories = res;
+        this.subCategories = res;
+        // this.loadChildren(res);
       },
       (err) => {
 
