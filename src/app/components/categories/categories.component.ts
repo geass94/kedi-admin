@@ -19,6 +19,7 @@ export class CategoriesComponent implements OnInit {
   dataSource = new MatTreeNestedDataSource<Category>();
   dataSourceChildren = new MatTreeNestedDataSource<Category>();
   private chosenParent: Category = new Category;
+
   constructor(private specService: SpecificationsService, private snackBar: MatSnackBar) {}
 
   ngOnInit() {
@@ -44,25 +45,6 @@ export class CategoriesComponent implements OnInit {
     );
   }
 
-  private loadChildren(cat: Category[]) {
-    cat.forEach(c => {
-      if (c.children.length) {
-        c.children.forEach(s => {
-          if (this.subCategories.indexOf(s) === -1) {
-            this.subCategories.push(s);
-          }
-          s.parent = c;
-          if (typeof this.categories[this.subCategories.indexOf(c)] !== 'undefined'
-            && this.categories[this.subCategories.indexOf(c)].children.indexOf(s) === -1) {
-            this.categories[this.subCategories.indexOf(c)].children.push(s);
-          }
-        });
-        this.loadChildren(c.children);
-      }
-    });
-  }
-
-
   onParentChoose(node: Category) {
     if (typeof node.children.length) {
       delete node.children;
@@ -74,26 +56,6 @@ export class CategoriesComponent implements OnInit {
   }
 
   hasChild = (_: number, node: Category) => !!node.children && node.children.length > 0;
-
-  private setChildren (cat: Category[]) {
-    cat.forEach(c => {
-      if (this.categories.indexOf(c) === -1 && typeof c.parent === 'undefined') {
-        this.categories.push(c);
-      }
-
-      if (c.children.length) {
-          c.children.forEach(s => {
-            s.parent = c;
-            if (typeof this.categories[this.categories.indexOf(c)] !== 'undefined'
-              && this.categories[this.categories.indexOf(c)].children.indexOf(s) === -1) {
-              this.categories[this.categories.indexOf(c)].children.push(s);
-            }
-          });
-        this.setChildren(c.children);
-      }
-    });
-  }
-
 
   onSave(f: NgForm) {
     let cat: Category = serialize(f.value);

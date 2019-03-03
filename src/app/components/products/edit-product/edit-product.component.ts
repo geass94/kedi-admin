@@ -101,8 +101,6 @@ export class EditProductComponent implements OnInit, AfterViewInit {
       this.productService.saveProduct(serialize(toSubmit), this.product.id).subscribe(res => {
         // პროდუქტის ინფორმაციის მოთხოვნა გაიგზავნა და უკან ბრუნდება პასუხი.
         this.product = res;
-        // this.fileUploadComponent.formDataKey = "product-id";
-        // this.fileUploadComponent.formDataValue = this.product.id;
       });
     }
   }
