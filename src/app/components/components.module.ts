@@ -7,9 +7,9 @@ import {
   MatAutocompleteModule,
   MatButtonModule, MatCardModule, MatExpansionModule, MatFormFieldModule, MatGridListModule, MatIconModule,
   MatInputModule, MatListModule,
-  MatProgressBarModule,
-  MatSelectModule,
-  MatStepperModule, MatTableModule, MatTabsModule
+  MatProgressBarModule, MatRadioModule,
+  MatSelectModule, MatSnackBarModule,
+  MatStepperModule, MatTableModule, MatTabsModule, MatTreeModule
 } from "@angular/material";
 import {UsersComponent} from "./users/users.component";
 import { ProductsComponent } from './products/products.component';
@@ -56,6 +56,9 @@ import { PagesComponent } from './pages/pages.component';
     MatListModule,
     MatProgressBarModule,
     MatGridListModule,
+    MatTreeModule,
+    MatRadioModule,
+    MatSnackBarModule
   ]
 })
 export class ComponentsModule { }

@@ -33,46 +33,99 @@
             <mat-form-field>
               <input matInput placeholder="ქვეკატეგორიის სახელი" name="name" [ngModel]="name">
             </mat-form-field>
-            <mat-form-field>
-              <mat-select name="parent" placeholder="მშობელი კატეგორია" [ngModel]="category">
-                <mat-optgroup *ngFor="let category of categories" [label]="category.name">
-                  <mat-option [value]="category">{{category.name}}</mat-option>
-                  <mat-option *ngFor="let subCat of category.children" [value]="subCat">
-                    {{subCat.name}}
-                  </mat-option>
-                </mat-optgroup>
-              </mat-select>
-            </mat-form-field>
+            <p>აირჩიეთ ქვეკატეგორია</p>
+            <div class="scrollable">
+              <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
+                <!-- This is the tree node template for leaf nodes -->
+                <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+                  <li class="mat-tree-node">
+                    <!-- use a disabled button to provide padding for tree leaf -->
+                    <button type="button" mat-icon-button disabled></button>
+                    <mat-radio-button (change)="onParentChoose(node)" name="parent" [value]="node">&nbsp;{{node.name}}</mat-radio-button>
+                  </li>
+                </mat-tree-node>
+                <!-- This is the tree node template for expandable nodes -->
+                <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+                  <li>
+                    <div class="mat-tree-node">
+                      <button type="button" mat-icon-button matTreeNodeToggle
+                              [attr.aria-label]="'toggle ' + node.name">
+                        <mat-icon class="mat-icon-rtl-mirror">
+                          {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                        </mat-icon>
+                      </button>
+                      <mat-radio-button (change)="onParentChoose(node)" name="parent" [value]="node">&nbsp;{{node.name}}</mat-radio-button>
+                    </div>
+                    <ul [class.example-tree-invisible]="!treeControl.isExpanded(node)">
+                      <ng-container matTreeNodeOutlet></ng-container>
+                    </ul>
+                  </li>
+                </mat-nested-tree-node>
+              </mat-tree>
+            </div>
+
+
             <button mat-raised-button type="submit" color="primary">დამატება</button>
           </form>
         </mat-tab>
         <mat-tab label="ქვეკატეგორიების რედაქტირება" *ngIf="category.children.length > 0">
           <br/>
           <ng-template matTabContent>
-              <mat-expansion-panel *ngFor="let subCat of children" [ngClass]="{'sub-child': subCat.parent.id > 0}">
-                <mat-expansion-panel-header>
-                  <mat-panel-title>
-                    {{subCat.name}}
-                  </mat-panel-title>
-                </mat-expansion-panel-header>
-                <form (submit)="onSave(f3)" #f3="ngForm">
-                  <mat-form-field>
-                    <input matInput placeholder="ქვეკატეგორიის სახელი" name="name" [ngModel]="subCat.name" value="{{subCat.name}}">
-                  </mat-form-field>
-                  <mat-form-field>
-                    <mat-select name="parent" placeholder="მშობელი კატეგორია" [ngModel]="subCat.parent">
-                      <mat-option *ngFor="let parent of children" [value]="parent">
-                        {{parent.name}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                  <input type="hidden" value="{{subCat.id}}" [ngModel]="subCat.id" name="id">
-                  <button mat-raised-button type="submit" color="primary">შენახვა</button>&nbsp;
-                  <button mat-raised-button type="button" (click)="onDelete(subCat)" color="warn">წაშლა</button>
-                </form>
-              </mat-expansion-panel>
-
-
+            <div class="scrollable">
+              <mat-tree [dataSource]="dataSourceChildren" [treeControl]="treeControl" class="example-tree">
+                <!-- This is the tree node template for leaf nodes -->
+                <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+                  <li class="mat-tree-node">
+                    <!-- use a disabled button to provide padding for tree leaf -->
+                    <button type="button" mat-icon-button disabled></button>
+                    <form class="inline-form" (submit)="onSave(f3)" #f3="ngForm">
+                      <mat-form-field>
+                        <input matInput placeholder="კატეგორიის სახელი" name="name" [ngModel]="node.name" value="{{node.name}}">
+                      </mat-form-field>
+                      <input type="hidden" value="{{node.id}}" [ngModel]="node.id" name="id">
+                      <div class="button-groups">
+                        <button type="submit" mat-icon-button color="primary">
+                          <mat-icon aria-label="Example icon-button with a heart icon">save</mat-icon>
+                        </button>&nbsp;
+                        <button mat-icon-button color="warn" type="button" (click)="onDelete(node)">
+                          <mat-icon aria-label="Example icon-button with a heart icon">delete</mat-icon>
+                        </button>
+                      </div>
+                    </form>
+                  </li>
+                </mat-tree-node>
+                <!-- This is the tree node template for expandable nodes -->
+                <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+                  <li>
+                    <div class="mat-tree-node">
+                      <button type="button" mat-icon-button matTreeNodeToggle
+                              [attr.aria-label]="'toggle ' + node.name">
+                        <mat-icon class="mat-icon-rtl-mirror">
+                          {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                        </mat-icon>
+                      </button>
+                      <form class="inline-form" (submit)="onSave(f4)" #f4="ngForm">
+                        <mat-form-field>
+                          <input matInput placeholder="კატეგორიის სახელი" name="name" [ngModel]="node.name" value="{{node.name}}">
+                        </mat-form-field>
+                        <input type="hidden" value="{{node.id}}" [ngModel]="node.id" name="id">
+                        <div class="button-groups">
+                          <button type="submit" mat-icon-button color="primary">
+                            <mat-icon aria-label="Example icon-button with a heart icon">save</mat-icon>
+                          </button>&nbsp;
+                          <button mat-icon-button color="warn" type="button" (click)="onDelete(node)">
+                            <mat-icon aria-label="Example icon-button with a heart icon">delete</mat-icon>
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                    <ul [class.example-tree-invisible]="!treeControl.isExpanded(node)">
+                      <ng-container matTreeNodeOutlet></ng-container>
+                    </ul>
+                  </li>
+                </mat-nested-tree-node>
+              </mat-tree>
+            </div>
           </ng-template>
         </mat-tab>
       </mat-tab-group>

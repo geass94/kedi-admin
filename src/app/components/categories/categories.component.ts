@@ -1,57 +1,113 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {Category} from "../../models/category";
 import {NgForm} from "@angular/forms";
 import {serialize} from "serializer.ts/Serializer";
 import {SpecificationsService} from "../../services/specifications.service";
+import {NestedTreeControl} from "@angular/cdk/tree";
+import {MatSnackBar, MatSnackBarConfig, MatTreeNestedDataSource} from "@angular/material";
 
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
-  styleUrls: ['./categories.component.css']
+  styleUrls: ['./categories.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CategoriesComponent implements OnInit {
-  categories: Category[];
-  children: Category[] = [];
-  constructor(private specService: SpecificationsService) { }
+  private categories: Category[] = [];
+  private subCategories: Category[] = [];
+  treeControl = new NestedTreeControl<Category>(node => node.children);
+  dataSource = new MatTreeNestedDataSource<Category>();
+  dataSourceChildren = new MatTreeNestedDataSource<Category>();
+  private chosenParent: Category = new Category;
+  constructor(private specService: SpecificationsService, private snackBar: MatSnackBar) {}
 
   ngOnInit() {
-    this.specService.getCategories().subscribe(res => {
-      this.categories = res;
-      this.categories.forEach(c => {
-        this.setChildren(c);
-      });
+    this.loadCategories();
+  }
+
+  private loadCategories() {
+    this.specService.getCategories().subscribe(
+      (res) => {
+        this.setChildren(res);
+        this.loadChildren(res);
+      },
+      (err) => {
+
+      },
+      () => {
+
+        this.dataSource.data = this.categories;
+        this.dataSourceChildren.data = this.subCategories;
+      }
+    );
+  }
+
+  private loadChildren(cat: Category[]) {
+    cat.forEach(c => {
+      if (c.children.length) {
+        c.children.forEach(s => {
+          if (this.subCategories.indexOf(s) === -1) {
+            this.subCategories.push(s);
+          }
+          s.parent = c;
+          if (typeof this.categories[this.subCategories.indexOf(c)] !== 'undefined'
+            && this.categories[this.subCategories.indexOf(c)].children.indexOf(s) === -1) {
+            this.categories[this.subCategories.indexOf(c)].children.push(s);
+          }
+        });
+        this.loadChildren(c.children);
+      }
     });
-
-    console.log(this.children);
   }
 
-  getChildrenByParent(id: number): Category[] {
-    return this.children.filter(c => c.parent.id === id);
-  }
 
-  setChildren (cat: Category) {
-    if (cat.children.length) {
-      cat.children.forEach(c => {
-        c.parent = cat;
-        this.children.push(c);
-        this.setChildren(c);
-      });
+  onParentChoose(node: Category) {
+    if (typeof node.children.length) {
+      delete node.children;
     }
+    if (typeof node.parent !== 'undefined') {
+      delete node.parent;
+    }
+    this.chosenParent = serialize(node);
   }
+
+  hasChild = (_: number, node: Category) => !!node.children && node.children.length > 0;
+
+  private setChildren (cat: Category[]) {
+    cat.forEach(c => {
+      if (this.categories.indexOf(c) === -1 && typeof c.parent === 'undefined') {
+        this.categories.push(c);
+      }
+
+      if (c.children.length) {
+          c.children.forEach(s => {
+            s.parent = c;
+            if (typeof this.categories[this.categories.indexOf(c)] !== 'undefined'
+              && this.categories[this.categories.indexOf(c)].children.indexOf(s) === -1) {
+              this.categories[this.categories.indexOf(c)].children.push(s);
+            }
+          });
+        this.setChildren(c.children);
+      }
+    });
+  }
+
 
   onSave(f: NgForm) {
     let cat: Category = serialize(f.value);
     this.specService.saveCategory(cat, cat.id);
+    this.loadCategories();
+    this.snackBar.open(`Category: ${cat.name}`, 'Saved', <MatSnackBarConfig>{
+      duration: 1500,
+    });
   }
 
   onAdd(f: NgForm) {
     let cat: Category = serialize(f.value);
+    cat.parent = this.chosenParent;
     this.specService.addCategory(cat).subscribe((res) => {
-      if (cat.parent !== null && typeof cat.parent !== 'undefined') {
-        this.categories.filter(c => c.id === cat.parent.id).map(c => c.children.push(res));
-      } else {
-        this.categories.unshift(res);
-      }
+      this.loadCategories();
+      this.snackBar.open(`Category: ${res.name}`, 'Added');
     });
     f.reset();
   }
@@ -61,14 +117,10 @@ export class CategoriesComponent implements OnInit {
       (res) => {},
       (error) => {},
       () => {
-        if (this.categories.indexOf(cat) === -1) {
-          this.categories.map(c => c.children.filter(a => a.id === cat.id).map(b => c.children.splice(c.children.indexOf(b), 1)));
-        } else {
-          this.categories.splice(this.categories.indexOf(cat), 1);
-        }
-
+        this.loadCategories();
+        this.snackBar.open(`Category: ${cat.name}`, 'Deleted');
       }
-      );
+    );
   }
 
 }
