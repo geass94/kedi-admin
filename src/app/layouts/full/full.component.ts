@@ -51,6 +51,5 @@ export class FullComponent implements OnDestroy, AfterViewInit {
     this.mobileQuery.removeListener(this._mobileQueryListener);
   }
   ngAfterViewInit() {
-    console.log(this.currentUser)
   }
 }

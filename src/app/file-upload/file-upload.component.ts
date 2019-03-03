@@ -1,7 +1,8 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation} from '@angular/core';
 import {FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
 import {FileUploadService} from "./file-upload.service";
 import {DataExchangeService} from "../services/data-exchange.service";
+import {Observable, Observer} from "rxjs/index";
 
 @Component({
   selector: 'app-file-upload',
@@ -13,14 +14,17 @@ export class FileUploadComponent implements OnInit {
   fileUploadForm: FormGroup = new FormGroup({
     'files': new FormControl(null, Validators.required)
   });
+  private response: any;
+  @Input()
   formDataKey: string;
+  @Input()
   formDataValue: any;
   mode = 'determinate';
   value = 0;
   uploadFinished = false;
 
   selectedFiles: File[] = [];
-  @Output() fileUploaderCallback = new EventEmitter<string>();
+  @Output() fileUploaderCallback = new EventEmitter<any>();
 
   @ViewChild('uploadForm') uploadForm: NgForm;
 
@@ -61,7 +65,7 @@ export class FileUploadComponent implements OnInit {
     }
     fd.append(this.formDataKey, this.formDataValue);
     this.fileUploadService.uploadFile(fd).subscribe((res) => {
-        // upload successful
+        this.response = res;
       },
       (error) => {
         console.log("Upload error: ", error);
@@ -70,6 +74,7 @@ export class FileUploadComponent implements OnInit {
         this.mode = 'determinate';
         this.value = 100;
         this.uploadFinished = true;
+        this.fileUploaderCallback.emit(this.response);
       });
   }
 

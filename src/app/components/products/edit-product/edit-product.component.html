@@ -13,18 +13,7 @@
       <textarea matInput placeholder="პროდუქტის აღწერა" formControlName="description"></textarea>
     </mat-form-field>
 
-    <!--<mat-form-field>-->
-      <!--<mat-select placeholder="აირჩიეთ კატეგორიები" formControlName="categoryList" [(ngModel)]="product.categoryList" [compareWith]="comparer" multiple>-->
-        <!--<mat-optgroup *ngFor="let category of categories | async" [label]="category.name">-->
-          <!--<mat-option [value]="category">{{category.name}}</mat-option>-->
-          <!--<mat-option *ngFor="let subCat of category.children" [value]="subCat">-->
-            <!--{{subCat.name}}-->
-          <!--</mat-option>-->
-        <!--</mat-optgroup>-->
-      <!--</mat-select>-->
-    <!--</mat-form-field>-->
-
-      <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
+    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
         <!-- This is the tree node template for leaf nodes -->
         <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
           <li class="mat-tree-node">
@@ -53,7 +42,7 @@
       </mat-tree>
 
     <mat-form-field>
-      <mat-select placeholder="აირჩიეთ ფერი" formControlName="color">
+      <mat-select placeholder="აირჩიეთ ფერი" formControlName="color" [compareWith]="compareFn">
         <mat-option>---</mat-option>
         <mat-option *ngFor="let color of colors | async" [value]="color">
           {{color.name}}
@@ -62,7 +51,7 @@
     </mat-form-field>
 
     <mat-form-field>
-      <mat-select placeholder="აირჩიეთ მწარმოებელი" formControlName="manufacturer">
+      <mat-select placeholder="აირჩიეთ მწარმოებელი" formControlName="manufacturer" [compareWith]="compareFn">
         <mat-option>---</mat-option>
         <mat-option *ngFor="let manufacturer of manufacturers | async" [value]="manufacturer">
           {{manufacturer.name}}
@@ -107,8 +96,8 @@
           <img src="{{file.fileUrl}}" alt="{{file.name}}">
         </mat-grid-tile>
       </mat-grid-list>
-      <div *ngIf="fileUploadComponent">
-        <app-file-upload (fileUploaderCallback)="finishUpload()"></app-file-upload>
+      <div *ngIf="product.id">
+        <app-file-upload (fileUploaderCallback)="finishUpload(files)" [formDataKey]="'product-id'" [formDataValue]="product.id"></app-file-upload>
       </div>
     </mat-expansion-panel>
   </mat-accordion>

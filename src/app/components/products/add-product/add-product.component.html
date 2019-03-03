@@ -16,19 +16,36 @@
         <textarea matInput placeholder="პროდუქტის აღწერა" formControlName="description"></textarea>
       </mat-form-field>
 
-      <mat-form-field>
-        <mat-select placeholder="აირჩიეთ კატეგორიები" formControlName="categoryList" multiple>
-          <mat-optgroup *ngFor="let category of categories | async" [label]="category.name">
-            <mat-option [value]="category">{{category.name}}</mat-option>
-            <mat-option *ngFor="let subCat of category.children" [value]="subCat">
-              {{subCat.name}}
-            </mat-option>
-          </mat-optgroup>
-        </mat-select>
-      </mat-form-field>
+      <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
+        <!-- This is the tree node template for leaf nodes -->
+        <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+          <li class="mat-tree-node">
+            <!-- use a disabled button to provide padding for tree leaf -->
+            <button type="button" mat-icon-button disabled></button>
+            <mat-checkbox (change)="onCategoryChoose(node)" name="parent" [value]="node" [checked]="inProductCategories(node)">&nbsp;{{node.name}}</mat-checkbox>
+          </li>
+        </mat-tree-node>
+        <!-- This is the tree node template for expandable nodes -->
+        <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+          <li>
+            <div class="mat-tree-node">
+              <button type="button" mat-icon-button matTreeNodeToggle
+                      [attr.aria-label]="'toggle ' + node.name">
+                <mat-icon class="mat-icon-rtl-mirror">
+                  {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                </mat-icon>
+              </button>
+              <mat-checkbox (change)="onCategoryChoose(node)" name="parent" [value]="node" [checked]="inProductCategories(node)">&nbsp;{{node.name}}</mat-checkbox>
+            </div>
+            <ul [class.example-tree-invisible]="!treeControl.isExpanded(node)">
+              <ng-container matTreeNodeOutlet></ng-container>
+            </ul>
+          </li>
+        </mat-nested-tree-node>
+      </mat-tree>
 
       <mat-form-field>
-        <mat-select placeholder="აირჩიეთ ფერი" formControlName="color">
+        <mat-select placeholder="აირჩიეთ ფერი" formControlName="color" [compareWith]="compareFn">
           <mat-option>---</mat-option>
           <mat-option *ngFor="let color of colors | async" [value]="color">
             {{color.name}}
@@ -37,7 +54,7 @@
       </mat-form-field>
 
       <mat-form-field>
-        <mat-select placeholder="აირჩიეთ მწარმოებელი" formControlName="manufacturer">
+        <mat-select placeholder="აირჩიეთ მწარმოებელი" formControlName="manufacturer" [compareWith]="compareFn">
           <mat-option>---</mat-option>
           <mat-option *ngFor="let manufacturer of manufacturers | async" [value]="manufacturer">
             {{manufacturer.name}}

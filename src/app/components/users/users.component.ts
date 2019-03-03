@@ -22,7 +22,7 @@ export class UsersComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    console.log(serialize(form.value));
+
   }
 
 }

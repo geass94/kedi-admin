@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Observable} from "rxjs/index";
 import {Product} from "../../../models/product";
@@ -18,7 +18,7 @@ import {MatTreeNestedDataSource} from "@angular/material";
   templateUrl: './edit-product.component.html',
   styleUrls: ['./edit-product.component.css']
 })
-export class EditProductComponent implements OnInit {
+export class EditProductComponent implements OnInit, AfterViewInit {
   product: Product;
   variants: Observable<Product[]>;
   treeControl = new NestedTreeControl<Category>(node => node.children);
@@ -28,7 +28,7 @@ export class EditProductComponent implements OnInit {
   manufacturers: Observable<Manufacturer[]>;
   basicInfoForm: FormGroup;
   private selectedCategories;
-  @ViewChild('FileUploadComponent')
+  @ViewChildren('FileUploadComponent')
   fileUploadComponent: FileUploadComponent;
 
   constructor(private route: ActivatedRoute, private productService: ProductService, private specService: SpecificationsService) { }
@@ -71,20 +71,23 @@ export class EditProductComponent implements OnInit {
 
   onCategoryChoose(cat: Category): void {
     delete cat.children;
-    if (this.selectedCategories.indexOf(cat) === -1) {
+    if (!this.selectedCategories.filter(c => c.id === cat.id).length) {
       this.selectedCategories.push(cat);
     } else {
       this.selectedCategories.splice(this.selectedCategories.indexOf(cat), 1);
     }
-    console.log(this.selectedCategories);
+  }
+
+  compareFn(c1: Category, c2: Category): boolean {
+    return c1 && c2 ? c1.id === c2.id : c1 === c2;
   }
 
   loadVariants() {
     this.variants = this.productService.getProductVariants(this.product.productVariantIds);
   }
 
-  finishUpload() {
-    this.fileUploadComponent.resetUploader();
+  finishUpload(files) {
+    // this.fileUploadComponent.resetUploader();
   }
 
   onSubmit() {
@@ -115,14 +118,8 @@ export class EditProductComponent implements OnInit {
       'sex': new FormControl(this.product.sex, Validators.required),
       'size': new FormControl(this.product.size, Validators.required)
     });
-
-
-    if (this.fileUploadComponent) {
-      console.log(this.fileUploadComponent)
-      this.fileUploadComponent.formDataKey = "product-id";
-      this.fileUploadComponent.formDataValue = this.product.id;
-    }
-
   }
 
+  ngAfterViewInit() {
+  }
 }
