@@ -9,6 +9,7 @@ import {Category} from "../models/category";
 import {Manufacturer} from "../models/manufacturer";
 import {Color} from "../models/color";
 import {RequestOptions} from "@angular/http";
+import {ProductPage} from "../components/products/products.component";
 
 
 @Injectable({
@@ -18,9 +19,12 @@ export class ProductService {
 
   constructor(private http: HttpClient) { }
 
-  getProducts(): Observable<Product[]> {
-    return this.http.get(`${environment.apiUrl}/product/get-products`)
-      .pipe(map((res: any) => deserialize<Product[]>(Product, res)));
+  getProducts(sort: string, order: string, page: number): Observable<ProductPage> {
+    let params = new HttpParams();
+    params = params.append('sort', sort);
+    params = params.append('order', order);
+    params = params.append('page', page.toString());
+    return this.http.get<ProductPage>(`${environment.apiUrl}/product/get-products`, {params: params});
   }
 
   getCategories() {
