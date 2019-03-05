@@ -12,7 +12,7 @@ import {ProductService} from "../../services/product.service";
   encapsulation: ViewEncapsulation.None
 })
 export class ProductsComponent implements AfterViewInit {
-  displayedColumns: string[] = ['created', 'state', 'number', 'title'];
+  displayedColumns: string[] = ['id', 'name', 'price', 'sale', 'quantity', 'actions'];
   data: Product[] = [];
 
   resultsLength = 0;
@@ -29,9 +29,9 @@ export class ProductsComponent implements AfterViewInit {
     // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
-    merge(this.sort.sortChange, <SchedulerLike>this.paginator.page)
+    merge(this.sort.sortChange, this.paginator.page)
       .pipe(
-        startWith(<SchedulerLike>{}),
+        startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
           return this.productService.getProducts(
