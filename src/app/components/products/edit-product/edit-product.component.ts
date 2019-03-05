@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild, ViewChildren, ViewEncapsulation} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Observable} from "rxjs/index";
 import {Product} from "../../../models/product";
@@ -16,7 +16,8 @@ import {MatTreeNestedDataSource} from "@angular/material";
 @Component({
   selector: 'app-edit-product',
   templateUrl: './edit-product.component.html',
-  styleUrls: ['./edit-product.component.css']
+  styleUrls: ['./edit-product.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class EditProductComponent implements OnInit, AfterViewInit {
   product: Product;
@@ -103,6 +104,10 @@ export class EditProductComponent implements OnInit, AfterViewInit {
         this.product = res;
       });
     }
+  }
+
+  deleteFile(file) {
+    console.log(file);
   }
 
   initForm() {
