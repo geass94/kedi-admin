@@ -1,12 +1,7 @@
-.example-card {
-  max-width: 400px;
-  float: left;
+.row {
+  display: block;
+  padding: 10px;
 }
-
-.example-header-image {
-  background-size: cover;
-}
-
 
 /* Structure */
 .example-container {
@@ -52,3 +47,30 @@ table {
 .mat-column-created {
   max-width: 124px;
 }
+
+.mat-column-select {
+  overflow: initial;
+}
+
+.inline-form {
+  width: 100%;
+  display: inline-block;
+}
+.inline-form mat-form-field {
+  width: 80%;
+}
+
+
+.inline-form .button-groups {
+  width: 20%;
+  padding-left: 30px;
+  display: inline;
+}
+
+.form-container{
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 3px;
+  margin-bottom: 10px;
+}
+
