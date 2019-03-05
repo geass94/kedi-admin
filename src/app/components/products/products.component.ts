@@ -17,7 +17,6 @@ import {deserialize} from "serializer.ts/Serializer";
 export class ProductsComponent implements AfterViewInit {
   displayedColumns: string[] = ['select', 'id', 'name', 'price', 'sale', 'quantity', 'promoted', 'actions'];
   data: Product[] = [];
-  dataSource = new MatTableDataSource<Product>();
   selection = new SelectionModel<Product>(true, []);
   resultsLength = 0;
   isLoadingResults = true;
@@ -53,7 +52,6 @@ export class ProductsComponent implements AfterViewInit {
           this.isLoadingResults = false;
           this.isRateLimitReached = false;
           this.resultsLength = data.numberOfElements;
-          this.dataSource.data = data.content.map(c => deserialize(Product, c));
           return data.content;
         }),
         catchError(() => {
@@ -66,26 +64,54 @@ export class ProductsComponent implements AfterViewInit {
   }
 
   onSaleSubmit(f: NgForm) {
-    console.log(f);
+    if (!f.value.sale) {
+      f.value.sale = 0;
+    }
+
+    this.productService.setSale(this.selection.selected, f.value.sale).subscribe(res => {
+      res.forEach(c => {
+        this.data.filter(d => d.id === c.id)[0].sale = c.sale;
+      });
+    });
   }
 
   onRestockSubmit(f: NgForm) {
-    console.log(f);
+    if (!f.value.quantity) {
+      f.value.quantity = 0;
+    }
+
+    this.productService.refillStock(this.selection.selected, f.value.quantity).subscribe(res => {
+      res.forEach(c => {
+        this.data.filter(d => d.id === c.id)[0].quantity = c.quantity;
+      });
+    });
   }
 
-  highlight(): void {
-    console.log(this.selection.selected);
+  togglePromotion(): void {
+    this.productService.togglePromotion(this.selection.selected).subscribe(res => {
+      res.forEach(c => {
+        this.data.filter(d => d.id === c.id)[0].promoted = c.promoted;
+      });
+    });
+  }
+
+  promote(p: Product): void {
+    this.productService.togglePromotion([p]).subscribe(res => {
+      res.forEach(c => {
+        this.data.filter(d => d.id === c.id)[0].promoted = c.promoted;
+      });
+    });
   }
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
+    const numRows = this.data.length;
     return numSelected === numRows;
   }
   masterToggle() {
     this.isAllSelected() ?
       this.selection.clear() :
-      this.dataSource.data.forEach(row => this.selection.select(row));
+      this.data.forEach(row => this.selection.select(row));
   }
 
 }

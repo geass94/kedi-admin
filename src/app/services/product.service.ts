@@ -53,4 +53,19 @@ export class ProductService {
     return this.http.put(`${environment.apiUrl}/product/save-product/${id}`, serialize(product))
       .pipe(map((res: any) => deserialize<Product>(Product, res)));
   }
+
+  togglePromotion(product: Product[]) {
+    return this.http.post(`${environment.apiUrl}/product/toggle-promotion`, serialize(product))
+      .pipe(map((res: any) => deserialize<Product[]>(Product, res)));
+  }
+
+  setSale(product: Product[], sale: number) {
+    return this.http.post(`${environment.apiUrl}/product/set-sale`, { products: serialize(product), sale: sale } )
+      .pipe(map((res: any) => deserialize<Product[]>(Product, res)));
+  }
+
+  refillStock(product: Product[], qty: number) {
+    return this.http.post(`${environment.apiUrl}/product/refill-stock`, { products: serialize(product), quantity: qty } )
+      .pipe(map((res: any) => deserialize<Product[]>(Product, res)));
+  }
 }

@@ -1,19 +1,19 @@
 <div class="row">
-  <a mat-raised-button routerLink="/products/add">ახალი პროდუქტის დამატება</a>
+  <a mat-raised-button routerLink="/products/add">Add new product</a>
 </div>
 
 <div *ngIf="!selection.isEmpty()" class="row">
-  <button mat-button color="primary" title="დაწინაურება" (click)="highlight()">
-    დაწინაურება
+  <button mat-button color="primary" title="Toggle Promotion" (click)="togglePromotion()">
+    Toggle Promotion
   </button>
-  <button mat-button color="accent" title="რაოდენობის დამატება" (click)="toggleRestock = !toggleRestock">
-    მარაგის შევსება
+  <button mat-button color="accent" title="Refill Stock" (click)="toggleRestock = !toggleRestock">
+    Refill Stock
   </button>
-  <button mat-button title="წაშლა" (click)="toggleSale = !toggleSale">
-    ფასდაკლების რედაქტირება
+  <button mat-button title="Set Sale" (click)="toggleSale = !toggleSale">
+    Set Sale
   </button>
-  <button mat-button color="warn" title="წაშლა">
-    წაშლა
+  <button mat-button color="warn" title="Delete">
+    Delete
   </button>
 </div>
 
@@ -21,13 +21,13 @@
   <div class="form-container">
     <form class="inline-form" *ngIf="toggleSale" (submit)="onSaleSubmit(f)" #f="ngForm">
       <mat-form-field>
-        <input matInput placeholder="ფასდაკლება %" [ngModel]="sale" name="sale" type="number">
+        <input matInput placeholder="Sale %" [ngModel]="sale" name="sale" type="number">
       </mat-form-field>
       <button type="submit" color="primary" mat-button>შენახვა</button>
     </form>
     <form class="inline-form" *ngIf="toggleRestock" (submit)="onRestockSubmit(f)" #f="ngForm">
       <mat-form-field>
-        <input matInput placeholder="რაოდენობა" [ngModel]="quantity" name="quantity" type="number">
+        <input matInput placeholder="Quantity" [ngModel]="quantity" name="quantity" type="number">
       </mat-form-field>
       <button type="submit" color="primary" mat-button>შენახვა</button>
     </form>
@@ -45,7 +45,7 @@
 
   <div class="example-table-container">
 
-    <table mat-table [dataSource]="dataSource" class="example-table"
+    <table mat-table [dataSource]="data" class="example-table"
            matSort matSortActive="color" matSortDisableClear matSortDirection="desc">
 
       <!-- Checkbox Column -->
@@ -99,11 +99,12 @@
 
       <ng-container matColumnDef="promoted">
         <th mat-header-cell *matHeaderCellDef>
-          Quantity
+          Promoted
         </th>
         <td mat-cell *matCellDef="let row">
           <mat-slide-toggle
             class="example-margin"
+            (change)="promote(row)"
             [color]="primary"
             [checked]="row.promoted">
           </mat-slide-toggle>
