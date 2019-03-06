@@ -3,17 +3,17 @@
 </div>
 
 <div *ngIf="!selection.isEmpty()" class="row">
-  <button mat-button color="primary" title="Toggle Promotion" (click)="togglePromotion()">
-    Toggle Promotion
+  <button mat-button color="primary" title="დაწინაურებაზე გადართვა" (click)="togglePromotion()">
+    დაწინააურებაზე გადართვა
   </button>
-  <button mat-button color="accent" title="Refill Stock" (click)="toggleRestock = !toggleRestock">
-    Refill Stock
+  <button mat-button color="accent" title="საქონლის შევსება" (click)="toggleRestock = !toggleRestock">
+    საქონლის შევსება
   </button>
-  <button mat-button title="Set Sale" (click)="toggleSale = !toggleSale">
-    Set Sale
+  <button mat-button title="ფასდაკლების დამატება" (click)="toggleSale = !toggleSale">
+    ფასდაკლების დამატება
   </button>
-  <button mat-button color="warn" title="Delete">
-    Delete
+  <button mat-button color="warn" title="წაშლა">
+    წაშლა
   </button>
 </div>
 
@@ -21,13 +21,13 @@
   <div class="form-container">
     <form class="inline-form" *ngIf="toggleSale" (submit)="onSaleSubmit(f)" #f="ngForm">
       <mat-form-field>
-        <input matInput placeholder="Sale %" [ngModel]="sale" name="sale" type="number">
+        <input matInput placeholder="ფასდაკლება %" [ngModel]="sale" name="sale" type="number">
       </mat-form-field>
       <button type="submit" color="primary" mat-button>შენახვა</button>
     </form>
     <form class="inline-form" *ngIf="toggleRestock" (submit)="onRestockSubmit(f)" #f="ngForm">
       <mat-form-field>
-        <input matInput placeholder="Quantity" [ngModel]="quantity" name="quantity" type="number">
+        <input matInput placeholder="რაოდენობა" [ngModel]="quantity" name="quantity" type="number">
       </mat-form-field>
       <button type="submit" color="primary" mat-button>შენახვა</button>
     </form>
@@ -72,34 +72,34 @@
 
       <!-- Title Column -->
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <th mat-header-cell *matHeaderCellDef>სახელი</th>
         <td mat-cell *matCellDef="let row">{{row.name}}</td>
       </ng-container>
 
       <!-- State Column -->
       <ng-container matColumnDef="price">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ფასი</th>
         <td mat-cell *matCellDef="let row">{{row.price}}</td>
       </ng-container>
 
       <!-- Created Column -->
       <ng-container matColumnDef="sale">
         <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
-          Sale
+          ფასდაკლება
         </th>
         <td mat-cell *matCellDef="let row">{{row.sale}}&nbsp;%</td>
       </ng-container>
 
       <ng-container matColumnDef="quantity">
         <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
-          Quantity
+          რაოდენობა
         </th>
         <td mat-cell *matCellDef="let row">{{row.quantity}}</td>
       </ng-container>
 
       <ng-container matColumnDef="promoted">
         <th mat-header-cell *matHeaderCellDef>
-          Promoted
+          დაწინაურებული
         </th>
         <td mat-cell *matCellDef="let row">
           <mat-slide-toggle

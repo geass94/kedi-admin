@@ -1,3 +1,5 @@
+import {Bundle} from "./bundle";
+
 export class Product {
   id: number;
   name: string;
@@ -15,7 +17,5 @@ export class Product {
   productVariantId: number;
   productVariantIds: number[];
   promoted: boolean;
-  bundle: Product[];
-  bundlePrice: number;
-  bundleSale: number;
+  bundle: Bundle;
 }

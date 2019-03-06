@@ -60,6 +60,7 @@ export class AddProductComponent implements OnInit {
     this.basicInfoForm = new FormGroup({
       'name': new FormControl(null, Validators.required),
       'price': new FormControl(null, Validators.required),
+      'quantity': new FormControl(null, Validators.required),
       'description': new FormControl(null, Validators.required),
       'color': new FormControl(null, Validators.required),
       'manufacturer': new FormControl(null, Validators.required),
@@ -109,11 +110,11 @@ export class AddProductComponent implements OnInit {
   }
 
   createNewVariant() {
-    this.stepper.reset();
+    // this.stepper.reset();
     this.basicInfoForm.get("name").setValue(this.variant.name);
     this.basicInfoForm.get("price").setValue(this.variant.price);
+    this.basicInfoForm.get("quantity").setValue(this.variant.quantity);
     this.basicInfoForm.get("description").setValue(this.variant.description);
-    this.basicInfoForm.get("categoryList").setValue(this.variant.categoryList);
     this.basicInfoForm.get("color").setValue(this.variant.color);
     this.basicInfoForm.get("manufacturer").setValue(this.variant.manufacturer);
     this.basicInfoForm.get("sex").setValue(this.variant.sex);

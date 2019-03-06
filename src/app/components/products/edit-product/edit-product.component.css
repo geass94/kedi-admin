@@ -55,3 +55,23 @@
   top: 10px;
   right: 10px;
 }
+
+
+.active {
+  border: 1px solid red;
+}
+
+
+.horizontal-list{
+  display: inline-flex;
+}
+
+.example-card {
+  max-width: 400px;
+  flex: 1 1 25%;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}

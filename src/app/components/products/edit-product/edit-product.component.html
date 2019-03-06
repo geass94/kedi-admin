@@ -10,6 +10,14 @@
     </mat-form-field>
 
     <mat-form-field>
+      <input matInput placeholder="პროდუქტის რაოდენობა" name="quantity" formControlName="quantity" type="number">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="ფასდაკლება" name="sale" formControlName="sale" type="number">
+    </mat-form-field>
+
+    <mat-form-field>
       <textarea matInput placeholder="პროდუქტის აღწერა" formControlName="description"></textarea>
     </mat-form-field>
 
@@ -79,7 +87,20 @@
       <button mat-button type="submit" color="primary">შენახვა</button>
     </div>
   </form>
-
+</section>
+  <p>Edit product variants</p>
+<section style="display: flex;">
+  <mat-card class="example-card" *ngFor="let variant of variants | async" [ngClass]="{'active': variant.id === product.id}">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>{{variant.name}}</mat-card-title>
+      <mat-card-subtitle>{{variant.color.name}}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image src="{{variant.productFiles[0].fileUrl}}" alt="{{variant.name}}">
+    <mat-card-actions>
+      <a mat-button routerLink="/products/{{variant.id}}">Edit</a>
+    </mat-card-actions>
+  </mat-card>
 </section>
   <mat-accordion>
     <mat-expansion-panel>
@@ -106,4 +127,22 @@
       </div>
     </mat-expansion-panel>
   </mat-accordion>
+  <br>
+  <section class="form-container">
+    <p>Create Bundle</p>
+    <form #f="ngForm" (submit)="createBundle(f)">
+      <mat-form-field>
+        <input matInput placeholder="Bundle Price" name="price" [ngModel]="price" type="number">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Bundle Sale" name="sale" [ngModel]="sale" type="number">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select multiple placeholder="Select products to bundle with" [ngModel]="products" name="products">
+          <mat-option *ngFor="let p of productsForBundling" [value]="p" [disabled]="p.id === product.id">{{p.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-raised-button type="submit">Create Bundle</button>
+    </form>
+  </section>
 </div>

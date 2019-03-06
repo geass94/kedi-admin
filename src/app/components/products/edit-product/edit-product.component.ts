@@ -6,12 +6,13 @@ import {ProductService} from "../../../services/product.service";
 import {Color} from "../../../models/color";
 import {Category} from "../../../models/category";
 import {Manufacturer} from "../../../models/manufacturer";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
 import {FileUploadComponent} from "../../../file-upload/file-upload.component";
 import {SpecificationsService} from "../../../services/specifications.service";
 import {deserialize, serialize} from "serializer.ts/Serializer";
 import {NestedTreeControl} from "@angular/cdk/tree";
 import {MatTreeNestedDataSource} from "@angular/material";
+import {Bundle} from "../../../models/bundle";
 
 @Component({
   selector: 'app-edit-product',
@@ -28,6 +29,8 @@ export class EditProductComponent implements OnInit, AfterViewInit {
   categories: Category[];
   manufacturers: Observable<Manufacturer[]>;
   basicInfoForm: FormGroup;
+  productsForBundling: Product[] = [];
+  private id: string;
   private selectedCategories;
   @ViewChildren('FileUploadComponent')
   fileUploadComponent: FileUploadComponent;
@@ -46,24 +49,32 @@ export class EditProductComponent implements OnInit, AfterViewInit {
     this.colors = this.specService.getColors();
     this.manufacturers = this.specService.getManufacturers();
 
-    const id = +this.route.snapshot.paramMap.get('id');
-    this.productService.getProduct(id).subscribe((res) => {
-        this.product = res;
-      },
-      (error) => {
+    this.productService.getProductsForBundling().subscribe(res => {
+      this.productsForBundling = res;
+    });
 
-      },
-      () => {
-        this.selectedCategories = this.product.categoryList;
-        this.loadVariants();
-        this.initForm();
-      }
-    );
+    this.route.paramMap.subscribe(params => {
+      this.id = params.get('id');
+      this.productService.getProduct(this.id).subscribe((res) => {
+          this.product = res;
+        },
+        (error) => {
+
+        },
+        () => {
+          this.selectedCategories = this.product.categoryList;
+          this.loadVariants();
+          this.initForm();
+        }
+      );
+    });
+
+
   }
 
   hasChild = (_: number, node: Category) => !!node.children && node.children.length > 0;
 
-  inProductCategories(node: Category): boolean {
+  private inProductCategories(node: Category): boolean {
     if (this.product.categoryList.filter(c => c.id === node.id).length) {
       return true;
     }
@@ -83,7 +94,7 @@ export class EditProductComponent implements OnInit, AfterViewInit {
     return c1 && c2 ? c1.id === c2.id : c1 === c2;
   }
 
-  loadVariants() {
+  private loadVariants() {
     this.variants = this.productService.getProductVariants(this.product.productVariantIds);
   }
 
@@ -107,10 +118,14 @@ export class EditProductComponent implements OnInit, AfterViewInit {
   }
 
   deleteFile(file) {
-    console.log(file);
+    this.productService.deleteFile(file.id).subscribe(res => {
+      if (res) {
+        this.product.productFiles.splice(this.product.productFiles.indexOf(file), 1);
+      }
+    });
   }
 
-  initForm() {
+  private initForm() {
     this.basicInfoForm = new FormGroup({
       'name': new FormControl(this.product.name, Validators.required),
       'price': new FormControl(this.product.price, Validators.required),
@@ -119,7 +134,17 @@ export class EditProductComponent implements OnInit, AfterViewInit {
       'color': new FormControl(this.product.color, Validators.required),
       'manufacturer': new FormControl(this.product.manufacturer, Validators.required),
       'sex': new FormControl(this.product.sex, Validators.required),
-      'size': new FormControl(this.product.size, Validators.required)
+      'size': new FormControl(this.product.size, Validators.required),
+      'quantity': new FormControl(this.product.quantity, Validators.required),
+      'sale': new FormControl(this.product.sale, Validators.required),
+    });
+  }
+
+  createBundle(f: NgForm) {
+    let bundle: Bundle = serialize<Bundle>(f.value);
+    bundle.parent = this.product;
+    this.productService.addBundle(bundle).subscribe(res => {
+      console.log(res);
     });
   }
 

@@ -10,6 +10,7 @@ import {Manufacturer} from "../models/manufacturer";
 import {Color} from "../models/color";
 import {RequestOptions} from "@angular/http";
 import {ProductPage} from "../components/products/products.component";
+import {Bundle} from "../models/bundle";
 
 
 @Injectable({
@@ -25,6 +26,20 @@ export class ProductService {
     params = params.append('order', order);
     params = params.append('page', page.toString());
     return this.http.get<ProductPage>(`${environment.apiUrl}/product/get-products`, {params: params});
+  }
+
+  getProductsForBundling() {
+    return this.http.get<ProductPage>(`${environment.apiUrl}/product/get-products-for-bundling`)
+      .pipe(map((res: any) => deserialize<Product[]>(Product, res)));
+  }
+
+  addBundle(bundle: Bundle) {
+    return this.http.post(`${environment.apiUrl}/product/add-bundle`, serialize(bundle))
+      .pipe(map((res: any) => deserialize<Product>(Product, res)));
+  }
+
+  getBundles() {
+
   }
 
   getCategories() {
@@ -67,5 +82,9 @@ export class ProductService {
   refillStock(product: Product[], qty: number) {
     return this.http.post(`${environment.apiUrl}/product/refill-stock`, { products: serialize(product), quantity: qty } )
       .pipe(map((res: any) => deserialize<Product[]>(Product, res)));
+  }
+
+  deleteFile(fileId: number) {
+    return this.http.delete(`${environment.apiUrl}/product/delete-file/${fileId}`)
   }
 }
