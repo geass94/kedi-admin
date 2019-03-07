@@ -35,42 +35,42 @@ export class SpecificationsService {
   }
 
   addCategory(category: Category) {
-    return this.http.post(`${environment.apiUrl}/specification/add-category`, category)
+    return this.http.post(`${environment.apiUrl}/admin/specification/add-category`, category)
       .pipe(map((res: any) => deserialize<Category>(Category, res)));
   }
 
   saveCategory(category: Category, id: number): void {
-    this.http.put(`${environment.apiUrl}/specification/save-category/${id}`, category).subscribe();
+    this.http.put(`${environment.apiUrl}/admin/specification/save-category/${id}`, category).subscribe();
   }
 
   deleteCategory(id: number) {
-    return this.http.delete(`${environment.apiUrl}/specification/delete-category/${id}`);
+    return this.http.delete(`${environment.apiUrl}/admin/specification/delete-category/${id}`);
   }
 
   addColor(color: Color) {
-    return this.http.post(`${environment.apiUrl}/specification/add-color`, color)
+    return this.http.post(`${environment.apiUrl}/admin/specification/add-color`, color)
       .pipe(map((res: any) => deserialize<Color>(Color, res)));
   }
 
   saveColor(color: Color, id: number): void {
-    this.http.put(`${environment.apiUrl}/specification/save-color/${id}`, color).subscribe();
+    this.http.put(`${environment.apiUrl}/admin/specification/save-color/${id}`, color).subscribe();
   }
 
   deleteColor(id: number) {
-    return this.http.delete(`${environment.apiUrl}/specification/delete-color/${id}`);
+    return this.http.delete(`${environment.apiUrl}/admin/specification/delete-color/${id}`);
   }
 
   addManufacturer(color: Color) {
-    return this.http.post(`${environment.apiUrl}/specification/add-manufacturer`, color)
+    return this.http.post(`${environment.apiUrl}/admin/specification/add-manufacturer`, color)
       .pipe(map((res: any) => deserialize<Color>(Color, res)));
   }
 
   saveManufacturer(color: Color, id: number): void {
-    this.http.put(`${environment.apiUrl}/specification/save-manufacturer/${id}`, color).subscribe();
+    this.http.put(`${environment.apiUrl}/admin/specification/save-manufacturer/${id}`, color).subscribe();
   }
 
   deleteManufacturer(id: number) {
-    return this.http.delete(`${environment.apiUrl}/specification/delete-manufacturer/${id}`);
+    return this.http.delete(`${environment.apiUrl}/admin/specification/delete-manufacturer/${id}`);
   }
 
 }

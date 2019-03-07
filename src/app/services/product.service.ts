@@ -29,12 +29,12 @@ export class ProductService {
   }
 
   getProductsForBundling() {
-    return this.http.get<ProductPage>(`${environment.apiUrl}/product/get-products-for-bundling`)
+    return this.http.get<ProductPage>(`${environment.apiUrl}/admin/product/get-products-for-bundling`)
       .pipe(map((res: any) => deserialize<Product[]>(Product, res)));
   }
 
   addBundle(bundle: Bundle) {
-    return this.http.post(`${environment.apiUrl}/product/add-bundle`, serialize(bundle))
+    return this.http.post(`${environment.apiUrl}/admin/product/add-bundle`, serialize(bundle))
       .pipe(map((res: any) => deserialize<Product>(Product, res)));
   }
 
@@ -60,31 +60,31 @@ export class ProductService {
   }
 
   addProduct(product: Product): Observable<Product> {
-    return this.http.post(`${environment.apiUrl}/product/add-product`, serialize(product))
+    return this.http.post(`${environment.apiUrl}/admin/product/add-product`, serialize(product))
       .pipe(map((res: any) => deserialize<Product>(Product, res)));
   }
 
   saveProduct(product: Product, id: number) {
-    return this.http.put(`${environment.apiUrl}/product/save-product/${id}`, serialize(product))
+    return this.http.put(`${environment.apiUrl}/admin/product/save-product/${id}`, serialize(product))
       .pipe(map((res: any) => deserialize<Product>(Product, res)));
   }
 
   togglePromotion(product: Product[]) {
-    return this.http.post(`${environment.apiUrl}/product/toggle-promotion`, serialize(product))
+    return this.http.post(`${environment.apiUrl}/admin/product/toggle-promotion`, serialize(product))
       .pipe(map((res: any) => deserialize<Product[]>(Product, res)));
   }
 
   setSale(product: Product[], sale: number) {
-    return this.http.post(`${environment.apiUrl}/product/set-sale`, { products: serialize(product), sale: sale } )
+    return this.http.post(`${environment.apiUrl}/admin/product/set-sale`, { products: serialize(product), sale: sale } )
       .pipe(map((res: any) => deserialize<Product[]>(Product, res)));
   }
 
   refillStock(product: Product[], qty: number) {
-    return this.http.post(`${environment.apiUrl}/product/refill-stock`, { products: serialize(product), quantity: qty } )
+    return this.http.post(`${environment.apiUrl}/admin/product/refill-stock`, { products: serialize(product), quantity: qty } )
       .pipe(map((res: any) => deserialize<Product[]>(Product, res)));
   }
 
   deleteFile(fileId: number) {
-    return this.http.delete(`${environment.apiUrl}/product/delete-file/${fileId}`)
+    return this.http.delete(`${environment.apiUrl}/admin/product/delete-file/${fileId}`);
   }
 }
