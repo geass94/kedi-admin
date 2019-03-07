@@ -4,8 +4,9 @@ import {RouterModule} from "@angular/router";
 import {ComponentsRoutes} from "./components.routing";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {
-  MatAutocompleteModule,
-  MatButtonModule, MatCardModule, MatCheckboxModule, MatDialogModule, MatExpansionModule, MatFormFieldModule,
+  MatAutocompleteModule, MatBadgeModule,
+  MatButtonModule, MatCardModule, MatCheckboxModule, MatChipsModule, MatDialogModule, MatExpansionModule,
+  MatFormFieldModule,
   MatGridListModule,
   MatIconModule,
   MatInputModule, MatListModule, MatPaginatorModule,
@@ -66,7 +67,9 @@ import { PagesComponent } from './pages/pages.component';
     MatSortModule,
     MatProgressSpinnerModule,
     MatDialogModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatChipsModule,
+    MatBadgeModule
   ]
 })
 export class ComponentsModule { }

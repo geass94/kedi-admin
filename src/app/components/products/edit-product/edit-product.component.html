@@ -128,6 +128,16 @@
     </mat-expansion-panel>
   </mat-accordion>
   <br>
+  <div *ngIf="product.bundle != null" class="form-container">
+    <p>Buy together at {{product.bundle.price}} with {{product.bundle.sale}}% OFF</p>
+    <mat-chip-list>
+      <mat-chip color="primary" selected>{{product.name}}</mat-chip>
+      <div *ngFor="let b of product.bundle.products">
+        &nbsp;+&nbsp;<mat-chip color="accent" selected>{{b.name}}</mat-chip>
+      </div>
+    </mat-chip-list>
+  </div>
+  <br>
   <section class="form-container">
     <p>Create Bundle</p>
     <form #f="ngForm" (submit)="createBundle(f)">

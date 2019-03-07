@@ -144,7 +144,7 @@ export class EditProductComponent implements OnInit, AfterViewInit {
     let bundle: Bundle = serialize<Bundle>(f.value);
     bundle.parent = this.product;
     this.productService.addBundle(bundle).subscribe(res => {
-      console.log(res);
+      this.product = res;
     });
   }
 
