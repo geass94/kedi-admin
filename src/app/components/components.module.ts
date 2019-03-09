@@ -25,6 +25,9 @@ import { CategoriesComponent } from './categories/categories.component';
 import { ManufacturersComponent } from './manufacturers/manufacturers.component';
 import { ColorsComponent } from './colors/colors.component';
 import { PagesComponent } from './pages/pages.component';
+import { AddPageComponent } from './pages/add-page/add-page.component';
+import { EditPageComponent } from './pages/edit-page/edit-page.component';
+import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 
 @NgModule({
   declarations: [
@@ -37,7 +40,9 @@ import { PagesComponent } from './pages/pages.component';
     CategoriesComponent,
     ManufacturersComponent,
     ColorsComponent,
-    PagesComponent
+    PagesComponent,
+    AddPageComponent,
+    EditPageComponent
   ],
   imports: [
     RouterModule.forChild(ComponentsRoutes),
@@ -69,7 +74,8 @@ import { PagesComponent } from './pages/pages.component';
     MatDialogModule,
     MatSlideToggleModule,
     MatChipsModule,
-    MatBadgeModule
+    MatBadgeModule,
+    CKEditorModule
   ]
 })
 export class ComponentsModule { }

@@ -13,6 +13,7 @@ const MENUITEMS = [
   { state: 'categories', type: 'link', name: 'Categories', icon: 'category' },
   { state: 'products', type: 'link', name: 'Products', icon: 'receipt' },
   { state: 'manufacturers', type: 'link', name: 'Manufacturers', icon: 'new_releases' },
+  { state: 'pages', type: 'link', name: 'Pages', icon: 'pages' },
   { state: 'colors', type: 'link', name: 'Colors', icon: 'palette' },
   { state: 'countries', type: 'link', name: 'Country', icon: 'account_balance' },
   { state: 'states', type: 'link', name: 'State', icon: 'add_location' },

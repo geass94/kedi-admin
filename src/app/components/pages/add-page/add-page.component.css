@@ -1,0 +1,15 @@
+.form-container{
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 3px;
+  margin-bottom: 10px;
+}
+
+
+.ck-content{
+  background-color: #fff;
+}
+
+.ck.ck-editor__editable_inline {
+  border: 1px #c4c4c4 solid;
+}
