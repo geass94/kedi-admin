@@ -133,7 +133,6 @@ export class EditProductComponent implements OnInit, AfterViewInit {
       'categoryList': new FormControl(this.product.categoryList, Validators.required),
       'color': new FormControl(this.product.color, Validators.required),
       'manufacturer': new FormControl(this.product.manufacturer, Validators.required),
-      'sex': new FormControl(this.product.sex, Validators.required),
       'size': new FormControl(this.product.size, Validators.required),
       'quantity': new FormControl(this.product.quantity, Validators.required),
       'sale': new FormControl(this.product.sale, Validators.required),

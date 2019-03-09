@@ -64,7 +64,6 @@ export class AddProductComponent implements OnInit {
       'description': new FormControl(null, Validators.required),
       'color': new FormControl(null, Validators.required),
       'manufacturer': new FormControl(null, Validators.required),
-      'sex': new FormControl(null, Validators.required),
       'size': new FormControl(null, Validators.required)
     });
   }
@@ -117,7 +116,6 @@ export class AddProductComponent implements OnInit {
     this.basicInfoForm.get("description").setValue(this.variant.description);
     this.basicInfoForm.get("color").setValue(this.variant.color);
     this.basicInfoForm.get("manufacturer").setValue(this.variant.manufacturer);
-    this.basicInfoForm.get("sex").setValue(this.variant.sex);
     this.basicInfoForm.get("size").setValue(this.variant.size);
     this.fileUploadComponent.resetUploader();
   }
