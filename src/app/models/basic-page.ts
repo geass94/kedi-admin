@@ -4,3 +4,8 @@ export class BasicPage {
   alias: string;
   body: string;
 }
+
+export interface BasicPagePage {
+  content: BasicPage[];
+  numberOfElements: number;
+}

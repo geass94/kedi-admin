@@ -1,0 +1,75 @@
+.row {
+  display: block;
+  padding: 10px;
+}
+
+/* Structure */
+.example-container {
+  position: relative;
+  min-height: 200px;
+}
+
+.example-table-container {
+  position: relative;
+  max-height: 400px;
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+}
+
+.example-loading-shade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 56px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.example-rate-limit-reached {
+  color: #980000;
+  max-width: 360px;
+  text-align: center;
+}
+
+/* Column Widths */
+.mat-column-number,
+.mat-column-state {
+  max-width: 64px;
+}
+
+.mat-column-created {
+  max-width: 124px;
+}
+
+.mat-column-select {
+  overflow: initial;
+}
+
+.inline-form {
+  width: 100%;
+  display: inline-block;
+}
+.inline-form mat-form-field {
+  width: 80%;
+}
+
+
+.inline-form .button-groups {
+  width: 20%;
+  padding-left: 30px;
+  display: inline;
+}
+
+.form-container{
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 3px;
+  margin-bottom: 10px;
+}

@@ -6,7 +6,6 @@ import {Product} from "../../models/product";
 import {ProductService} from "../../services/product.service";
 import {SelectionModel} from "@angular/cdk/collections";
 import {NgForm} from "@angular/forms";
-import {deserialize} from "serializer.ts/Serializer";
 
 @Component({
   selector: 'app-product',
