@@ -96,7 +96,7 @@
       <mat-card-title>{{variant.name}}</mat-card-title>
       <mat-card-subtitle>{{variant.color.name}}</mat-card-subtitle>
     </mat-card-header>
-    <img mat-card-image src="{{variant.productFiles[0].fileUrl}}" alt="{{variant.name}}">
+    <img *ngIf="variant.productFiles.length" mat-card-image src="{{variant.productFiles[0].fileUrl}}" alt="{{variant.name}}">
     <mat-card-actions>
       <a mat-button routerLink="/products/{{variant.id}}">Edit</a>
     </mat-card-actions>
