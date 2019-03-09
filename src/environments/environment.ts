@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://api.kedi.ge'
+  apiUrl: 'http://api.kedi.ge:5800'
 };
 
 /*
