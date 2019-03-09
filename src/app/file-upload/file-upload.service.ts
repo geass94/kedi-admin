@@ -16,6 +16,6 @@ export class FileUploadService {
         Accept: 'application/json'
       })
     };
-    return this.http.post<any>(`${environment.apiUrl}/product/add-product-file`, data, httpOptions);
+    return this.http.post<any>(`${environment.apiUrl}/admin/product/add-product-file`, data, httpOptions);
   }
 }
