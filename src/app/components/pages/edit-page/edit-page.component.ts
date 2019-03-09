@@ -35,7 +35,7 @@ export class EditPageComponent implements OnInit {
       this.alias = params.get('alias');
       this.basicPageService.getPage(this.alias).subscribe(
         (res) => {
-          let page = deserialize(BasicPage, res);
+          let page = deserialize<BasicPage>(BasicPage, res);
           this.mapModel(page);
         },
         (error) => {
@@ -51,7 +51,7 @@ export class EditPageComponent implements OnInit {
   onSubmit(f: NgForm) {
     let page: BasicPage = deserialize(BasicPage, f.value);
     this.basicPageService.savePage(page, page.id).subscribe(res => {
-      let data = deserialize(BasicPage, res);
+      let data = deserialize<BasicPage>(BasicPage, res);
       this.mapModel(data);
     });
   }
