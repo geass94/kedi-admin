@@ -19,6 +19,8 @@ export class FileUploadComponent implements OnInit {
   formDataKey: string;
   @Input()
   formDataValue: any;
+  @Input()
+  formActionUrl: string;
   mode = 'determinate';
   value = 0;
   uploadFinished = false;
@@ -64,7 +66,7 @@ export class FileUploadComponent implements OnInit {
       fd.append('files', singleFile, singleFile.name);
     }
     fd.append(this.formDataKey, this.formDataValue);
-    this.fileUploadService.uploadFile(fd).subscribe((res) => {
+    this.fileUploadService.uploadFile(fd, this.formActionUrl).subscribe((res) => {
         this.response = res;
       },
       (error) => {

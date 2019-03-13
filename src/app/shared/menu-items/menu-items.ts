@@ -15,8 +15,7 @@ const MENUITEMS = [
   { state: 'manufacturers', type: 'link', name: 'Manufacturers', icon: 'new_releases' },
   { state: 'pages', type: 'link', name: 'Pages', icon: 'pages' },
   { state: 'colors', type: 'link', name: 'Colors', icon: 'palette' },
-  { state: 'countries', type: 'link', name: 'Country', icon: 'account_balance' },
-  { state: 'states', type: 'link', name: 'State', icon: 'add_location' },
+  { state: 'carousel', type: 'link', name: 'Carousel', icon: 'slideshow' },
   { state: 'settings', type: 'link', name: 'Settings', icon: 'settings' },
 ];
 

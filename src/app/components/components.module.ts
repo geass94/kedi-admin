@@ -28,6 +28,9 @@ import { PagesComponent } from './pages/pages.component';
 import { AddPageComponent } from './pages/add-page/add-page.component';
 import { EditPageComponent } from './pages/edit-page/edit-page.component';
 import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
+import { CarouselComponent } from './carousel/carousel.component';
+import { AddCarouselComponent } from './carousel/add-carousel/add-carousel.component';
+import { EditCarouselComponent } from './carousel/edit-carousel/edit-carousel.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +45,10 @@ import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
     ColorsComponent,
     PagesComponent,
     AddPageComponent,
-    EditPageComponent
+    EditPageComponent,
+    CarouselComponent,
+    AddCarouselComponent,
+    EditCarouselComponent
   ],
   imports: [
     RouterModule.forChild(ComponentsRoutes),

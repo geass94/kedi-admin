@@ -10,12 +10,12 @@ export class FileUploadService {
 
   constructor(private http: HttpClient) { }
 
-  uploadFile(data: FormData): Observable<any> {
+  uploadFile(data: FormData, url: string): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         Accept: 'application/json'
       })
     };
-    return this.http.post<any>(`${environment.apiUrl}/admin/product/add-product-file`, data, httpOptions);
+    return this.http.post<any>(`${environment.apiUrl}/${url}`, data, httpOptions);
   }
 }

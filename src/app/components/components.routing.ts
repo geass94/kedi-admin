@@ -10,6 +10,9 @@ import {ColorsComponent} from "./colors/colors.component";
 import {PagesComponent} from "./pages/pages.component";
 import {AddPageComponent} from "./pages/add-page/add-page.component";
 import {EditPageComponent} from "./pages/edit-page/edit-page.component";
+import {CarouselComponent} from "./carousel/carousel.component";
+import {AddCarouselComponent} from "./carousel/add-carousel/add-carousel.component";
+import {EditCarouselComponent} from "./carousel/edit-carousel/edit-carousel.component";
 
 export const ComponentsRoutes: Routes = [
   {
@@ -55,5 +58,17 @@ export const ComponentsRoutes: Routes = [
   {
     path: 'pages/:alias',
     component: EditPageComponent
+  },
+  {
+    path: 'carousel',
+    component: CarouselComponent
+  },
+  {
+    path: 'carousel/add',
+    component: AddCarouselComponent
+  },
+  {
+    path: 'carousel/:id',
+    component: EditCarouselComponent
   }
 ];

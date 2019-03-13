@@ -104,6 +104,7 @@ export class AddProductComponent implements OnInit {
         this.stepOneCompleted = true;
         this.fileUploadComponent.formDataKey = "product-id";
         this.fileUploadComponent.formDataValue = this.variant.id;
+        this.fileUploadComponent.formActionUrl = "admin/product/add-product-file";
       });
     }
   }
