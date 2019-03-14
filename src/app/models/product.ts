@@ -1,4 +1,5 @@
 import {Bundle} from "./bundle";
+import {ProductFile} from "./product-file";
 
 export class Product {
   id: number;
@@ -12,7 +13,7 @@ export class Product {
   color: { id: number, name: string };
   manufacturer: { id: number, name: string };
   categoryList: [{ id: number, name: string }];
-  productFiles: [ { id: number, name: string, fileType: string, fileUrl: string } ];
+  productFiles: ProductFile[];
   baseProduct: boolean;
   productVariantId: number;
   productVariantIds: number[];

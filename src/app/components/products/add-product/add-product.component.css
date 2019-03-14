@@ -42,3 +42,21 @@
   max-height: 300px;
   overflow-y: scroll;
 }
+
+
+table.result-table {
+  width: 100%;
+  text-align: left;
+}
+
+table.result-table td {
+  width: 50%;
+}
+
+table.result-table td img {
+  max-width: 130px;
+  -o-object-fit: cover;
+  object-fit: cover;
+  padding: 5px;
+  vertical-align: top;
+}

@@ -14,6 +14,7 @@ import {Manufacturer} from "../../../models/manufacturer";
 import {ProductService} from "../../../services/product.service";
 import {SpecificationsService} from "../../../services/specifications.service";
 import {NestedTreeControl} from "@angular/cdk/tree";
+import {ProductFile} from "../../../models/product-file";
 
 @Component({
   selector: 'app-add-product',
@@ -31,8 +32,9 @@ export class AddProductComponent implements OnInit {
   treeControl = new NestedTreeControl<Category>(node => node.children);
   dataSource = new MatTreeNestedDataSource<Category>();
   basicInfoForm: FormGroup;
-  private selectedCategories;
+  selectedCategories;
   variant: Product = new Product;
+  files: ProductFile[] = [];
 
   stepOneCompleted = false;
   stepTwoCompleted = false;
@@ -90,6 +92,11 @@ export class AddProductComponent implements OnInit {
     return c1 && c2 ? c1.id === c2.id : c1 === c2;
   }
 
+  uploadFinished(res) {
+    this.stepTwoCompleted = true;
+    this.files = deserialize<ProductFile[]>(ProductFile, res);
+  }
+
   onSubmit() {
     const form = this.basicInfoForm;
     if (form.valid) {
@@ -105,12 +112,13 @@ export class AddProductComponent implements OnInit {
         this.fileUploadComponent.formDataKey = "product-id";
         this.fileUploadComponent.formDataValue = this.variant.id;
         this.fileUploadComponent.formActionUrl = "admin/product/add-product-file";
+        this.stepper.next();
       });
     }
   }
 
   createNewVariant() {
-    // this.stepper.reset();
+    this.stepper.reset();
     this.basicInfoForm.get("name").setValue(this.variant.name);
     this.basicInfoForm.get("price").setValue(this.variant.price);
     this.basicInfoForm.get("quantity").setValue(this.variant.quantity);

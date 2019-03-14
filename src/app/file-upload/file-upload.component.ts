@@ -41,6 +41,7 @@ export class FileUploadComponent implements OnInit {
     this.selectedFiles = [];
     this.formDataKey = '';
     this.formDataValue = null;
+    this.formActionUrl = '';
     this.mode = 'determinate';
     this.value = 0;
     this.uploadFinished = false;

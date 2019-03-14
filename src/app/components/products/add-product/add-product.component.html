@@ -75,25 +75,62 @@
         </mat-select>
       </mat-form-field>
       <div>
-        <button mat-button matStepperNext type="submit">შემდეგი ნაბიჯი</button>
+        <button mat-raised-button color="primary" type="submit">შემდეგი ნაბიჯი</button>
       </div>
     </form>
   </mat-step>
-  <mat-step [stepControl]="fileUploadComponent.fileUploadForm" errorMessage="At least one image is required.">
+  <mat-step [stepControl]="stepOneCompleted" errorMessage="At least one image is required.">
     <ng-template matStepLabel>დაამატეთ სურათები</ng-template>
     <p *ngIf="stepOneCompleted">ატვირთეთ სურათები წინა ნაბიჯზე არჩეული <u>{{variant.color.name}}</u> ფერისთვის!</p>
-    <app-file-upload (fileUploaderCallback)="createNewVariant()"></app-file-upload>
+    <app-file-upload (fileUploaderCallback)="uploadFinished($event)"></app-file-upload>
+    <br/>
     <div>
-      <button mat-button matStepperPrevious>უკან</button>
-      <button mat-button matStepperNext [disabled]="!fileUploadComponent.fileUploadForm.valid">შემდეგი ნაბიჯი</button>
+      <button mat-raised-button color="primary" matStepperNext [disabled]="!stepTwoCompleted">შემდეგი ნაბიჯი</button>
     </div>
   </mat-step>
-  <mat-step>
+  <mat-step [stepControl]="stepTwoCompleted">
     <ng-template matStepLabel>დაამატეთ პროდუქტის ნაირსახეობა ან დაასრულეთ ოპერაცია</ng-template>
-    მორჩა!
+    <table class="result-table" *ngIf="stepOneCompleted">
+      <thead><th>Field</th><th>Value</th></thead>
+      <tbody>
+      <tr>
+        <td>Name</td>
+        <td>{{variant.name}}</td>
+      </tr>
+      <tr>
+        <td>Price</td>
+        <td>{{variant.price}}</td>
+      </tr>
+      <tr>
+        <td>Quantity</td>
+        <td>{{variant.quantity}}</td>
+      </tr>
+      <tr>
+        <td>Description</td>
+        <td>{{variant.description}}</td>
+      </tr>
+      <tr *ngIf="selectedCategories.length > 0">
+        <td>Categories</td>
+        <td><span *ngFor="let cat of selectedCategories">{{cat.name}} / </span></td>
+      </tr>
+      <tr>
+        <td>Color</td>
+        <td>{{variant.color.name}}</td>
+      </tr>
+      <tr>
+        <td>Size</td>
+        <td>{{variant.size.name}}</td>
+      </tr>
+      <tr *ngIf="files.length > 0">
+        <td>Images</td>
+        <td><img *ngFor="let file of files" src="{{file.fileUrl}}" alt="{{variant.name}}"></td>
+      </tr>
+      </tbody>
+    </table>
+    <br/>
     <div>
-      <button mat-button (click)="createNewVariant()">ნაირსახეობის დამატება</button>
-      <button mat-button (click)="stepper.reset()">დასრულება</button>
+      <button mat-raised-button color="primary" (click)="createNewVariant()">ნაირსახეობის დამატება</button>
+      <button mat-raised-button color="accent" (click)="stepper.reset()">დასრულება</button>
     </div>
   </mat-step>
 </mat-horizontal-stepper>
