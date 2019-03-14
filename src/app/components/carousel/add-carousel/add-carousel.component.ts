@@ -48,7 +48,17 @@ export class AddCarouselComponent implements OnInit {
   }
 
   addCaptions() {
-    console.log(this.files);
+    this.carouselService.addCaptions(this.files).subscribe(
+      res => {
+        this.files = deserialize<CarouselFile[]>(CarouselFile, res);
+      },
+      err => {
+
+      },
+      () => {
+        this.stepper.reset();
+      }
+    );
   }
 
   onSubmit() {
