@@ -1,0 +1,15 @@
+.row{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.example-card {
+  max-width: 400px;
+}
+
+
+.actions{
+  display: block;
+  padding-left: 10px;
+  padding-bottom: 10px;
+}

@@ -1,3 +1,23 @@
-<p>
-  carousel works!
-</p>
+<div class="row">
+  <a mat-raised-button routerLink="/carousel/add">Add new carousel</a>
+</div>
+
+<div *ngIf="carousels.length" class="row">
+  <mat-card *ngFor="let carousel of carousels;" class="example-card">
+    <mat-card-header>
+      <mat-card-title>{{carousel.name}}</mat-card-title>
+      <mat-card-subtitle>{{carousel.area}}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image src="{{carousel.carouselFiles[0].fileUrl}}" alt="{{carousel.name}}">
+    <mat-card-content>
+      <p>{{carousel.carouselFiles[0].caption}}</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <div class="actions">
+        <button mat-raised-button routerLink="/carousel/{{carousel.id}}">Edit</button>
+        <button mat-raised-button color="accent" (click)="switchStatus(carousel)">{{statusButtonLabel(carousel.status)}}</button>
+        <button mat-raised-button color="warn" (click)="deleteCarousel(carousel.id)">Delete</button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</div>

@@ -32,8 +32,8 @@ export class AddCarouselComponent implements OnInit {
     this.basicInfoForm = new FormGroup({
       'name': new FormControl(null, Validators.required),
       'area': new FormControl(null, Validators.required),
-      'width': new FormControl(null, Validators.required),
-      'height': new FormControl(null, Validators.required),
+      'width': new FormControl(null, [Validators.required, Validators.max(100), Validators.min(1)]),
+      'height': new FormControl(null, [Validators.required, Validators.max(720), Validators.min(1)]),
       'sliderEffect': new FormControl(null, Validators.required)
     });
   }

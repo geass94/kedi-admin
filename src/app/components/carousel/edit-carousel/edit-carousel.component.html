@@ -1,3 +1,67 @@
-<p>
-  edit-carousel works!
-</p>
+<div *ngIf="carousel != null" class="row form-container">
+  <form [formGroup]="basicInfoForm" (submit)="onSubmit()">
+    <ng-template matStepLabel>Fill in carousel options</ng-template>
+
+    <mat-form-field>
+      <input matInput placeholder="Slider name" name="name" formControlName="name" type="text">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="Slider area" formControlName="area">
+        <mat-option value="homepage-header">Homepage Header</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field style="width: 50%;">
+      <input matInput placeholder="Slider width in percents" name="width" formControlName="width" min="1" max="100" type="number">
+      <mat-error>
+        Please enter a number between 1 and 100.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field style="width: 50%;">
+      <input matInput placeholder="Slider height in pixels" name="height" formControlName="height" min="1" max="720" type="number">
+      <mat-error>
+        Please enter a number between 1 and 720.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="Slider effect" formControlName="sliderEffect">
+        <mat-option value="fadeIn">FadeIn</mat-option>
+        <mat-option value="fadeOut">FadeOut</mat-option>
+        <mat-option value="slideOut">SlideOut</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br/>
+    <div>
+      <button mat-raised-button color="primary" type="submit">Update carousel data</button>
+    </div>
+  </form>
+  <br/>
+  <app-file-upload [formActionUrl]="'admin/carousel/add-carousel-file'"
+                   [formDataKey]="'carousel-id'"
+                   [formDataValue]="carousel.id"
+                   (fileUploaderCallback)="uploadFinished($event)">
+  </app-file-upload>
+  <br/>
+  <mat-grid-list *ngIf="carousel.carouselFiles.length" cols="3" gutterSize="10px">
+    <mat-grid-tile *ngFor="let file of carousel.carouselFiles" class="grid-item">
+      <img src="{{file.fileUrl}}" alt="{{file.name}}">
+      <button title="Delete File" mat-raised-button color="accent" (click)="deleteFile(file)">
+        <i class="material-icons">
+          remove_circle_outline
+        </i>
+      </button>
+      <div class="slider-inputs">
+        <input type="text" placeholder="Title" name="title" [(ngModel)]="file.title">
+        <input type="text" name="heading" placeholder="Heading" [(ngModel)]="file.heading">
+        <textarea name="caption" [(ngModel)]="file.caption" placeholder="Slider text"></textarea>
+        <input type="text" name="externalURL" placeholder="Link to somewhere else" [(ngModel)]="file.externalURL">
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <br/>
+  <div>
+    <button mat-raised-button color="primary" (click)="addCaptions()">Save images</button>
+  </div>
+</div>

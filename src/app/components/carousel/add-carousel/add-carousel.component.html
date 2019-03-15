@@ -8,19 +8,26 @@
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="Slider area on site" name="area" formControlName="area" type="text">
+        <mat-select placeholder="Slider area" formControlName="area">
+          <mat-option value="homepage-header">Homepage Header</mat-option>
+        </mat-select>
       </mat-form-field>
 
       <mat-form-field style="width: 50%;">
-        <input matInput placeholder="Slider width" name="width" formControlName="width" type="number">
+        <input matInput placeholder="Slider width in percents" name="width" formControlName="width" min="1" max="100" type="number">
+        <mat-error>
+          Please enter a number between 1 and 100.
+        </mat-error>
       </mat-form-field>
       <mat-form-field style="width: 50%;">
-        <input matInput placeholder="Slider height" name="height" formControlName="height" type="number">
+        <input matInput placeholder="Slider height in pixels" name="height" formControlName="height" min="1" max="720" type="number">
+        <mat-error>
+          Please enter a number between 1 and 720.
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field>
         <mat-select placeholder="Slider effect" formControlName="sliderEffect">
-          <mat-option>---</mat-option>
           <mat-option value="fadeIn">FadeIn</mat-option>
           <mat-option value="fadeOut">FadeOut</mat-option>
           <mat-option value="slideOut">SlideOut</mat-option>
@@ -40,7 +47,7 @@
   </mat-step>
   <mat-step [stepControl]="stepTwoCompleted" errorMessage="At least one image is required.">
     <ng-template matStepLabel>Add slider image options</ng-template>
-    <mat-grid-list *ngIf="files.length" cols="4" gutterSize="10px">
+    <mat-grid-list *ngIf="files.length" cols="2" rowHeight="2:1" gutterSize="10px">
       <mat-grid-tile *ngFor="let file of files" class="grid-item">
         <img src="{{file.fileUrl}}" alt="{{file.name}}">
         <button title="Delete File" mat-raised-button color="accent" (click)="deleteFile(file)">
@@ -48,7 +55,12 @@
             remove_circle_outline
           </i>
         </button>
-        <textarea name="caption" [(ngModel)]="file.caption"></textarea>
+        <div class="slider-inputs">
+          <input type="text" placeholder="Title" name="title" [(ngModel)]="file.title">
+          <input type="text" name="heading" placeholder="Heading" [(ngModel)]="file.heading">
+          <textarea name="caption" [(ngModel)]="file.caption" placeholder="Slider text"></textarea>
+          <input type="text" name="externalURL" placeholder="Link to somewhere else" [(ngModel)]="file.externalURL">
+        </div>
       </mat-grid-tile>
     </mat-grid-list>
     <div>
