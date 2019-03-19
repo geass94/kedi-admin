@@ -67,7 +67,7 @@ export class ProductsComponent implements AfterViewInit {
       f.value.sale = 0;
     }
 
-    this.productService.setSale(this.selection.selected, f.value.sale).subscribe(res => {
+    this.productService.setSale(this.selection.selected, f.value.sale, f.value.countDown.format('YYYY-MM-DD h:mm:ss')).subscribe(res => {
       res.forEach(c => {
         this.data.filter(d => d.id === c.id)[0].sale = c.sale;
       });

@@ -23,6 +23,11 @@
       <mat-form-field>
         <input matInput placeholder="ფასდაკლება %" [ngModel]="sale" name="sale" type="number">
       </mat-form-field>
+      <mat-form-field>
+        <input matInput [ngModel]="countDown" name="countDown" [matDatepicker]="dp3">
+        <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+        <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+      </mat-form-field>
       <button type="submit" color="primary" mat-button>შენახვა</button>
     </form>
     <form class="inline-form" *ngIf="toggleRestock" (submit)="onRestockSubmit(f)" #f="ngForm">

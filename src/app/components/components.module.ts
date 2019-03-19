@@ -5,11 +5,12 @@ import {ComponentsRoutes} from "./components.routing";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {
   MatAutocompleteModule, MatBadgeModule,
-  MatButtonModule, MatCardModule, MatCheckboxModule, MatChipsModule, MatDialogModule, MatExpansionModule,
+  MatButtonModule, MatCardModule, MatCheckboxModule, MatChipsModule, MatDatepickerModule, MatDialogModule,
+  MatExpansionModule,
   MatFormFieldModule,
   MatGridListModule,
   MatIconModule,
-  MatInputModule, MatListModule, MatPaginatorModule,
+  MatInputModule, MatListModule, MatNativeDateModule, MatPaginatorModule,
   MatProgressBarModule, MatProgressSpinnerModule, MatRadioModule,
   MatSelectModule, MatSlideToggleModule, MatSnackBarModule, MatSortModule,
   MatStepperModule, MatTableModule, MatTabsModule, MatTreeModule
@@ -31,6 +32,7 @@ import {CKEditorModule} from "@ckeditor/ckeditor5-angular";
 import { CarouselComponent } from './carousel/carousel.component';
 import { AddCarouselComponent } from './carousel/add-carousel/add-carousel.component';
 import { EditCarouselComponent } from './carousel/edit-carousel/edit-carousel.component';
+import {MatMomentDateModule} from "@angular/material-moment-adapter";
 
 @NgModule({
   declarations: [
@@ -81,7 +83,10 @@ import { EditCarouselComponent } from './carousel/edit-carousel/edit-carousel.co
     MatSlideToggleModule,
     MatChipsModule,
     MatBadgeModule,
-    CKEditorModule
+    CKEditorModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatMomentDateModule
   ]
 })
 export class ComponentsModule { }

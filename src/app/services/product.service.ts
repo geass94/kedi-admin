@@ -74,8 +74,9 @@ export class ProductService {
       .pipe(map((res: any) => deserialize<Product[]>(Product, res)));
   }
 
-  setSale(product: Product[], sale: number) {
-    return this.http.post(`${environment.apiUrl}/admin/product/set-sale`, { products: serialize(product), sale: sale } )
+  setSale(product: Product[], sale: number, countDown: string) {
+    return this.http.post(`${environment.apiUrl}/admin/product/set-sale`,
+      { products: serialize(product), sale: sale, countDown: countDown } )
       .pipe(map((res: any) => deserialize<Product[]>(Product, res)));
   }
 

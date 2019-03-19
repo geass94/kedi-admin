@@ -19,4 +19,5 @@ export class Product {
   productVariantIds: number[];
   promoted: boolean;
   bundle: Bundle;
+  countDown: string;
 }
