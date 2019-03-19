@@ -136,17 +136,20 @@
     <p>Create Bundle</p>
     <form #f="ngForm" (submit)="createBundle(f)">
       <mat-form-field>
-        <input matInput placeholder="Bundle Price" name="price" [ngModel]="price" type="number">
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput placeholder="Bundle Sale" name="sale" [ngModel]="sale" type="number">
-      </mat-form-field>
-      <mat-form-field>
-        <mat-select multiple placeholder="Select products to bundle with" [ngModel]="products" name="products">
+        <mat-select multiple placeholder="Select products to bundle with" (valueChange)="updateBundlePriceAndSale($event)" [ngModel]="products" name="products">
           <mat-option *ngFor="let p of productsForBundling" [value]="p" [disabled]="p.id === product.id">{{p.name}}</mat-option>
         </mat-select>
       </mat-form-field>
-      <button mat-raised-button type="submit">Create Bundle</button>
+      <mat-form-field *ngIf="bundleProducts.length > 0">
+        <input matInput placeholder="0 < Bundle Sale < 100" name="sale" [(ngModel)]="bundleSale" type="number" (change)="updateBundlePrice()" max="100">
+        <mat-error>
+          Please enter a number between 0 and 100.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field *ngIf="bundleProducts.length > 0">
+        <input matInput placeholder="Bundle Price" name="price" [(ngModel)]="bundlePrice" type="number" readonly>
+      </mat-form-field>
+      <button *ngIf="bundleProducts.length > 0" mat-raised-button type="submit">Create Bundle</button>
     </form>
   </section>
 </div>

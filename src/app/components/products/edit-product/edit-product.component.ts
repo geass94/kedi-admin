@@ -30,6 +30,11 @@ export class EditProductComponent implements OnInit, AfterViewInit {
   manufacturers: Observable<Manufacturer[]>;
   basicInfoForm: FormGroup;
   productsForBundling: Product[] = [];
+
+  bundlePrice = 0;
+  bundleSale = 0;
+  bundleProducts = [];
+
   private id: string;
   private selectedCategories;
   @ViewChildren('FileUploadComponent')
@@ -68,8 +73,6 @@ export class EditProductComponent implements OnInit, AfterViewInit {
         }
       );
     });
-
-
   }
 
   hasChild = (_: number, node: Category) => !!node.children && node.children.length > 0;
@@ -139,9 +142,25 @@ export class EditProductComponent implements OnInit, AfterViewInit {
     });
   }
 
+
+  updateBundlePriceAndSale(ev): void {
+    this.bundleProducts = [];
+    this.bundleProducts = deserialize<Product[]>(Product, ev);
+    this.bundleProducts.push(this.product);
+    this.updateBundlePrice();
+  }
+
+  updateBundlePrice(): void {
+    this.bundlePrice = 0;
+    this.bundleProducts.forEach(c => {
+      this.bundlePrice += (c.price - (c.price * this.bundleSale / 100));
+    });
+  }
+
   createBundle(f: NgForm) {
     let bundle: Bundle = serialize<Bundle>(f.value);
     bundle.parent = this.product;
+
     this.productService.addBundle(bundle).subscribe(res => {
       this.product = res;
     });
