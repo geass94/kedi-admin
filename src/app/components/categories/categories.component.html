@@ -3,6 +3,9 @@
   <form (submit)="onAdd(f)" #f="ngForm">
     <mat-form-field>
       <input required matInput placeholder="Category Name" name="name" [ngModel]="name" required>
+      <mat-error>
+        Please enter name
+      </mat-error>
     </mat-form-field>
     <button mat-raised-button type="submit" color="primary">Add</button>
   </form>
@@ -21,6 +24,9 @@
           <form (submit)="onSave(f1)" #f1="ngForm">
             <mat-form-field>
               <input required matInput placeholder="Category Name" name="name" [ngModel]="category.name" value="{{category.name}}">
+              <mat-error>
+                Please enter name
+              </mat-error>
             </mat-form-field>
             <input type="hidden" value="{{category.id}}" [ngModel]="category.id" name="id">
             <button mat-raised-button type="submit" color="primary">Update</button>&nbsp;
@@ -32,6 +38,9 @@
           <form (submit)="onAdd(f2)" #f2="ngForm">
             <mat-form-field>
               <input required matInput placeholder="Subcategory Name" name="name" [ngModel]="name">
+              <mat-error>
+                Please enter name
+              </mat-error>
             </mat-form-field>
             <p>Choose Parent</p>
             <div class="scrollable">
@@ -81,6 +90,9 @@
                     <form class="inline-form" (submit)="onSave(f3)" #f3="ngForm">
                       <mat-form-field>
                         <input required matInput placeholder="Category Name" name="name" [ngModel]="node.name" value="{{node.name}}">
+                        <mat-error>
+                          Please enter name
+                        </mat-error>
                       </mat-form-field>
                       <input type="hidden" value="{{node.id}}" [ngModel]="node.id" name="id">
                       <div class="button-groups">
@@ -107,6 +119,9 @@
                       <form class="inline-form" (submit)="onSave(f4)" #f4="ngForm">
                         <mat-form-field>
                           <input matInput placeholder="Category Name" name="name" [ngModel]="node.name" value="{{node.name}}">
+                          <mat-error>
+                            Please enter name
+                          </mat-error>
                         </mat-form-field>
                         <input required type="hidden" value="{{node.id}}" [ngModel]="node.id" name="id">
                         <div class="button-groups">

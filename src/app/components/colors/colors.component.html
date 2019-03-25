@@ -2,7 +2,10 @@
   <label>Add New Color</label>
   <form (submit)="onAdd(f)" #f="ngForm">
     <mat-form-field>
-      <input matInput placeholder="Color Name" name="name" [ngModel]="name" required>
+      <input [required]="" matInput placeholder="Color Name" name="name" [ngModel]="name" required>
+      <mat-error>
+        Please enter name
+      </mat-error>
     </mat-form-field>
     <!--<mat-form-field>-->
       <!--<input matInput placeholder="Color HEX Code" name="hex" [ngModel]="hex">-->
@@ -19,7 +22,10 @@
     </mat-expansion-panel-header>
         <form (submit)="onSave(f1)" #f1="ngForm">
           <mat-form-field>
-            <input matInput placeholder="Color Name" name="name" [ngModel]="color.name" value="{{color.name}}">
+            <input required matInput placeholder="Color Name" name="name" [ngModel]="color.name" value="{{color.name}}">
+            <mat-error>
+              Please enter name
+            </mat-error>
           </mat-form-field>
           <input type="hidden" value="{{color.id}}" [ngModel]="color.id" name="id">
           <button mat-raised-button type="submit" color="primary">Update</button>&nbsp;

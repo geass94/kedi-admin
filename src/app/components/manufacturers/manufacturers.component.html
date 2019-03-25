@@ -3,6 +3,9 @@
   <form (submit)="onAdd(f)" #f="ngForm">
     <mat-form-field>
       <input matInput placeholder="Manufacturer Name" name="name" [ngModel]="name" required>
+      <mat-error>
+        Please enter name
+      </mat-error>
     </mat-form-field>
     <button mat-raised-button type="submit" manufacturer="primary">Add</button>
   </form>
@@ -16,7 +19,10 @@
     </mat-expansion-panel-header>
     <form (submit)="onSave(f1)" #f1="ngForm">
       <mat-form-field>
-        <input matInput placeholder="Manufacturer Name" name="name" [ngModel]="manufacturer.name" value="{{manufacturer.name}}">
+        <input required placeholder="Manufacturer Name" name="name" [ngModel]="manufacturer.name" value="{{manufacturer.name}}">
+        <mat-error>
+          Please enter name
+        </mat-error>
       </mat-form-field>
       <input type="hidden" value="{{manufacturer.id}}" [ngModel]="manufacturer.id" name="id">
       <button mat-raised-button type="submit" manufacturer="primary">Update</button>&nbsp;
