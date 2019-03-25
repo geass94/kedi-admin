@@ -5,19 +5,19 @@
       <ng-template matStepLabel>შეავსეთ პროდუქტის ინფორმაცია</ng-template>
 
       <mat-form-field>
-        <input matInput placeholder="პროდუქტის სახელი" name="name" formControlName="name" type="text">
+        <input matInput placeholder="Product Name" name="name" formControlName="name" type="text">
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="პროდუქტის ფასი" name="price" formControlName="price" type="number">
+        <input matInput placeholder="Product Price" name="price" formControlName="price" type="number">
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="პროდუქტის რაოდენობა" name="quantity" formControlName="quantity" type="number">
+        <input matInput placeholder="Product Quantity" name="quantity" formControlName="quantity" type="number">
       </mat-form-field>
 
       <mat-form-field>
-        <textarea matInput placeholder="პროდუქტის აღწერა" formControlName="description"></textarea>
+        <textarea matInput placeholder="Product Description" formControlName="description"></textarea>
       </mat-form-field>
 
       <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
@@ -49,8 +49,7 @@
       </mat-tree>
 
       <mat-form-field>
-        <mat-select placeholder="აირჩიეთ ფერი" formControlName="color" [compareWith]="compareFn">
-          <mat-option>---</mat-option>
+        <mat-select placeholder="Choose color from library" formControlName="color" [compareWith]="compareFn">
           <mat-option *ngFor="let color of colors | async" [value]="color">
             {{color.name}}
           </mat-option>
@@ -58,8 +57,7 @@
       </mat-form-field>
 
       <mat-form-field>
-        <mat-select placeholder="აირჩიეთ მწარმოებელი" formControlName="manufacturer" [compareWith]="compareFn">
-          <mat-option>---</mat-option>
+        <mat-select placeholder="Choose manufacturer from library" formControlName="manufacturer" [compareWith]="compareFn">
           <mat-option *ngFor="let manufacturer of manufacturers | async" [value]="manufacturer">
             {{manufacturer.name}}
           </mat-option>
@@ -67,7 +65,7 @@
       </mat-form-field>
 
       <mat-form-field>
-        <mat-select placeholder="აირჩიეთ ზომა" formControlName="size">
+        <mat-select placeholder="Choose size" formControlName="size">
           <mat-option value="XS">XS</mat-option>
           <mat-option value="S">S</mat-option>
           <mat-option value="M">M</mat-option>
@@ -77,21 +75,21 @@
         </mat-select>
       </mat-form-field>
       <div>
-        <button mat-raised-button color="primary" type="submit">შემდეგი ნაბიჯი</button>
+        <button mat-raised-button color="primary" type="submit">Save and continue</button>
       </div>
     </form>
   </mat-step>
   <mat-step [stepControl]="stepOneCompleted" errorMessage="At least one image is required.">
-    <ng-template matStepLabel>დაამატეთ სურათები</ng-template>
-    <p *ngIf="stepOneCompleted">ატვირთეთ სურათები წინა ნაბიჯზე არჩეული <u>{{variant.color.name}}</u> ფერისთვის!</p>
+    <ng-template matStepLabel>Add Images</ng-template>
+    <p *ngIf="stepOneCompleted">Upload Images for product <u>{{variant.color.name}}</u> color!</p>
     <app-file-upload (fileUploaderCallback)="uploadFinished($event)"></app-file-upload>
     <br/>
     <div>
-      <button mat-raised-button color="primary" matStepperNext [disabled]="!stepTwoCompleted">შემდეგი ნაბიჯი</button>
+      <button mat-raised-button color="primary" matStepperNext [disabled]="!stepTwoCompleted">Save and continue</button>
     </div>
   </mat-step>
   <mat-step [stepControl]="stepTwoCompleted">
-    <ng-template matStepLabel>დაამატეთ პროდუქტის ნაირსახეობა ან დაასრულეთ ოპერაცია</ng-template>
+    <ng-template matStepLabel>Final overview of product</ng-template>
     <table class="result-table" *ngIf="stepOneCompleted">
       <thead><th>Field</th><th>Value</th></thead>
       <tbody>
@@ -131,8 +129,8 @@
     </table>
     <br/>
     <div>
-      <button mat-raised-button color="primary" (click)="createNewVariant()">ნაირსახეობის დამატება</button>
-      <button mat-raised-button color="accent" (click)="stepper.reset()">დასრულება</button>
+      <button mat-raised-button color="primary" (click)="createNewVariant()">Add new color for this product</button>
+      <button mat-raised-button color="accent" (click)="stepper.reset()">Finish adding product</button>
     </div>
   </mat-step>
 </mat-horizontal-stepper>

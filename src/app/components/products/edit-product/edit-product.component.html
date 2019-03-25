@@ -2,23 +2,23 @@
 <section class="form-container">
   <form [formGroup]="basicInfoForm" (submit)="onSubmit()">
     <mat-form-field>
-      <input matInput placeholder="პროდუქტის სახელი" name="name" formControlName="name" type="text">
+      <input matInput placeholder="Product Name" name="name" formControlName="name" type="text">
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput placeholder="პროდუქტის ფასი" name="price" formControlName="price" type="number">
+      <input matInput placeholder="Product Price" name="price" formControlName="price" type="number">
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput placeholder="პროდუქტის რაოდენობა" name="quantity" formControlName="quantity" type="number">
+      <input matInput placeholder="Product Quantity" name="quantity" formControlName="quantity" type="number">
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput placeholder="ფასდაკლება" name="sale" formControlName="sale" type="number">
+      <input matInput placeholder="Sale %" name="sale" formControlName="sale" type="number">
     </mat-form-field>
 
     <mat-form-field>
-      <textarea matInput placeholder="პროდუქტის აღწერა" formControlName="description"></textarea>
+      <textarea matInput placeholder="Product Description" formControlName="description"></textarea>
     </mat-form-field>
 
     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
@@ -50,8 +50,7 @@
       </mat-tree>
 
     <mat-form-field>
-      <mat-select placeholder="აირჩიეთ ფერი" formControlName="color" [compareWith]="compareFn">
-        <mat-option>---</mat-option>
+      <mat-select placeholder="Choose color from library" formControlName="color" [compareWith]="compareFn">
         <mat-option *ngFor="let color of colors | async" [value]="color">
           {{color.name}}
         </mat-option>
@@ -59,8 +58,7 @@
     </mat-form-field>
 
     <mat-form-field>
-      <mat-select placeholder="აირჩიეთ მწარმოებელი" formControlName="manufacturer" [compareWith]="compareFn">
-        <mat-option>---</mat-option>
+      <mat-select placeholder="Choose manufacturer from library" formControlName="manufacturer" [compareWith]="compareFn">
         <mat-option *ngFor="let manufacturer of manufacturers | async" [value]="manufacturer">
           {{manufacturer.name}}
         </mat-option>
@@ -68,7 +66,7 @@
     </mat-form-field>
 
     <mat-form-field>
-      <mat-select placeholder="აირჩიეთ ზომა" formControlName="size">
+      <mat-select placeholder="Choose size" formControlName="size">
         <mat-option value="XS">XS</mat-option>
         <mat-option value="S">S</mat-option>
         <mat-option value="M">M</mat-option>
@@ -78,7 +76,7 @@
       </mat-select>
     </mat-form-field>
     <div>
-      <button mat-button type="submit" color="primary">შენახვა</button>
+      <button mat-button type="submit" color="primary">Update product</button>
     </div>
   </form>
 </section>
@@ -86,7 +84,7 @@
 <section style="display: flex;">
   <mat-card class="example-card" *ngFor="let variant of variants | async" [ngClass]="{'active': variant.id === product.id}">
     <mat-card-header>
-      <div mat-card-avatar class="example-header-image"></div>
+      <!--<div mat-card-avatar class="example-header-image"></div>-->
       <mat-card-title>{{variant.name}}</mat-card-title>
       <mat-card-subtitle>{{variant.color.name}}</mat-card-subtitle>
     </mat-card-header>
@@ -100,10 +98,10 @@
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>
-          პროდუქტის სურათები
+          Product Images
         </mat-panel-title>
         <mat-panel-description>
-          წაშალეთ ან დაამატეთ ახალი სურათები
+          Delete or add new images.
         </mat-panel-description>
       </mat-expansion-panel-header>
       <mat-grid-list *ngIf="product.productFiles.length" cols="4" rowHeight="1:1" gutterSize="10px">

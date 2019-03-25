@@ -1,10 +1,10 @@
 <section class="form-container">
-  <label>ახალი მწარმოებლის დამატება</label>
+  <label>Add New Manufacturer</label>
   <form (submit)="onAdd(f)" #f="ngForm">
     <mat-form-field>
-      <input matInput placeholder="მწარმოებლის სახელი" name="name" [ngModel]="name" required>
+      <input matInput placeholder="Manufacturer Name" name="name" [ngModel]="name" required>
     </mat-form-field>
-    <button mat-raised-button type="submit" manufacturer="primary">დამატება</button>
+    <button mat-raised-button type="submit" manufacturer="primary">Add</button>
   </form>
 </section>
 <mat-accordion>
@@ -16,11 +16,11 @@
     </mat-expansion-panel-header>
     <form (submit)="onSave(f1)" #f1="ngForm">
       <mat-form-field>
-        <input matInput placeholder="მწარმოებლის სახელი" name="name" [ngModel]="manufacturer.name" value="{{manufacturer.name}}">
+        <input matInput placeholder="Manufacturer Name" name="name" [ngModel]="manufacturer.name" value="{{manufacturer.name}}">
       </mat-form-field>
       <input type="hidden" value="{{manufacturer.id}}" [ngModel]="manufacturer.id" name="id">
-      <button mat-raised-button type="submit" manufacturer="primary">შენახვა</button>&nbsp;
-      <button mat-raised-button type="button" (click)="onDelete(manufacturer)" manufacturer="warn">წაშლა</button>
+      <button mat-raised-button type="submit" manufacturer="primary">Update</button>&nbsp;
+      <button mat-raised-button type="button" (click)="onDelete(manufacturer)" manufacturer="warn">Delete</button>
     </form>
   </mat-expansion-panel>
 </mat-accordion>

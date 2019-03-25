@@ -1,10 +1,10 @@
 <section class="form-container">
-  <label>ახალი კატეგორიის დამატება</label>
+  <label>Add New Parent Category</label>
   <form (submit)="onAdd(f)" #f="ngForm">
     <mat-form-field>
-      <input matInput placeholder="კატეგორიის სახელი" name="name" [ngModel]="name" required>
+      <input required matInput placeholder="Category Name" name="name" [ngModel]="name" required>
     </mat-form-field>
-    <button mat-raised-button type="submit" color="primary">დამატება</button>
+    <button mat-raised-button type="submit" color="primary">Add</button>
   </form>
 </section>
 <mat-accordion>
@@ -16,24 +16,24 @@
     </mat-expansion-panel-header>
     <ng-template matExpansionPanelContent>
       <mat-tab-group>
-        <mat-tab label="მშობელი კატეგორიის რედაქტირება">
+        <mat-tab label="Edit Parent Category">
           <br/>
           <form (submit)="onSave(f1)" #f1="ngForm">
             <mat-form-field>
-              <input matInput placeholder="კატეგორიის სახელი" name="name" [ngModel]="category.name" value="{{category.name}}">
+              <input required matInput placeholder="Category Name" name="name" [ngModel]="category.name" value="{{category.name}}">
             </mat-form-field>
             <input type="hidden" value="{{category.id}}" [ngModel]="category.id" name="id">
-            <button mat-raised-button type="submit" color="primary">შენახვა</button>&nbsp;
-            <button mat-raised-button type="button" (click)="onDelete(category)" color="warn">წაშლა</button>
+            <button mat-raised-button type="submit" color="primary">Update</button>&nbsp;
+            <button mat-raised-button type="button" (click)="onDelete(category)" color="warn">Delete</button>
           </form>
         </mat-tab>
-        <mat-tab label="ქვეკატეგორიის დამატება">
+        <mat-tab label="Add Subcateogry">
           <br/>
           <form (submit)="onAdd(f2)" #f2="ngForm">
             <mat-form-field>
-              <input matInput placeholder="ქვეკატეგორიის სახელი" name="name" [ngModel]="name">
+              <input required matInput placeholder="Subcategory Name" name="name" [ngModel]="name">
             </mat-form-field>
-            <p>აირჩიეთ ქვეკატეგორია</p>
+            <p>Choose Parent</p>
             <div class="scrollable">
               <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
                 <!-- This is the tree node template for leaf nodes -->
@@ -65,10 +65,10 @@
             </div>
 
 
-            <button mat-raised-button type="submit" color="primary">დამატება</button>
+            <button mat-raised-button type="submit" color="primary">Add</button>
           </form>
         </mat-tab>
-        <mat-tab label="ქვეკატეგორიების რედაქტირება" *ngIf="category.children.length > 0">
+        <mat-tab label="Edit Subcategories" *ngIf="category.children.length > 0">
           <br/>
           <ng-template matTabContent>
             <div class="scrollable">
@@ -80,7 +80,7 @@
                     <button type="button" mat-icon-button disabled></button>
                     <form class="inline-form" (submit)="onSave(f3)" #f3="ngForm">
                       <mat-form-field>
-                        <input matInput placeholder="კატეგორიის სახელი" name="name" [ngModel]="node.name" value="{{node.name}}">
+                        <input required matInput placeholder="Category Name" name="name" [ngModel]="node.name" value="{{node.name}}">
                       </mat-form-field>
                       <input type="hidden" value="{{node.id}}" [ngModel]="node.id" name="id">
                       <div class="button-groups">
@@ -106,9 +106,9 @@
                       </button>
                       <form class="inline-form" (submit)="onSave(f4)" #f4="ngForm">
                         <mat-form-field>
-                          <input matInput placeholder="კატეგორიის სახელი" name="name" [ngModel]="node.name" value="{{node.name}}">
+                          <input matInput placeholder="Category Name" name="name" [ngModel]="node.name" value="{{node.name}}">
                         </mat-form-field>
-                        <input type="hidden" value="{{node.id}}" [ngModel]="node.id" name="id">
+                        <input required type="hidden" value="{{node.id}}" [ngModel]="node.id" name="id">
                         <div class="button-groups">
                           <button type="submit" mat-icon-button color="primary">
                             <mat-icon aria-label="Example icon-button with a heart icon">save</mat-icon>

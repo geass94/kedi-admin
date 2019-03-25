@@ -3,17 +3,17 @@
 </div>
 
 <div *ngIf="!selection.isEmpty()" class="row">
-  <button mat-button color="primary" title="დაწინაურებაზე გადართვა" (click)="togglePromotion()">
-    დაწინააურებაზე გადართვა
+  <button mat-button color="primary" title="Toggle Promotion" (click)="togglePromotion()">
+    Toggle Promotion
   </button>
-  <button mat-button color="accent" title="საქონლის შევსება" (click)="toggleRestock = !toggleRestock">
-    საქონლის შევსება
+  <button mat-button color="accent" title="Refill Stock" (click)="toggleRestock = !toggleRestock">
+    Refill Stock
   </button>
-  <button mat-button title="ფასდაკლების დამატება" (click)="toggleSale = !toggleSale">
-    ფასდაკლების დამატება
+  <button mat-button title="Set Sale & Sale Timer" (click)="toggleSale = !toggleSale">
+    Set Sale & Sale Timer
   </button>
-  <button mat-button color="warn" title="წაშლა">
-    წაშლა
+  <button mat-button color="warn" title="Delete">
+    Deleteა
   </button>
 </div>
 
@@ -21,20 +21,20 @@
   <div class="form-container">
     <form class="inline-form" *ngIf="toggleSale" (submit)="onSaleSubmit(f)" #f="ngForm">
       <mat-form-field>
-        <input matInput placeholder="ფასდაკლება %" [ngModel]="sale" name="sale" type="number">
+        <input matInput placeholder="Sale %" [ngModel]="sale" name="sale" type="number">
       </mat-form-field>
       <mat-form-field>
-        <input matInput [ngModel]="countDown" name="countDown" [matDatepicker]="dp3">
+        <input matInput [ngModel]="countDown" name="countDown" placeholder="Expiration Date" [matDatepicker]="dp3">
         <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
         <mat-datepicker #dp3 disabled="false"></mat-datepicker>
       </mat-form-field>
-      <button type="submit" color="primary" mat-button>შენახვა</button>
+      <button type="submit" color="primary" mat-button>Save</button>
     </form>
     <form class="inline-form" *ngIf="toggleRestock" (submit)="onRestockSubmit(f)" #f="ngForm">
       <mat-form-field>
-        <input matInput placeholder="რაოდენობა" [ngModel]="quantity" name="quantity" type="number">
+        <input matInput placeholder="Quantity" [ngModel]="quantity" name="quantity" type="number">
       </mat-form-field>
-      <button type="submit" color="primary" mat-button>შენახვა</button>
+      <button type="submit" color="primary" mat-button>Save</button>
     </form>
   </div>
 </div>
@@ -77,34 +77,34 @@
 
       <!-- Title Column -->
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>სახელი</th>
+        <th mat-header-cell *matHeaderCellDef>Name</th>
         <td mat-cell *matCellDef="let row">{{row.name}}</td>
       </ng-container>
 
       <!-- State Column -->
       <ng-container matColumnDef="price">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>ფასი</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
         <td mat-cell *matCellDef="let row">{{row.price}}</td>
       </ng-container>
 
       <!-- Created Column -->
       <ng-container matColumnDef="sale">
         <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
-          ფასდაკლება
+          Sale
         </th>
         <td mat-cell *matCellDef="let row">{{row.sale}}&nbsp;%</td>
       </ng-container>
 
       <ng-container matColumnDef="quantity">
         <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>
-          რაოდენობა
+          Quantity
         </th>
         <td mat-cell *matCellDef="let row">{{row.quantity}}</td>
       </ng-container>
 
       <ng-container matColumnDef="promoted">
         <th mat-header-cell *matHeaderCellDef>
-          დაწინაურებული
+          Promoted
         </th>
         <td mat-cell *matCellDef="let row">
           <mat-slide-toggle
