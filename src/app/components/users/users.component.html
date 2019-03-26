@@ -15,11 +15,7 @@
     <mat-form-field>
       <input matInput placeholder="Email" name="email" [ngModel]="user.email" value="{{user.email}}">
     </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="Password" name="password" type="password">
-    </mat-form-field>
   <input type="hidden" value="{{user.id}}" [ngModel]="user.id" name="id">
-    <button mat-raised-button type="submit" color="primary">Save</button>
 </form>
   </mat-expansion-panel>
 </mat-accordion>
