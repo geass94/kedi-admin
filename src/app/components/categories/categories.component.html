@@ -77,7 +77,7 @@
             <button mat-raised-button type="submit" color="primary">Add</button>
           </form>
         </mat-tab>
-        <mat-tab label="Edit Subcategories" *ngIf="category.children.length > 0">
+        <mat-tab label="Edit Subcategories" *ngIf="category.children != null && category.children.length > 0">
           <br/>
           <ng-template matTabContent>
             <div class="scrollable">

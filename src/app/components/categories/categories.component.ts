@@ -46,12 +46,12 @@ export class CategoriesComponent implements OnInit {
   }
 
   onParentChoose(node: Category) {
-    if (typeof node.children.length) {
-      delete node.children;
-    }
-    if (typeof node.parent !== 'undefined') {
-      delete node.parent;
-    }
+    // if (node.children.length) {
+    //   delete node.children;
+    // }
+    // if (typeof node.parent !== 'undefined') {
+    //   delete node.parent;
+    // }
     this.chosenParent = serialize(node);
   }
 
