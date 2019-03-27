@@ -59,4 +59,12 @@ export class PagesComponent implements AfterViewInit {
       ).subscribe(data => this.data = data);
   }
 
+  deletePage(page: BasicPage) {
+    this.basicPageService.deletePage(page.id).subscribe(
+      res => {
+        window.location.reload();
+      }
+    );
+  }
+
 }

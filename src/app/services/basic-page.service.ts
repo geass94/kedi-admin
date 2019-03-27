@@ -34,4 +34,8 @@ export class BasicPageService {
   savePage(data: BasicPage, id: number) {
     return this.http.put(`${environment.apiUrl}/admin/page/save-page/${id}`, data);
   }
+
+  deletePage(id: number) {
+    return this.http.delete(`${environment.apiUrl}/admin/page/delete-page/${id}`);
+  }
 }

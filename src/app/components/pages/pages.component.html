@@ -59,7 +59,8 @@
           Actions
         </th>
         <td mat-cell *matCellDef="let row">
-          <a mat-raised-button routerLink="/pages/{{row.alias}}">Edit</a>
+          <a mat-raised-button routerLink="/pages/{{row.alias}}">Edit</a>&nbsp;
+          <a mat-raised-button (click)="deletePage(row)" color="warn">Delete</a>
         </td>
       </ng-container>
 
