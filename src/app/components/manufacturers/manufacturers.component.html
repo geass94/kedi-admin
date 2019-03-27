@@ -19,7 +19,7 @@
     </mat-expansion-panel-header>
     <form (submit)="onSave(f1)" #f1="ngForm">
       <mat-form-field>
-        <input required placeholder="Manufacturer Name" name="name" [ngModel]="manufacturer.name" value="{{manufacturer.name}}">
+        <input required matInput placeholder="Manufacturer Name" name="name" [ngModel]="manufacturer.name" value="{{manufacturer.name}}">
         <mat-error>
           Please enter name
         </mat-error>
