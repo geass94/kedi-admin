@@ -4,7 +4,7 @@
       <input matInput placeholder="Page name" name="name" [(ngModel)]="model.name" required>
     </mat-form-field>
     <mat-form-field class="example-full-width">
-      <input matInput placeholder="URL Alias" name="alias" [(ngModel)]="model.alias" required>
+      <input matInput placeholder="URL Alias" name="alias" (change)="checkAlias()" [(ngModel)]="model.alias" required>
     </mat-form-field>
     <ckeditor [(ngModel)]="model.body" name="body" [editor]="Editor" (ready)="onReady($event)"></ckeditor>
     <br>

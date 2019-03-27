@@ -27,6 +27,10 @@ export class BasicPageService {
     return this.http.get<BasicPagePage>(`${environment.apiUrl}/admin/page/get-all`, {params: params});
   }
 
+  checkAlias(alias: string) {
+    this.http.get(`${environment.apiUrl}/admin/page/check-alias/${alias}`);
+  }
+
   savePage(data: BasicPage, id: number) {
     return this.http.put(`${environment.apiUrl}/admin/page/save-page/${id}`, data);
   }
