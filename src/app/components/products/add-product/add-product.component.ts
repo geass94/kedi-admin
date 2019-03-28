@@ -34,7 +34,7 @@ export class AddProductComponent implements OnInit {
   treeControl = new NestedTreeControl<Category>(node => node.children);
   dataSource = new MatTreeNestedDataSource<Category>();
   basicInfoForm: FormGroup;
-  selectedCategories;
+  selectedCategories: Category[] = [];
   @Input()
   variant: Product = new Product;
   files: ProductFile[] = [];
@@ -50,7 +50,6 @@ export class AddProductComponent implements OnInit {
   constructor(private productService: ProductService, private specService: SpecificationsService) { }
 
   ngOnInit() {
-    console.log("inited", this.variant);
     this.colors = this.specService.getColors();
     this.specService.getCategories().subscribe(res => {
         this.categories = res;
@@ -58,7 +57,6 @@ export class AddProductComponent implements OnInit {
 
       },
       () => {
-      this.selectedCategories = this.categories;
         this.dataSource.data = this.categories;
       });
     this.manufacturers = this.specService.getManufacturers();
@@ -86,7 +84,8 @@ export class AddProductComponent implements OnInit {
 
   onCategoryChoose(cat: Category): void {
     delete cat.children;
-    if (!this.selectedCategories.filter(c => c.id === cat.id).length) {
+    delete cat.parent;
+    if (this.selectedCategories.indexOf(cat) === -1) {
       this.selectedCategories.push(cat);
     } else {
       this.selectedCategories.splice(this.selectedCategories.indexOf(cat), 1);

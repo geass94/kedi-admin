@@ -26,7 +26,7 @@
           <li class="mat-tree-node">
             <!-- use a disabled button to provide padding for tree leaf -->
             <button type="button" mat-icon-button disabled></button>
-            <mat-checkbox (change)="onCategoryChoose(node)" name="parent" [value]="node" [checked]="inProductCategories(node)">&nbsp;{{node.name}}</mat-checkbox>
+            <mat-checkbox (change)="onCategoryChoose(node)" [value]="node" [checked]="inProductCategories(node)">&nbsp;{{node.name}}</mat-checkbox>
           </li>
         </mat-tree-node>
         <!-- This is the tree node template for expandable nodes -->
@@ -39,7 +39,7 @@
                   {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                 </mat-icon>
               </button>
-              <mat-checkbox (change)="onCategoryChoose(node)" name="parent" [value]="node" [checked]="inProductCategories(node)">&nbsp;{{node.name}}</mat-checkbox>
+              <mat-checkbox (change)="onCategoryChoose(node)" [value]="node" [checked]="inProductCategories(node)">&nbsp;{{node.name}}</mat-checkbox>
             </div>
             <ul [class.example-tree-invisible]="!treeControl.isExpanded(node)">
               <ng-container matTreeNodeOutlet></ng-container>
