@@ -80,7 +80,7 @@ export class EditProductComponent implements OnInit, AfterViewInit {
 
   hasChild = (_: number, node: Category) => !!node.children && node.children.length > 0;
 
-  private inProductCategories(node: Category): boolean {
+  inProductCategories(node: Category): boolean {
     if (this.product.categoryList.filter(c => c.id === node.id).length) {
       return true;
     }
@@ -89,7 +89,8 @@ export class EditProductComponent implements OnInit, AfterViewInit {
 
   onCategoryChoose(cat: Category): void {
     delete cat.children;
-    if (!this.selectedCategories.filter(c => c.id === cat.id).length) {
+    delete cat.parent;
+    if (this.selectedCategories.indexOf(cat) === -1) {
       this.selectedCategories.push(cat);
     } else {
       this.selectedCategories.splice(this.selectedCategories.indexOf(cat), 1);
