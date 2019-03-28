@@ -76,13 +76,20 @@ export class CategoriesComponent implements OnInit {
 
   onSave(f: NgForm) {
     let cat: Category = serialize(f.value);
+    if (typeof cat.parent !== "undefined") {
+      delete cat.parent.children;
+      if (typeof cat.parent.parent !== "undefined") {
+        delete cat.parent.parent;
+      }
+    }
+    delete cat.children;
+    console.log(cat)
     this.specService.saveCategory(cat, cat.id).subscribe(
       res => {
         this.loadCategories();
         this.snackBar.open(`Category: ${cat.name}`, 'Saved', <MatSnackBarConfig>{
           duration: 3500,
         });
-        f.reset();
       }
     );
   }
