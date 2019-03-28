@@ -71,9 +71,11 @@ export class CategoriesComponent implements OnInit {
   hasChild = (_: number, node: Category) => !!node.children && node.children.length > 0;
 
   onSave(f: NgForm) {
-    let cat: Category = serialize(f.value);
-    delete cat.parent.children;
-    console.log(cat);
+    let cat: Category = serialize(this.chosenCategory);
+
+    delete cat.children;
+    delete cat.parent;
+
     this.specService.saveCategory(cat, cat.id).subscribe(
       res => {
         this.loadCategories();

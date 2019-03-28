@@ -40,7 +40,6 @@ export class SpecificationsService {
   }
 
   saveCategory(category: Category, id: number) {
-    console.log(category)
     return this.http.put(`${environment.apiUrl}/admin/specification/save-category/${id}`, category);
   }
 
