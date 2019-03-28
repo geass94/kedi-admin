@@ -66,13 +66,10 @@
     </mat-form-field>
 
     <mat-form-field>
-      <mat-select placeholder="Choose size" formControlName="size">
-        <mat-option value="XS">XS</mat-option>
-        <mat-option value="S">S</mat-option>
-        <mat-option value="M">M</mat-option>
-        <mat-option value="L">L</mat-option>
-        <mat-option value="XL">XL</mat-option>
-        <mat-option value="XXL">XL</mat-option>
+      <mat-select placeholder="Choose size" formControlName="size" [compareWith]="compareFn">
+        <mat-option *ngFor="let size of sizes | async" [value]="size">
+          {{size.countrySuffix}} / {{size.genderSuffix}} / {{size.size}}
+        </mat-option>
       </mat-select>
     </mat-form-field>
     <div>

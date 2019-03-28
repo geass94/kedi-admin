@@ -13,10 +13,10 @@ const MENUITEMS = [
   { state: 'categories', type: 'link', name: 'Categories', icon: 'category' },
   { state: 'products', type: 'link', name: 'Products', icon: 'receipt' },
   { state: 'manufacturers', type: 'link', name: 'Manufacturers', icon: 'new_releases' },
+  { state: 'size', type: 'link', name: 'Size Chart', icon: 'settings' },
   { state: 'pages', type: 'link', name: 'Pages', icon: 'pages' },
   { state: 'colors', type: 'link', name: 'Colors', icon: 'palette' },
   { state: 'carousel', type: 'link', name: 'Carousel', icon: 'slideshow' },
-  { state: 'settings', type: 'link', name: 'Settings', icon: 'settings' },
 ];
 
 @Injectable()

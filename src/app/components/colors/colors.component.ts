@@ -14,6 +14,10 @@ export class ColorsComponent implements OnInit {
   constructor(private specService: SpecificationsService) { }
 
   ngOnInit() {
+    this.loadData();
+  }
+
+  private loadData() {
     this.specService.getColors().subscribe(res => {
       this.colors = res;
     });
@@ -27,7 +31,7 @@ export class ColorsComponent implements OnInit {
   onAdd(f: NgForm) {
     let color: Color = serialize(f.value);
     this.specService.addColor(color).subscribe((res) => {
-        this.colors.unshift(res);
+      this.loadData();
     });
     f.reset();
   }

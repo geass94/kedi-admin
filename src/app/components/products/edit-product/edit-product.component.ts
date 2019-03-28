@@ -13,6 +13,7 @@ import {deserialize, serialize} from "serializer.ts/Serializer";
 import {NestedTreeControl} from "@angular/cdk/tree";
 import {MatTreeNestedDataSource} from "@angular/material";
 import {Bundle} from "../../../models/bundle";
+import {Size} from "../../../models/size";
 
 @Component({
   selector: 'app-edit-product',
@@ -28,6 +29,7 @@ export class EditProductComponent implements OnInit, AfterViewInit {
   colors: Observable<Color[]>;
   categories: Category[];
   manufacturers: Observable<Manufacturer[]>;
+  sizes: Observable<Size[]>;
   basicInfoForm: FormGroup;
   productsForBundling: Product[] = [];
 
@@ -53,6 +55,7 @@ export class EditProductComponent implements OnInit, AfterViewInit {
     });
     this.colors = this.specService.getColors();
     this.manufacturers = this.specService.getManufacturers();
+    this.sizes = this.specService.getSizes();
 
     this.productService.getProductsForBundling().subscribe(res => {
       this.productsForBundling = res;

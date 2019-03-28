@@ -13,6 +13,7 @@ import {EditPageComponent} from "./pages/edit-page/edit-page.component";
 import {CarouselComponent} from "./carousel/carousel.component";
 import {AddCarouselComponent} from "./carousel/add-carousel/add-carousel.component";
 import {EditCarouselComponent} from "./carousel/edit-carousel/edit-carousel.component";
+import {SizeComponent} from "./size/size.component";
 
 export const ComponentsRoutes: Routes = [
   {
@@ -46,6 +47,10 @@ export const ComponentsRoutes: Routes = [
   {
     path: 'colors',
     component: ColorsComponent
+  },
+  {
+    path: 'size',
+    component: SizeComponent
   },
   {
     path: 'pages',

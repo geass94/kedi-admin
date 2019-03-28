@@ -33,6 +33,7 @@ import { CarouselComponent } from './carousel/carousel.component';
 import { AddCarouselComponent } from './carousel/add-carousel/add-carousel.component';
 import { EditCarouselComponent } from './carousel/edit-carousel/edit-carousel.component';
 import {MatMomentDateModule} from "@angular/material-moment-adapter";
+import { SizeComponent } from './size/size.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import {MatMomentDateModule} from "@angular/material-moment-adapter";
     EditPageComponent,
     CarouselComponent,
     AddCarouselComponent,
-    EditCarouselComponent
+    EditCarouselComponent,
+    SizeComponent
   ],
   imports: [
     RouterModule.forChild(ComponentsRoutes),

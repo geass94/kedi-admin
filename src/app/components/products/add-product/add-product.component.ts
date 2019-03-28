@@ -15,6 +15,7 @@ import {ProductService} from "../../../services/product.service";
 import {SpecificationsService} from "../../../services/specifications.service";
 import {NestedTreeControl} from "@angular/cdk/tree";
 import {ProductFile} from "../../../models/product-file";
+import {Size} from "../../../models/size";
 
 @Component({
   selector: 'app-add-product',
@@ -29,6 +30,7 @@ export class AddProductComponent implements OnInit {
   colors: Observable<Color[]>;
   categories: Category[];
   manufacturers: Observable<Manufacturer[]>;
+  sizes: Observable<Size[]>;
   treeControl = new NestedTreeControl<Category>(node => node.children);
   dataSource = new MatTreeNestedDataSource<Category>();
   basicInfoForm: FormGroup;
@@ -58,6 +60,7 @@ export class AddProductComponent implements OnInit {
         this.dataSource.data = this.categories;
       });
     this.manufacturers = this.specService.getManufacturers();
+    this.sizes = this.specService.getSizes();
 
     this.basicInfoForm = new FormGroup({
       'name': new FormControl(null, Validators.required),

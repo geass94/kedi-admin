@@ -14,6 +14,10 @@ export class ManufacturersComponent implements OnInit {
   constructor(private specService: SpecificationsService) { }
 
   ngOnInit() {
+    this.loadData();
+  }
+
+  private loadData() {
     this.specService.getManufacturers().subscribe(res => {
       this.manufacturers = res;
     });
@@ -27,7 +31,7 @@ export class ManufacturersComponent implements OnInit {
   onAdd(f: NgForm) {
     let manufacturer: Manufacturer = serialize(f.value);
     this.specService.addManufacturer(manufacturer).subscribe((res) => {
-      this.manufacturers.unshift(res);
+      this.loadData();
     });
     f.reset();
   }
