@@ -39,8 +39,9 @@ export class SpecificationsService {
       .pipe(map((res: any) => deserialize<Category>(Category, res)));
   }
 
-  saveCategory(category: Category, id: number): void {
-    this.http.put(`${environment.apiUrl}/admin/specification/save-category/${id}`, category).subscribe();
+  saveCategory(category: Category, id: number) {
+    console.log(category)
+    return this.http.put(`${environment.apiUrl}/admin/specification/save-category/${id}`, category);
   }
 
   deleteCategory(id: number) {

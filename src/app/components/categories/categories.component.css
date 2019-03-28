@@ -3,6 +3,7 @@
   background-color: #fff;
   border-radius: 3px;
   margin-bottom: 10px;
+  display: flex;
 }
 
 
@@ -39,6 +40,11 @@
 
 .scrollable {
   padding-top: 15px;
-  max-height: 300px;
+  max-height: 500px;
   overflow-y: scroll;
+}
+
+
+.half{
+  width: 50%;
 }

@@ -13,12 +13,15 @@ import {MatSnackBar, MatSnackBarConfig, MatTreeNestedDataSource} from "@angular/
   encapsulation: ViewEncapsulation.None
 })
 export class CategoriesComponent implements OnInit {
-  private categories: Category[] = [];
-  private subCategories: Category[] = [];
+  categories: Category[] = [];
+  allCategories: Category[] = [];
   treeControl = new NestedTreeControl<Category>(node => node.children);
   dataSource = new MatTreeNestedDataSource<Category>();
-  dataSourceChildren = new MatTreeNestedDataSource<Category>();
-  private chosenParent: Category = new Category;
+
+  activeTab = 0;
+
+  chosenCategory: Category = new Category();
+  catForm: Category = new Category();
 
   constructor(private specService: SpecificationsService, private snackBar: MatSnackBar) {}
 
@@ -29,46 +32,60 @@ export class CategoriesComponent implements OnInit {
   private loadCategories() {
     this.specService.getCategories().subscribe(
       (res) => {
-        // this.setChildren(res);
         this.categories = res;
-        this.subCategories = res;
-        // this.loadChildren(res);
       },
       (err) => {
 
       },
       () => {
 
+        this.specService.getAllCategories().subscribe(
+          res => {
+            this.allCategories = res;
+          }
+        );
+
+        this.categories.map(c => {
+          this.setParents(c);
+        });
+
         this.dataSource.data = this.categories;
-        this.dataSourceChildren.data = this.subCategories;
       }
     );
   }
 
+  private setParents(cat: Category) {
+    if (cat.children.length) {
+      cat.children.map(c => {
+        c.parent = cat;
+        this.setParents(c);
+      });
+    }
+  }
+
   onParentChoose(node: Category) {
-    // if (node.children.length) {
-    //   delete node.children;
-    // }
-    // if (typeof node.parent !== 'undefined') {
-    //   delete node.parent;
-    // }
-    this.chosenParent = serialize(node);
+    this.activeTab = 1;
+    this.chosenCategory = serialize(node);
   }
 
   hasChild = (_: number, node: Category) => !!node.children && node.children.length > 0;
 
   onSave(f: NgForm) {
     let cat: Category = serialize(f.value);
-    this.specService.saveCategory(cat, cat.id);
-    this.loadCategories();
-    this.snackBar.open(`Category: ${cat.name}`, 'Saved', <MatSnackBarConfig>{
-      duration: 1500,
-    });
+    delete cat.parent.children;
+    console.log(cat);
+    this.specService.saveCategory(cat, cat.id).subscribe(
+      res => {
+        this.loadCategories();
+        this.snackBar.open(`Category: ${cat.name}`, 'Saved', <MatSnackBarConfig>{
+          duration: 3500,
+        });
+      }
+    );
   }
 
   onAdd(f: NgForm) {
-    let cat: Category = serialize(f.value);
-    cat.parent = this.chosenParent;
+    let cat: Category = serialize(this.catForm);
     this.specService.addCategory(cat).subscribe((res) => {
       this.loadCategories();
       this.snackBar.open(`Category: ${res.name}`, 'Added');
@@ -85,6 +102,10 @@ export class CategoriesComponent implements OnInit {
         this.snackBar.open(`Category: ${cat.name}`, 'Deleted');
       }
     );
+  }
+
+  compareFn(c1: Category, c2: Category): boolean {
+    return c1 && c2 ? c1.id === c2.id : c1 === c2;
   }
 
 }
