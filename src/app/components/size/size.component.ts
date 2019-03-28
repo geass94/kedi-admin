@@ -25,7 +25,11 @@ export class SizeComponent implements OnInit {
 
   onSave(f: NgForm) {
     let size: Size = serialize(f.value);
-    this.specService.saveSize(size, size.id);
+    this.specService.saveSize(size, size.id).subscribe(
+      res => {
+        this.loadData();
+      }
+    );
   }
 
   onAdd(f: NgForm) {

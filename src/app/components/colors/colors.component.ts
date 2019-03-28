@@ -25,7 +25,11 @@ export class ColorsComponent implements OnInit {
 
   onSave(f: NgForm) {
     let color: Color = serialize(f.value);
-    this.specService.saveColor(color, color.id);
+    this.specService.saveColor(color, color.id).subscribe(
+      res => {
+        this.loadData();
+      }
+    );
   }
 
   onAdd(f: NgForm) {

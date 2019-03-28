@@ -58,8 +58,8 @@ export class SpecificationsService {
       .pipe(map((res: any) => deserialize<Color>(Color, res)));
   }
 
-  saveColor(data: Color, id: number): void {
-    this.http.put(`${environment.apiUrl}/admin/specification/save-color/${id}`, data).subscribe();
+  saveColor(data: Color, id: number) {
+    return this.http.put(`${environment.apiUrl}/admin/specification/save-color/${id}`, data);
   }
 
   deleteColor(id: number) {
@@ -71,8 +71,8 @@ export class SpecificationsService {
       .pipe(map((res: any) => deserialize<Manufacturer>(Manufacturer, res)));
   }
 
-  saveManufacturer(data: Manufacturer, id: number): void {
-    this.http.put(`${environment.apiUrl}/admin/specification/save-manufacturer/${id}`, data).subscribe();
+  saveManufacturer(data: Manufacturer, id: number) {
+    return this.http.put(`${environment.apiUrl}/admin/specification/save-manufacturer/${id}`, data);
   }
 
   deleteManufacturer(id: number) {
@@ -84,8 +84,8 @@ export class SpecificationsService {
       .pipe(map((res: any) => deserialize<Size>(Size, res)));
   }
 
-  saveSize(data: Size, id: number): void {
-    this.http.put(`${environment.apiUrl}/admin/specification/save-size/${id}`, data).subscribe();
+  saveSize(data: Size, id: number) {
+    return this.http.put(`${environment.apiUrl}/admin/specification/save-size/${id}`, data);
   }
 
   deleteSize(id: number) {

@@ -25,7 +25,11 @@ export class ManufacturersComponent implements OnInit {
 
   onSave(f: NgForm) {
     let manufacturer: Manufacturer = serialize(f.value);
-    this.specService.saveManufacturer(manufacturer, manufacturer.id);
+    this.specService.saveManufacturer(manufacturer, manufacturer.id).subscribe(
+      res => {
+        this.loadData();
+      }
+    );
   }
 
   onAdd(f: NgForm) {
