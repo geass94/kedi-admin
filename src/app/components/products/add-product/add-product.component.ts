@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Component, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 
 import {deserialize, serialize} from "serializer.ts/Serializer";
 import {FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
@@ -35,6 +35,7 @@ export class AddProductComponent implements OnInit {
   dataSource = new MatTreeNestedDataSource<Category>();
   basicInfoForm: FormGroup;
   selectedCategories;
+  @Input()
   variant: Product = new Product;
   files: ProductFile[] = [];
 
@@ -49,6 +50,7 @@ export class AddProductComponent implements OnInit {
   constructor(private productService: ProductService, private specService: SpecificationsService) { }
 
   ngOnInit() {
+    console.log("inited", this.variant);
     this.colors = this.specService.getColors();
     this.specService.getCategories().subscribe(res => {
         this.categories = res;
@@ -63,13 +65,13 @@ export class AddProductComponent implements OnInit {
     this.sizes = this.specService.getSizes();
 
     this.basicInfoForm = new FormGroup({
-      'name': new FormControl(null, Validators.required),
-      'price': new FormControl(null, Validators.required),
-      'quantity': new FormControl(null, Validators.required),
-      'description': new FormControl(null, Validators.required),
-      'color': new FormControl(null, Validators.required),
-      'manufacturer': new FormControl(null, Validators.required),
-      'size': new FormControl(null, Validators.required)
+      'name': new FormControl(this.variant.name, Validators.required),
+      'price': new FormControl(this.variant.price, Validators.required),
+      'quantity': new FormControl(this.variant.quantity, Validators.required),
+      'description': new FormControl(this.variant.quantity, Validators.required),
+      'color': new FormControl(this.variant.color, Validators.required),
+      'manufacturer': new FormControl(this.variant.manufacturer, Validators.required),
+      'size': new FormControl(this.variant.size, Validators.required)
     });
   }
 
