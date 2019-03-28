@@ -35,7 +35,7 @@
           </mat-form-field>
           <mat-form-field *ngIf="categories.length">
             <mat-label>Choose Parent Category</mat-label>
-            <mat-select name="parent" [(ngModel)]="chosenCategory.parent" [value]="chosenCategory.parent" [compareWith]="compareFn">
+            <mat-select name="parent" [(ngModel)]="chosenCategory.parent" [compareWith]="compareFn">
               <mat-option>-- None --</mat-option>
               <mat-option *ngFor="let cat of allCategories" [value]="cat">
                 {{cat.name}}

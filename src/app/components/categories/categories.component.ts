@@ -42,6 +42,10 @@ export class CategoriesComponent implements OnInit {
         this.specService.getAllCategories().subscribe(
           res => {
             this.allCategories = res;
+            this.allCategories.map(c => {
+              delete c.parent;
+              delete c.children;
+            });
           }
         );
 
@@ -71,17 +75,14 @@ export class CategoriesComponent implements OnInit {
   hasChild = (_: number, node: Category) => !!node.children && node.children.length > 0;
 
   onSave(f: NgForm) {
-    let cat: Category = serialize(this.chosenCategory);
-
-    delete cat.children;
-    delete cat.parent;
-
+    let cat: Category = serialize(f.value);
     this.specService.saveCategory(cat, cat.id).subscribe(
       res => {
         this.loadCategories();
         this.snackBar.open(`Category: ${cat.name}`, 'Saved', <MatSnackBarConfig>{
           duration: 3500,
         });
+        f.reset();
       }
     );
   }
