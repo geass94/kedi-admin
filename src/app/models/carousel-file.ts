@@ -7,4 +7,5 @@ export class CarouselFile {
   heading: string;
   caption: string;
   externalURL: string;
+  label: string;
 }
