@@ -2,17 +2,24 @@
   <label>Add New Color</label>
   <form (submit)="onAdd(f)" #f="ngForm">
     <mat-form-field>
-      <input [required]="" matInput placeholder="Color Name" name="name" [ngModel]="name" required>
+      <input [required]="" matInput placeholder="Color Name" name="name" [ngModel]="color.name" required>
       <mat-error>
         Please enter name
       </mat-error>
     </mat-form-field>
-    <!--<mat-form-field>-->
-      <!--<input matInput placeholder="Color HEX Code" name="hex" [ngModel]="hex">-->
-    <!--</mat-form-field>-->
+    <mat-form-field class="colorpicker">
+      <input matInput readonly placeholder="Color HEX Code" type="text" name="hex" [ngModel]="color.hex"
+             [value]="selectedColor"
+             [style.background]="selectedColor"
+             [(colorPicker)]="selectedColor"
+             [cpOutputFormat]="'hex'"
+             (cpSliderDragEnd)="applyInputValue(color, $event)">
+    </mat-form-field>
+    <br/>
     <button mat-raised-button type="submit" color="primary">Add</button>
-  </form>
+    </form>
 </section>
+
 <mat-accordion>
   <mat-expansion-panel *ngFor="let color of colors">
     <mat-expansion-panel-header>
@@ -27,6 +34,15 @@
               Please enter name
             </mat-error>
           </mat-form-field>
+          <mat-form-field class="colorpicker">
+            <input matInput placeholder="Color HEX Code" type="text" name="hex" [ngModel]="color.hex"
+                   [value]="color.hex"
+                   [style.background]="color.hex"
+                   [(colorPicker)]="color.hex"
+                   [cpOutputFormat]="'hex'"
+                   (cpSliderDragEnd)="updateCurrentColor(color, $event)">
+          </mat-form-field>
+          <br/>
           <input type="hidden" value="{{color.id}}" [ngModel]="color.id" name="id">
           <button mat-raised-button type="submit" color="primary">Update</button>&nbsp;
           <button mat-raised-button type="button" (click)="onDelete(color)" color="warn">Delete</button>

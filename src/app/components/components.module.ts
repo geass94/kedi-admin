@@ -34,6 +34,7 @@ import { AddCarouselComponent } from './carousel/add-carousel/add-carousel.compo
 import { EditCarouselComponent } from './carousel/edit-carousel/edit-carousel.component';
 import {MatMomentDateModule} from "@angular/material-moment-adapter";
 import { SizeComponent } from './size/size.component';
+import {ColorPickerModule} from "ngx-color-picker";
 
 @NgModule({
   declarations: [
@@ -88,7 +89,8 @@ import { SizeComponent } from './size/size.component';
     CKEditorModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatMomentDateModule
+    MatMomentDateModule,
+    ColorPickerModule
   ]
 })
 export class ComponentsModule { }

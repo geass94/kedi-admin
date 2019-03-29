@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewContainerRef, ViewEncapsulation} from '@angular/core';
 import {SpecificationsService} from "../../services/specifications.service";
 import {Color} from "../../models/color";
 import {NgForm} from "@angular/forms";
@@ -7,10 +7,14 @@ import {serialize} from "serializer.ts/Serializer";
 @Component({
   selector: 'app-colors',
   templateUrl: './colors.component.html',
-  styleUrls: ['./colors.component.css']
+  styleUrls: ['./colors.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ColorsComponent implements OnInit {
   colors: Color[];
+  color = new Color();
+  public selectedColor = '#2889e9';
+
   constructor(private specService: SpecificationsService) { }
 
   ngOnInit() {
@@ -49,5 +53,15 @@ export class ColorsComponent implements OnInit {
       }
     );
   }
+
+
+  public applyInputValue(model: Color, data: any): void {
+    this.color.hex = data.color;
+  }
+
+  updateCurrentColor(model: Color, data: any): void {
+    model.hex = data.color;
+  }
+
 
 }
