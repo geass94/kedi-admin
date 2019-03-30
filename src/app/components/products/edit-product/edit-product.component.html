@@ -119,34 +119,45 @@
             </mat-expansion-panel>
           </mat-accordion>
           <br>
-          <div *ngIf="product.bundle != null" class="form-container">
-            <p>Buy together at {{product.bundle.price}} with {{product.bundle.sale}}% OFF</p>
-            <mat-chip-list>
-              <mat-chip color="primary" selected>{{product.name}}</mat-chip>
-              <div *ngFor="let b of product.bundle.products">
-                &nbsp;+&nbsp;<mat-chip color="accent" selected>{{b.name}}</mat-chip>
-              </div>
-            </mat-chip-list>
+          <div *ngIf="productBundle != null" class="form-container">
+            <div *ngFor="let bundle of productBundle">
+              <p>Buy together at {{bundle.price}} with {{bundle.sale}}% OFF</p>
+              <mat-chip-list>
+                <mat-chip color="primary" selected>{{bundle.name}}</mat-chip>
+                <div *ngFor="let b of bundle.bundledProducts">
+                  &nbsp;+&nbsp;<mat-chip color="accent" selected>{{b.name}}</mat-chip>
+                </div>
+              </mat-chip-list>
+            </div>
           </div>
           <br>
           <section class="form-container">
             <p>Create Bundle</p>
             <form #f="ngForm" (submit)="createBundle(f)">
               <mat-form-field>
-                <mat-select multiple placeholder="Select products to bundle with" (valueChange)="updateBundlePriceAndSale($event)" [ngModel]="products" name="products">
+                <mat-select multiple placeholder="Select products to bundle with" (valueChange)="updateBundlePriceAndSale($event)" [(ngModel)]="bundle.products" name="products">
                   <mat-option *ngFor="let p of productsForBundling" [value]="p" [disabled]="p.id === product.id">{{p.name}}</mat-option>
                 </mat-select>
               </mat-form-field>
-              <mat-form-field *ngIf="bundleProducts.length > 0">
+              <mat-form-field *ngIf="bundle.products.length > 0">
                 <input matInput placeholder="0 < Bundle Sale < 100" name="sale" [(ngModel)]="bundleSale" type="number" (change)="updateBundlePrice()" max="100">
                 <mat-error>
                   Please enter a number between 0 and 100.
                 </mat-error>
               </mat-form-field>
-              <mat-form-field *ngIf="bundleProducts.length > 0">
+              <mat-form-field *ngIf="bundle.products.length > 0">
+                <input matInput placeholder="Bundle Name" name="name" [(ngModel)]="bundle.product.name" type="text" required>
+              </mat-form-field>
+              <mat-form-field *ngIf="bundle.products.length > 0">
+                <input matInput placeholder="Bundle Quantity" name="quantity" [(ngModel)]="bundle.product.quantity" type="text" required>
+              </mat-form-field>
+              <mat-form-field *ngIf="bundle.products.length > 0">
+                <textarea matInput placeholder="Bundle Description" name="description" [(ngModel)]="bundle.product.description"></textarea>
+              </mat-form-field>
+              <mat-form-field *ngIf="bundle.products.length > 0">
                 <input matInput placeholder="Bundle Price" name="price" [(ngModel)]="bundlePrice" type="number" readonly>
               </mat-form-field>
-              <button *ngIf="bundleProducts.length > 0" mat-raised-button type="submit">Create Bundle</button>
+              <button *ngIf="bundle.products.length > 0" mat-raised-button type="submit">Create Bundle</button>
             </form>
           </section>
       </mat-tab>

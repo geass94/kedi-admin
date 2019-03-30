@@ -1,24 +1,33 @@
 import {Bundle} from "./bundle";
 import {ProductFile} from "./product-file";
 import {Category} from "./category";
+import {Size} from "./size";
 
 export class Product {
   id: number;
   name: string;
+  referenceCode: string;
+  barCode: string;
   price: number;
-  sale: number;
   quantity: number;
-  size: string;
-  sex: string;
-  description: string
+  totalQuantity: number;
+  sale: number;
+  description: string;
+  promoted: boolean;
+  countDown: string;
+  //  Specifications
   color: { id: number, name: string };
+  size: Size;
+  sex: string;
   manufacturer: { id: number, name: string };
   categoryList: Category[];
+  //  File attachments
   productFiles: ProductFile[];
+  //  Product Variants
   baseProduct: boolean;
   productVariantId: number;
   productVariantIds: number[];
-  promoted: boolean;
-  bundle: Bundle;
-  countDown: string;
+  //  Bundles and gifts
+  bundledProducts: Product[];
+  makeBundle: boolean;
 }

@@ -32,10 +32,10 @@ export class EditProductComponent implements OnInit, AfterViewInit {
   sizes: Observable<Size[]>;
   basicInfoForm: FormGroup;
   productsForBundling: Product[] = [];
-
   bundlePrice = 0;
   bundleSale = 0;
-  bundleProducts = [];
+  bundle: Bundle = new Bundle();
+  productBundle: Product[];
 
   private id: string;
   private selectedCategories;
@@ -47,11 +47,7 @@ export class EditProductComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.specService.getCategories().subscribe(res => {
       this.categories = res;
-    }, err => {
-
-    },
-      () => {
-        this.dataSource.data = this.categories;
+      this.dataSource.data = this.categories;
     });
     this.colors = this.specService.getColors();
     this.manufacturers = this.specService.getManufacturers();
@@ -63,19 +59,34 @@ export class EditProductComponent implements OnInit, AfterViewInit {
 
     this.route.paramMap.subscribe(params => {
       this.id = params.get('id');
-      this.productService.getProduct(this.id).subscribe((res) => {
-          this.product = res;
-        },
-        (error) => {
-
-        },
-        () => {
-          this.selectedCategories = this.product.categoryList;
-          this.loadVariants();
-          this.initForm();
-        }
-      );
+      this.loadProduct();
     });
+  }
+
+  private loadProduct() {
+    this.product = null;
+    this.bundle = new Bundle();
+    this.productService.getProduct(this.id).subscribe((res) => {
+        this.product = res;
+      },
+      (error) => {
+
+      },
+      () => {
+        this.selectedCategories = this.product.categoryList;
+        this.loadVariants();
+        this.initForm();
+        this.loadProductBundles();
+      }
+    );
+  }
+
+  private loadProductBundles() {
+    this.productService.getBundles(parseInt(this.id, 10)).subscribe(
+      res => {
+        this.productBundle = res;
+      }
+    );
   }
 
   hasChild = (_: number, node: Category) => !!node.children && node.children.length > 0;
@@ -148,28 +159,32 @@ export class EditProductComponent implements OnInit, AfterViewInit {
 
 
   updateBundlePriceAndSale(ev): void {
-    this.bundleProducts = [];
-    this.bundleProducts = deserialize<Product[]>(Product, ev);
-    this.bundleProducts.push(this.product);
     this.updateBundlePrice();
   }
 
   updateBundlePrice(): void {
     this.bundlePrice = 0;
-    this.bundleProducts.forEach(c => {
+    this.bundle.products.forEach(c => {
       this.bundlePrice += (c.price - (c.price * this.bundleSale / 100));
     });
   }
 
   createBundle(f: NgForm) {
-    let bundle: Bundle = serialize<Bundle>(f.value);
-    bundle.parent = this.product;
-
-    this.productService.addBundle(bundle).subscribe(res => {
-      this.product = res;
+    let b: Bundle = serialize<Bundle>(this.bundle);
+    b.product.price = this.bundlePrice;
+    b.product.sale = this.bundleSale;
+    b.products.push(this.product);
+    b.product.size = this.product.size;
+    b.product.color = this.product.color;
+    b.product.manufacturer = this.product.manufacturer;
+    b.product.categoryList = this.product.categoryList;
+    console.log(b);
+    this.productService.addBundle(b).subscribe(res => {
+      window.location.reload();
     });
   }
 
   ngAfterViewInit() {
+
   }
 }
