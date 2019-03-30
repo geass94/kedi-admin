@@ -1,0 +1,23 @@
+<div class="row">
+  <a mat-raised-button routerLink="/banner/add">Add new banner</a>
+</div>
+
+<div *ngIf="banners.length" class="row">
+  <mat-card *ngFor="let banner of banners;" class="example-card">
+    <mat-card-header>
+      <mat-card-title>{{banner.name}}</mat-card-title>
+      <mat-card-subtitle>{{banner.area}}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image src="{{banner.bannerFiles[0].fileUrl}}" alt="{{banner.name}}">
+    <mat-card-content>
+      <p>{{banner.bannerFiles[0].caption}}</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <div class="actions">
+        <a mat-raised-button href="/banner/{{banner.id}}">Edit</a>
+        <button mat-raised-button color="accent" (click)="switchStatus(banner)">{{statusButtonLabel(banner.status)}}</button>
+        <button mat-raised-button color="warn" (click)="deleteBanner(banner.id)">Delete</button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</div>

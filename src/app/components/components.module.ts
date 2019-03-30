@@ -35,6 +35,9 @@ import { EditCarouselComponent } from './carousel/edit-carousel/edit-carousel.co
 import {MatMomentDateModule} from "@angular/material-moment-adapter";
 import { SizeComponent } from './size/size.component';
 import {ColorPickerModule} from "ngx-color-picker";
+import { BannerComponent } from './banner/banner.component';
+import { AddBannerComponent } from './banner/add-banner/add-banner.component';
+import { EditBannerComponent } from './banner/edit-banner/edit-banner.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +56,10 @@ import {ColorPickerModule} from "ngx-color-picker";
     CarouselComponent,
     AddCarouselComponent,
     EditCarouselComponent,
-    SizeComponent
+    SizeComponent,
+    BannerComponent,
+    AddBannerComponent,
+    EditBannerComponent
   ],
   imports: [
     RouterModule.forChild(ComponentsRoutes),

@@ -17,6 +17,7 @@ const MENUITEMS = [
   { state: 'pages', type: 'link', name: 'Pages', icon: 'pages' },
   { state: 'colors', type: 'link', name: 'Colors', icon: 'palette' },
   { state: 'carousel', type: 'link', name: 'Carousel', icon: 'slideshow' },
+  { state: 'banner', type: 'link', name: 'Banner', icon: 'slideshow' },
 ];
 
 @Injectable()

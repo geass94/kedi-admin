@@ -14,6 +14,9 @@ import {CarouselComponent} from "./carousel/carousel.component";
 import {AddCarouselComponent} from "./carousel/add-carousel/add-carousel.component";
 import {EditCarouselComponent} from "./carousel/edit-carousel/edit-carousel.component";
 import {SizeComponent} from "./size/size.component";
+import {BannerComponent} from "./banner/banner.component";
+import {AddBannerComponent} from "./banner/add-banner/add-banner.component";
+import {EditBannerComponent} from "./banner/edit-banner/edit-banner.component";
 
 export const ComponentsRoutes: Routes = [
   {
@@ -75,5 +78,17 @@ export const ComponentsRoutes: Routes = [
   {
     path: 'carousel/:id',
     component: EditCarouselComponent
+  },
+  {
+    path: 'banner',
+    component: BannerComponent
+  },
+  {
+    path: 'banner/add',
+    component: AddBannerComponent
+  },
+  {
+    path: 'banner/:id',
+    component: EditBannerComponent
   }
 ];
