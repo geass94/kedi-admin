@@ -44,10 +44,7 @@ export class EditBannerComponent implements OnInit {
   private initForm(): void {
     this.basicInfoForm = new FormGroup({
       'name': new FormControl(this.banner.name, Validators.required),
-      'area': new FormControl(this.banner.area, Validators.required),
-      'width': new FormControl(this.banner.width, [Validators.required, Validators.max(100), Validators.min(1)]),
-      'height': new FormControl(this.banner.height, [Validators.required, Validators.max(720), Validators.min(1)]),
-      'sliderEffect': new FormControl(this.banner.sliderEffect, Validators.required)
+      'area': new FormControl(this.banner.area, Validators.required)
     });
   }
 

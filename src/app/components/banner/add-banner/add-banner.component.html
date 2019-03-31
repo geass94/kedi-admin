@@ -9,28 +9,9 @@
 
       <mat-form-field>
         <mat-select placeholder="Banner area" formControlName="area">
-          <mat-option value="homepage-header">Homepage Header</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field style="width: 50%;">
-        <input matInput placeholder="Banner width in percents" name="width" formControlName="width" min="1" max="100" type="number">
-        <mat-error>
-          Please enter a number between 1 and 100.
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field style="width: 50%;">
-        <input matInput placeholder="Banner height in pixels" name="height" formControlName="height" min="1" max="720" type="number">
-        <mat-error>
-          Please enter a number between 1 and 720.
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-select placeholder="Banner effect" formControlName="sliderEffect">
-          <mat-option value="fadeIn">FadeIn</mat-option>
-          <mat-option value="fadeOut">FadeOut</mat-option>
-          <mat-option value="slideOut">BannerOut</mat-option>
+          <mat-option value="shop-header">Shop Header Area</mat-option>
+          <mat-option value="shop-sidebar">Shop Sidebar Area</mat-option>
+          <mat-option value="product-details">Product Details Area</mat-option>
         </mat-select>
       </mat-form-field>
       <div>
@@ -56,11 +37,7 @@
           </i>
         </button>
         <div class="slider-inputs">
-          <input type="text" placeholder="Title" name="title" [(ngModel)]="file.title">
-          <input type="text" name="heading" placeholder="Heading" [(ngModel)]="file.heading">
-          <textarea name="caption" [(ngModel)]="file.caption" placeholder="Banner text"></textarea>
           <input type="text" name="externalURL" placeholder="Link to somewhere else" [(ngModel)]="file.externalURL">
-          <input type="text" name="externalURL" placeholder="Button Text" [(ngModel)]="file.label">
         </div>
       </mat-grid-tile>
     </mat-grid-list>
