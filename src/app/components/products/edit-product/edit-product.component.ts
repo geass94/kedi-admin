@@ -36,6 +36,7 @@ export class EditProductComponent implements OnInit, AfterViewInit {
   bundleSale = 0;
   bundle: Bundle = new Bundle();
   productBundle: Product[];
+  chosenProducts: Product[] = [];
 
   private id: string;
   private selectedCategories;
@@ -159,12 +160,17 @@ export class EditProductComponent implements OnInit, AfterViewInit {
 
 
   updateBundlePriceAndSale(ev): void {
+    this.chosenProducts = [];
+    this.chosenProducts = deserialize<Product[]>(Product, ev);
+    if (this.chosenProducts.indexOf(this.product) < 0) {
+      this.chosenProducts.push(this.product);
+    }
     this.updateBundlePrice();
   }
 
   updateBundlePrice(): void {
     this.bundlePrice = 0;
-    this.bundle.products.forEach(c => {
+    this.chosenProducts.forEach(c => {
       this.bundlePrice += (c.price - (c.price * this.bundleSale / 100));
     });
   }
@@ -173,12 +179,12 @@ export class EditProductComponent implements OnInit, AfterViewInit {
     let b: Bundle = serialize<Bundle>(this.bundle);
     b.product.price = this.bundlePrice;
     b.product.sale = this.bundleSale;
-    b.products.push(this.product);
     b.product.size = this.product.size;
     b.product.color = this.product.color;
     b.product.manufacturer = this.product.manufacturer;
     b.product.categoryList = this.product.categoryList;
-    console.log(b);
+    b.products = this.chosenProducts;
+    // console.log(b);
     this.productService.addBundle(b).subscribe(res => {
       window.location.reload();
     });
