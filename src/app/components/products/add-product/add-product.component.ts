@@ -122,7 +122,7 @@ export class AddProductComponent implements OnInit {
   }
 
   createNewVariant() {
-    this.stepper.reset();
+    this.stepper.selectedIndex = 0;
     this.basicInfoForm.get("name").setValue(this.variant.name);
     this.basicInfoForm.get("price").setValue(this.variant.price);
     this.basicInfoForm.get("quantity").setValue(this.variant.quantity);
@@ -131,7 +131,10 @@ export class AddProductComponent implements OnInit {
     this.basicInfoForm.get("manufacturer").setValue(this.variant.manufacturer);
     this.basicInfoForm.get("size").setValue(this.variant.size);
     this.fileUploadComponent.resetUploader();
-    console.log("new variant", this.variant);
+
+    this.stepOneCompleted = false;
+    this.stepTwoCompleted = false;
+    this.files = [];
   }
 
 }

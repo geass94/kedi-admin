@@ -1,4 +1,4 @@
-<mat-horizontal-stepper linear #stepper>
+<mat-horizontal-stepper [linear]="true" #stepper>
   <mat-step [stepControl]="basicInfoForm" errorMessage="წითელი ველები აუცილებლად შეავსეთ!">
 
     <form [formGroup]="basicInfoForm" (submit)="onSubmit()">
