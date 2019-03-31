@@ -48,29 +48,53 @@
         </mat-nested-tree-node>
       </mat-tree>
 
-      <mat-form-field>
-        <mat-select placeholder="Choose color from library" formControlName="color" [compareWith]="compareFn">
-          <mat-option *ngFor="let color of colors | async" [value]="color">
-            {{color.name}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
 
-      <mat-form-field>
-        <mat-select placeholder="Choose manufacturer from library" formControlName="manufacturer" [compareWith]="compareFn">
-          <mat-option *ngFor="let manufacturer of manufacturers | async" [value]="manufacturer">
-            {{manufacturer.name}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+      <mat-tab-group class="custom-tabs" (selectedTabChange)="onColorTabChange()" [(selectedIndex)]="colorLibraryTab">
+        <mat-tab label="Choose color from ibrary">
+          <mat-form-field>
+            <mat-select placeholder="Choose color from library" formControlName="color" [compareWith]="compareFn">
+              <mat-option *ngFor="let color of colors" [value]="color">
+                {{color.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-tab>
+        <mat-tab label="Add new color to library">
+          <app-colors></app-colors>
+        </mat-tab>
+      </mat-tab-group>
 
-      <mat-form-field>
-        <mat-select placeholder="Choose size" formControlName="size" [compareWith]="compareFn">
-          <mat-option *ngFor="let size of sizes | async" [value]="size">
-            {{size.countrySuffix}} / {{size.genderSuffix}} / {{size.size}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+
+      <mat-tab-group class="custom-tabs" (selectedTabChange)="onManufacturerTabChange()" [(selectedIndex)]="manufacturerLibraryTab">
+        <mat-tab label="Choose manufacturer from library">
+          <mat-form-field>
+            <mat-select placeholder="Choose manufacturer from library" formControlName="manufacturer" [compareWith]="compareFn">
+              <mat-option *ngFor="let manufacturer of manufacturers" [value]="manufacturer">
+                {{manufacturer.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-tab>
+        <mat-tab label="Add manufacturer to library">
+          <app-manufacturers></app-manufacturers>
+        </mat-tab>
+      </mat-tab-group>
+
+
+      <mat-tab-group class="custom-tabs" (selectedTabChange)="onSizeTabChange()" [(selectedIndex)]="sizeLibraryTab">
+        <mat-tab label="Choose size from library">
+          <mat-form-field>
+            <mat-select placeholder="Choose size" formControlName="size" [compareWith]="compareFn">
+              <mat-option *ngFor="let size of sizes" [value]="size">
+                {{size.countrySuffix}} / {{size.genderSuffix}} / {{size.size}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-tab>
+        <mat-tab label="Add size to library">
+          <app-size></app-size>
+        </mat-tab>
+      </mat-tab-group>
       <div>
         <button mat-raised-button color="primary" type="submit">Save and continue</button>
       </div>

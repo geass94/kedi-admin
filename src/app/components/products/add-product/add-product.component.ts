@@ -27,10 +27,10 @@ import {Size} from "../../../models/size";
   encapsulation: ViewEncapsulation.None
 })
 export class AddProductComponent implements OnInit {
-  colors: Observable<Color[]>;
+  colors: Color[];
   categories: Category[];
-  manufacturers: Observable<Manufacturer[]>;
-  sizes: Observable<Size[]>;
+  manufacturers: Manufacturer[];
+  sizes: Size[];
   treeControl = new NestedTreeControl<Category>(node => node.children);
   dataSource = new MatTreeNestedDataSource<Category>();
   basicInfoForm: FormGroup;
@@ -47,10 +47,13 @@ export class AddProductComponent implements OnInit {
   @ViewChild(FileUploadComponent)
   fileUploadComponent: FileUploadComponent;
 
+  colorLibraryTab = 0;
+  manufacturerLibraryTab = 0;
+  sizeLibraryTab = 0;
+
   constructor(private productService: ProductService, private specService: SpecificationsService) { }
 
   ngOnInit() {
-    this.colors = this.specService.getColors();
     this.specService.getCategories().subscribe(res => {
         this.categories = res;
       }, err => {
@@ -59,8 +62,10 @@ export class AddProductComponent implements OnInit {
       () => {
         this.dataSource.data = this.categories;
       });
-    this.manufacturers = this.specService.getManufacturers();
-    this.sizes = this.specService.getSizes();
+
+    this.loadColors();
+    this.loadManufacturers();
+    this.loadSizes();
 
     this.basicInfoForm = new FormGroup({
       'name': new FormControl(this.variant.name, Validators.required),
@@ -71,6 +76,30 @@ export class AddProductComponent implements OnInit {
       'manufacturer': new FormControl(this.variant.manufacturer, Validators.required),
       'size': new FormControl(this.variant.size, Validators.required)
     });
+  }
+
+  private loadColors() {
+    this.specService.getColors().subscribe(
+      res => {
+        this.colors = deserialize<Color[]>(Color, res);
+      }
+    );
+  }
+
+  private loadManufacturers() {
+    this.specService.getManufacturers().subscribe(
+      res => {
+        this.manufacturers = deserialize<Manufacturer[]>(Manufacturer, res);
+      }
+    );
+  }
+
+  private loadSizes() {
+    this.specService.getSizes().subscribe(
+      res => {
+        this.sizes = deserialize<Size[]>(Size, res);
+      }
+    );
   }
 
   hasChild = (_: number, node: Category) => !!node.children && node.children.length > 0;
@@ -135,6 +164,24 @@ export class AddProductComponent implements OnInit {
     this.stepOneCompleted = false;
     this.stepTwoCompleted = false;
     this.files = [];
+  }
+
+  onColorTabChange(): void {
+    if (this.colorLibraryTab === 0) {
+      this.loadColors();
+    }
+  }
+
+  onSizeTabChange(): void {
+    if (this.sizeLibraryTab === 0) {
+      this.loadSizes();
+    }
+  }
+
+  onManufacturerTabChange(): void {
+    if (this.manufacturerLibraryTab === 0) {
+      this.loadManufacturers();
+    }
   }
 
 }

@@ -60,3 +60,10 @@ table.result-table td img {
   padding: 5px;
   vertical-align: top;
 }
+
+.custom-tabs {
+  border: 1px #e1e1e1 solid;
+  border-radius: 3px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
