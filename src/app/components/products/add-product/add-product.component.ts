@@ -36,7 +36,7 @@ export class AddProductComponent implements OnInit {
   basicInfoForm: FormGroup;
   selectedCategories: Category[] = [];
   @Input()
-  variant: Product = new Product;
+  variant: Product = new Product();
   files: ProductFile[] = [];
 
   stepOneCompleted = false;
@@ -131,6 +131,7 @@ export class AddProductComponent implements OnInit {
     this.basicInfoForm.get("manufacturer").setValue(this.variant.manufacturer);
     this.basicInfoForm.get("size").setValue(this.variant.size);
     this.fileUploadComponent.resetUploader();
+    console.log("new variant", this.variant);
   }
 
 }
