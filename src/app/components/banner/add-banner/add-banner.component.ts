@@ -6,6 +6,8 @@ import {MatStepper} from "@angular/material";
 import {FileUploadComponent} from "../../../file-upload/file-upload.component";
 import {BannerService} from "../../../services/banner.service";
 import {deserialize, serialize} from "serializer.ts/Serializer";
+import {SpecificationsService} from "../../../services/specifications.service";
+import {Category} from "../../../models/category";
 
 @Component({
   selector: 'app-add-banner',
@@ -25,13 +27,30 @@ export class AddBannerComponent implements OnInit {
   @ViewChild(FileUploadComponent)
   fileUploadComponent: FileUploadComponent;
 
-  constructor(private bannerService: BannerService) { }
+  areas: { value: string, name: string }[] = [];
+
+  constructor(private bannerService: BannerService, private specsService: SpecificationsService) { }
 
   ngOnInit() {
     this.basicInfoForm = new FormGroup({
       'name': new FormControl(null, Validators.required),
       'area': new FormControl(null, Validators.required)
     });
+
+    this.areas.push( { value: 'shop-header', name: 'Shop Header Area' } );
+    this.areas.push( { value: 'shop-sidebar', name: 'Shop Sidebar Area' } );
+    this.areas.push( { value: 'product-details', name: 'Product Details Area' } );
+
+    this.specsService.getCategories().subscribe(
+      res => {
+        res.forEach(c => {
+          if (c.children.length > 0) {
+            let obj = { value : `menu-area-${c.id}`, name: `Menu: ${c.name} Area` };
+            this.areas.push(obj);
+          }
+        });
+      }
+    );
   }
 
   compareFn(c1: any, c2: any): boolean {

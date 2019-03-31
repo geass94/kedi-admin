@@ -5,6 +5,7 @@ import {ActivatedRoute} from "@angular/router";
 import {BannerService} from "../../../services/banner.service";
 import {deserialize, serialize} from "serializer.ts/Serializer";
 import {BannerFile} from "../../../models/banner-file";
+import {SpecificationsService} from "../../../services/specifications.service";
 
 @Component({
   selector: 'app-edit-banner',
@@ -15,7 +16,8 @@ export class EditBannerComponent implements OnInit {
   private id: number;
   banner: Banner = null;
   basicInfoForm: FormGroup;
-  constructor(private route: ActivatedRoute, private bannerService: BannerService) { }
+  areas: { value: string, name: string }[] = [];
+  constructor(private route: ActivatedRoute, private bannerService: BannerService, private specsService: SpecificationsService) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -27,6 +29,21 @@ export class EditBannerComponent implements OnInit {
         }
       );
     });
+
+    this.areas.push( { value: 'shop-header', name: 'Shop Header Area' } );
+    this.areas.push( { value: 'shop-sidebar', name: 'Shop Sidebar Area' } );
+    this.areas.push( { value: 'product-details', name: 'Product Details Area' } );
+
+    this.specsService.getCategories().subscribe(
+      res => {
+        res.forEach(c => {
+          if (c.children.length > 0) {
+            let obj = { value : `menu-area-${c.id}`, name: `Menu: ${c.name} Area` };
+            this.areas.push(obj);
+          }
+        });
+      }
+    );
   }
 
   onSubmit() {

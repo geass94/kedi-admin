@@ -9,9 +9,7 @@
 
       <mat-form-field>
         <mat-select placeholder="Banner area" formControlName="area">
-          <mat-option value="shop-header">Shop Header Area</mat-option>
-          <mat-option value="shop-sidebar">Shop Sidebar Area</mat-option>
-          <mat-option value="product-details">Product Details Area</mat-option>
+          <mat-option *ngFor="let area of areas" [value]="area.value">{{area.name}}</mat-option>
         </mat-select>
       </mat-form-field>
       <div>
