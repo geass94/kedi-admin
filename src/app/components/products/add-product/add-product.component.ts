@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 
-import {deserialize, serialize, serialize} from "serializer.ts/Serializer";
+import {deserialize, serialize} from "serializer.ts/Serializer";
 import {FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
 import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 
