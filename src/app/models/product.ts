@@ -27,8 +27,8 @@ export class Product {
   productFiles: ProductFile[];
   //  Product Variants
   baseProduct: boolean;
-  productVariantId: number;
-  productVariantIds: number[];
+  baseVariant: Product;
+  variants: Product[];
   //  Bundles and gifts
   bundledProducts: Product[];
   makeBundle: boolean;

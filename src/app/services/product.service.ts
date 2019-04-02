@@ -53,9 +53,9 @@ export class ProductService {
       .pipe(map((res: any) => deserialize<Product>(Product, res)));
   }
 
-  getProductVariants(ids: any[]): Observable<Product[]> {
+  getProductVariants(id: number): Observable<Product[]> {
     let params = new HttpParams();
-    params = params.append('ids', JSON.stringify(ids).replace("[", "").replace("]", ""));
+    params = params.append('id', id.toString());
     return this.http.get(`${environment.apiUrl}/product/get-product-variants`, {params: params})
       .pipe(map((res: any) => deserialize<Product[]>(Product, res)));
   }

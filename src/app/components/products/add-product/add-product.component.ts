@@ -137,8 +137,8 @@ export class AddProductComponent implements OnInit {
     if (form.valid) {
       let toSubmit: Product = deserialize<Product>(Product, form.value);
       const formValue = serialize(form.value);
-      toSubmit.productVariantId = this.variant.productVariantId;
-      toSubmit.productVariantIds = this.variant.productVariantIds;
+      toSubmit.baseVariant = this.variant.baseVariant;
+      toSubmit.variants = this.variant.variants;
       toSubmit.categoryList = this.selectedCategories;
       toSubmit.size = formValue.size[0];
       toSubmit.color = formValue.color[0];
@@ -197,6 +197,7 @@ export class AddProductComponent implements OnInit {
       () => {
         if (this.colorVariants.filter(cv => cv.color.id === this.variant.color.id).length === 0) {
           this.colorVariants.push(this.variant);
+          console.log(this.variant);
         }
         // console.log("Iterator Complete: ", this.variant);
       }
