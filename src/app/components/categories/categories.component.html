@@ -12,6 +12,12 @@
               Please enter name
             </mat-error>
           </mat-form-field>
+          <mat-form-field>
+            <input required matInput placeholder="Category Order" name="weight" [(ngModel)]="catForm.weight" required [value]="catForm.weight">
+            <mat-error>
+              Please enter name
+            </mat-error>
+          </mat-form-field>
           <mat-form-field *ngIf="categories.length">
             <mat-label>Choose Parent Category</mat-label>
             <mat-select name="parent" [(ngModel)]="catForm.parent" >
@@ -29,6 +35,12 @@
           <br/>
           <mat-form-field>
             <input required matInput placeholder="Category Name" name="name" [(ngModel)]="chosenCategory.name" required [value]="chosenCategory.name">
+            <mat-error>
+              Please enter name
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input required matInput placeholder="Category Order" name="weight" [(ngModel)]="chosenCategory.weight" required [value]="chosenCategory.weight">
             <mat-error>
               Please enter name
             </mat-error>
