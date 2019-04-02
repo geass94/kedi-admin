@@ -184,6 +184,7 @@ export class AddProductComponent implements OnInit {
     }
     this.variant.color = c;
     this.variant.size = s;
+    delete this.variant.id;
     // console.log("Iterator toSubmit: ", this.variant);
 
     this.productService.addProduct(serialize(this.variant)).subscribe(
