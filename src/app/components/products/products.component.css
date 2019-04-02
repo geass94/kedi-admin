@@ -11,7 +11,6 @@
 
 .example-table-container {
   position: relative;
-  max-height: 400px;
   overflow: auto;
 }
 
