@@ -114,7 +114,7 @@
                 </mat-grid-tile>
               </mat-grid-list>
               <div *ngIf="product.id">
-                <app-file-upload (fileUploaderCallback)="finishUpload(files)" [formDataKey]="'product-id'" [formDataValue]="product.id" [formActionUrl]="'admin/product/add-product-file'"></app-file-upload>
+                <app-file-upload (fileUploaderCallback)="finishUpload(files)" [formDataKey]="['product-id']" [formDataValue]="[product.id]" [formActionUrl]="'admin/product/add-product-file'"></app-file-upload>
               </div>
             </mat-expansion-panel>
           </mat-accordion>

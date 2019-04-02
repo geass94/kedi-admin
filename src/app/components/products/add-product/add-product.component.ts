@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 
-import {deserialize, serialize} from "serializer.ts/Serializer";
+import {deserialize, serialize, serialize} from "serializer.ts/Serializer";
 import {FormControl, FormGroup, NgForm, Validators} from "@angular/forms";
 import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 
@@ -50,6 +50,8 @@ export class AddProductComponent implements OnInit {
   colorLibraryTab = 0;
   manufacturerLibraryTab = 0;
   sizeLibraryTab = 0;
+
+  colorVariants: Product[] = [];
 
   constructor(private productService: ProductService, private specService: SpecificationsService) { }
 
@@ -134,21 +136,73 @@ export class AddProductComponent implements OnInit {
     const form = this.basicInfoForm;
     if (form.valid) {
       let toSubmit: Product = deserialize<Product>(Product, form.value);
+      const formValue = serialize(form.value);
       toSubmit.productVariantId = this.variant.productVariantId;
       toSubmit.productVariantIds = this.variant.productVariantIds;
       toSubmit.categoryList = this.selectedCategories;
+      toSubmit.size = formValue.size[0];
+      toSubmit.color = formValue.color[0];
+
+      // console.log("To Submit: ", toSubmit);
       // ფორმაში ყველაფერი შევსებულია და ვამატებ პრუდუქტის ინფორმაციას.
-      this.productService.addProduct(serialize(toSubmit)).subscribe(res => {
-        // პროდუქტის ინფორმაციის მოთხოვნა გაიგზავნა და უკან ბრუნდება პასუხი.
-        this.variant = res;
-        this.stepOneCompleted = true;
-        this.fileUploadComponent.formDataKey = "product-id";
-        this.fileUploadComponent.formDataValue = this.variant.id;
-        this.fileUploadComponent.formActionUrl = "admin/product/add-product-file";
-        this.stepper.next();
-      });
+      this.productService.addProduct(serialize(toSubmit)).subscribe(
+        res => {
+          // პროდუქტის ინფორმაციის მოთხოვნა გაიგზავნა და უკან ბრუნდება პასუხი.
+          this.variant = res;
+        },
+        err => {
+
+        },
+        () => {
+          this.colorVariants.push(this.variant);
+          this.iterate(formValue.color, formValue.size);
+        }
+      );
     }
   }
+
+  private iterate(c: Color[], s: Size[]) {
+    let sum = 0;
+    for (let i = 0; i < c.length; i++) {
+      for (let j = 0; j < s.length; j++) {
+          this.iterateAdder(c[i], s[j], i, j);
+          sum++;
+        if (sum === c.length + s.length) {
+          this.colorVariants.forEach(cv => {
+
+          });
+          this.stepOneCompleted = true;
+          this.stepper.next();
+        }
+      }
+    }
+  }
+
+  private iterateAdder(c: Color, s: Size, i: number, j: number) {
+    if (i === 0 && j === 0) {
+      return false;
+    }
+    this.variant.color = c;
+    this.variant.size = s;
+    delete this.variant.id;
+    // console.log("Iterator toSubmit: ", this.variant);
+
+    this.productService.addProduct(serialize(this.variant)).subscribe(
+      res => {
+        this.variant = res;
+      },
+      err => {
+
+      },
+      () => {
+        if (this.colorVariants.filter(cv => cv.color.id === this.variant.color.id).length === 0) {
+          this.colorVariants.push(this.variant);
+        }
+        // console.log("Iterator Complete: ", this.variant);
+      }
+    );
+  }
+
 
   createNewVariant() {
     this.stepper.selectedIndex = 0;
@@ -156,9 +210,9 @@ export class AddProductComponent implements OnInit {
     this.basicInfoForm.get("price").setValue(this.variant.price);
     this.basicInfoForm.get("quantity").setValue(this.variant.quantity);
     this.basicInfoForm.get("description").setValue(this.variant.description);
-    this.basicInfoForm.get("color").setValue(this.variant.color);
+    this.basicInfoForm.get("color").setValue([this.variant.color]);
     this.basicInfoForm.get("manufacturer").setValue(this.variant.manufacturer);
-    this.basicInfoForm.get("size").setValue(this.variant.size);
+    this.basicInfoForm.get("size").setValue([this.variant.size]);
     this.fileUploadComponent.resetUploader();
 
     this.stepOneCompleted = false;

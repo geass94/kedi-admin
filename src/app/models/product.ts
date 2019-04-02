@@ -2,6 +2,8 @@ import {Bundle} from "./bundle";
 import {ProductFile} from "./product-file";
 import {Category} from "./category";
 import {Size} from "./size";
+import {Color} from "./color";
+import {Manufacturer} from "./manufacturer";
 
 export class Product {
   id: number;
@@ -16,10 +18,10 @@ export class Product {
   promoted: boolean;
   countDown: string;
   //  Specifications
-  color: { id: number, name: string };
+  color: Color;
   size: Size;
   sex: string;
-  manufacturer: { id: number, name: string };
+  manufacturer: Manufacturer;
   categoryList: Category[];
   //  File attachments
   productFiles: ProductFile[];

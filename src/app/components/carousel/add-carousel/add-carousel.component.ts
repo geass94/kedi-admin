@@ -71,8 +71,8 @@ export class AddCarouselComponent implements OnInit {
           this.carousel = deserialize<Carousel>(Carousel, res);
           // პროდუქტის ინფორმაციის მოთხოვნა გაიგზავნა და უკან ბრუნდება პასუხი.
           this.stepOneCompleted = true;
-          this.fileUploadComponent.formDataKey = "carousel-id";
-          this.fileUploadComponent.formDataValue = this.carousel.id;
+          this.fileUploadComponent.formDataKey = ["carousel-id"];
+          this.fileUploadComponent.formDataValue = [this.carousel.id];
           this.fileUploadComponent.formActionUrl = "admin/carousel/add-carousel-file";
         }
       );

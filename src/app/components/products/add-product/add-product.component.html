@@ -52,7 +52,7 @@
       <mat-tab-group class="custom-tabs" (selectedTabChange)="onColorTabChange()" [(selectedIndex)]="colorLibraryTab">
         <mat-tab label="Choose color from ibrary">
           <mat-form-field>
-            <mat-select placeholder="Choose color from library" formControlName="color" [compareWith]="compareFn">
+            <mat-select placeholder="Choose color from library" formControlName="color" [compareWith]="compareFn" multiple>
               <mat-option *ngFor="let color of colors" [value]="color">
                 {{color.name}}
               </mat-option>
@@ -84,7 +84,7 @@
       <mat-tab-group class="custom-tabs" (selectedTabChange)="onSizeTabChange()" [(selectedIndex)]="sizeLibraryTab">
         <mat-tab label="Choose size from library">
           <mat-form-field>
-            <mat-select placeholder="Choose size" formControlName="size" [compareWith]="compareFn">
+            <mat-select placeholder="Choose size" formControlName="size" [compareWith]="compareFn" multiple>
               <mat-option *ngFor="let size of sizes" [value]="size">
                 {{size.countrySuffix}} / {{size.genderSuffix}} / {{size.size}}
               </mat-option>
@@ -100,10 +100,12 @@
       </div>
     </form>
   </mat-step>
-  <mat-step [stepControl]="stepOneCompleted" errorMessage="At least one image is required.">
+  <mat-step [stepControl]="stepOneCompleted && colorVariants.length > 0" errorMessage="At least one image is required.">
     <ng-template matStepLabel>Add Images</ng-template>
-    <p *ngIf="stepOneCompleted">Upload Images for product <u>{{variant.color.name}}</u> color!</p>
-    <app-file-upload (fileUploaderCallback)="uploadFinished($event)"></app-file-upload>
+    <div *ngFor="let uploader of colorVariants">
+      <p *ngIf="stepOneCompleted">Upload Images for product <u>{{uploader.color.name}}</u> color!</p>
+      <app-file-upload [formDataValue]="[uploader.id, uploader.color.id]" [formDataKey]="['product-id', 'color-id']" [formActionUrl]="'admin/product/add-product-file'" (fileUploaderCallback)="uploadFinished($event)"></app-file-upload>
+    </div>
     <br/>
     <div>
       <button mat-raised-button color="primary" matStepperNext [disabled]="!stepTwoCompleted">Save and continue</button>

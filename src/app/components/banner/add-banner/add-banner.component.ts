@@ -86,8 +86,8 @@ export class AddBannerComponent implements OnInit {
           this.banner = deserialize<Banner>(Banner, res);
           // პროდუქტის ინფორმაციის მოთხოვნა გაიგზავნა და უკან ბრუნდება პასუხი.
           this.stepOneCompleted = true;
-          this.fileUploadComponent.formDataKey = "banner-id";
-          this.fileUploadComponent.formDataValue = this.banner.id;
+          this.fileUploadComponent.formDataKey = ["banner-id"];
+          this.fileUploadComponent.formDataValue = [this.banner.id];
           this.fileUploadComponent.formActionUrl = "admin/banner/add-banner-file";
         }
       );

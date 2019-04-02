@@ -18,8 +18,8 @@
   </form>
   <br/>
   <app-file-upload [formActionUrl]="'admin/banner/add-banner-file'"
-                   [formDataKey]="'banner-id'"
-                   [formDataValue]="banner.id"
+                   [formDataKey]="['banner-id']"
+                   [formDataValue]="[banner.id]"
                    (fileUploaderCallback)="uploadFinished($event)">
   </app-file-upload>
   <br/>

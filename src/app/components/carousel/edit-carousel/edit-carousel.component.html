@@ -39,8 +39,8 @@
   </form>
   <br/>
   <app-file-upload [formActionUrl]="'admin/carousel/add-carousel-file'"
-                   [formDataKey]="'carousel-id'"
-                   [formDataValue]="carousel.id"
+                   [formDataKey]="'[carousel-id]'"
+                   [formDataValue]="[carousel.id]"
                    (fileUploaderCallback)="uploadFinished($event)">
   </app-file-upload>
   <br/>
