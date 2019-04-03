@@ -114,7 +114,7 @@ export class EditProductComponent implements OnInit, AfterViewInit {
   }
 
   private loadVariants() {
-    this.variants = this.productService.getProductVariants(this.product.baseVariant.id);
+    this.variants = this.productService.getProductVariants(this.product.baseVariantId);
   }
 
   finishUpload(files) {
@@ -125,7 +125,7 @@ export class EditProductComponent implements OnInit, AfterViewInit {
     const form = this.basicInfoForm;
     if (form.valid) {
       let toSubmit: Product = deserialize<Product>(Product, form.value);
-      toSubmit.baseVariant = this.product.baseVariant;
+      toSubmit.baseVariantId = this.product.baseVariantId;
       toSubmit.variants = this.product.variants;
       toSubmit.categoryList = this.selectedCategories;
       // ფორმაში ყველაფერი შევსებულია და ვამატებ პრუდუქტის ინფორმაციას.

@@ -137,7 +137,7 @@ export class AddProductComponent implements OnInit {
     if (form.valid) {
       let toSubmit: Product = deserialize<Product>(Product, form.value);
       const formValue = serialize(form.value);
-      toSubmit.baseVariant = this.variant.baseVariant;
+      toSubmit.baseVariantId = this.variant.baseVariantId;
       toSubmit.variants = this.variant.variants;
       toSubmit.categoryList = this.selectedCategories;
       toSubmit.size = formValue.size[0];
